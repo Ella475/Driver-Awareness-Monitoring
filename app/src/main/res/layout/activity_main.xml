@@ -102,8 +102,9 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+
                 <ImageView
-                    android:id="@+id/ii1"
+                    android:id="@+id/camera"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:src="@drawable/camera"
@@ -130,6 +131,7 @@
                 android:orientation="vertical">
 
                 <ImageView
+                    android:id="@+id/statistics"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:src="@drawable/statistics" />
