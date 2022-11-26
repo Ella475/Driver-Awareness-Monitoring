@@ -1,4 +1,4 @@
-package com.example.driverawarenessdetection.ui.login;
+package com.example.driverawarenessdetection.login.ui;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -6,12 +6,12 @@ import androidx.lifecycle.ViewModel;
 
 import android.util.Patterns;
 
-import com.example.driverawarenessdetection.data.login.LoginRepository;
-import com.example.driverawarenessdetection.data.login.Result;
-import com.example.driverawarenessdetection.data.login.model.LoggedInUser;
+import com.example.driverawarenessdetection.login.data.LoginRepository;
+import com.example.driverawarenessdetection.login.data.Result;
+import com.example.driverawarenessdetection.login.data.model.LoggedInUser;
 import com.example.driverawarenessdetection.R;
 
-public class LoginViewModel extends ViewModel {
+class LoginViewModel extends ViewModel {
 
     private final MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>();
     private final MutableLiveData<LoginResult> loginResult = new MutableLiveData<>();

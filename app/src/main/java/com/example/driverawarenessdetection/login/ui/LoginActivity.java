@@ -1,4 +1,4 @@
-package com.example.driverawarenessdetection.ui.login;
+package com.example.driverawarenessdetection.login.ui;
 
 import android.app.Activity;
 
@@ -23,8 +23,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.driverawarenessdetection.R;
-import com.example.driverawarenessdetection.ui.login.LoginViewModel;
-import com.example.driverawarenessdetection.ui.login.LoginViewModelFactory;
 import com.example.driverawarenessdetection.databinding.ActivityLoginBinding;
 
 public class LoginActivity extends AppCompatActivity {
@@ -125,7 +123,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void updateUiWithUser(LoggedInUserView model) {
-        String welcome = getString(R.string.welcome) + model.getDisplayName();
+        String welcome = getString(R.string.welcome) + model.getDisplayName() + "!";
         // TODO : initiate successful logged in experience
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
     }

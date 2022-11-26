@@ -1,17 +1,17 @@
-package com.example.driverawarenessdetection.ui.login;
+package com.example.driverawarenessdetection.login.ui;
 
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.annotation.NonNull;
 
-import com.example.driverawarenessdetection.data.login.LoginDataSource;
-import com.example.driverawarenessdetection.data.login.LoginRepository;
+import com.example.driverawarenessdetection.login.data.LoginDataSource;
+import com.example.driverawarenessdetection.login.data.LoginRepository;
 
 /**
  * ViewModel provider factory to instantiate LoginViewModel.
  * Required given LoginViewModel has a non-empty constructor
  */
-public class LoginViewModelFactory implements ViewModelProvider.Factory {
+class LoginViewModelFactory implements ViewModelProvider.Factory {
 
     @NonNull
     @Override

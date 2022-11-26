@@ -1,6 +1,6 @@
-package com.example.driverawarenessdetection.data.login;
+package com.example.driverawarenessdetection.login.data;
 
-import com.example.driverawarenessdetection.data.login.model.LoggedInUser;
+import com.example.driverawarenessdetection.login.data.model.LoggedInUser;
 
 /**
  * Class that requests authentication and user information from the remote data source and

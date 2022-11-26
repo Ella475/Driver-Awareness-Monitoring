@@ -1,4 +1,4 @@
-package com.example.driverawarenessdetection.ui.login;
+package com.example.driverawarenessdetection.login.ui;
 
 import androidx.annotation.Nullable;
 

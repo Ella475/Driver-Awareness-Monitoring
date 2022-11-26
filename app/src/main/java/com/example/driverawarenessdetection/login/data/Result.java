@@ -1,4 +1,4 @@
-package com.example.driverawarenessdetection.data.login;
+package com.example.driverawarenessdetection.login.data;
 
 /**
  * A generic class that holds a result success w/ data or an error exception.
