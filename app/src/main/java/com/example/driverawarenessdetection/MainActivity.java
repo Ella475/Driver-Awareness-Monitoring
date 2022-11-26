@@ -19,13 +19,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent switchCameraActivity = new Intent(MainActivity.this,
-                CameraActivity.class);
-        startActivity(switchCameraActivity);
 
-
-//        Intent switchLoginActivityIntent = new Intent(MainActivity.this, LoginActivity.class);
-//        startActivity(switchLoginActivityIntent);
+        Intent switchLoginActivityIntent = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(switchLoginActivityIntent);
 
         setContentView(R.layout.activity_main);
 
