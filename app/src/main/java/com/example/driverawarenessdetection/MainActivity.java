@@ -8,12 +8,14 @@ import android.os.Bundle;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LifecycleObserver;
 
 import com.example.driverawarenessdetection.login.ui.LoginActivity;
 import com.ncorti.slidetoact.SlideToActView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements LifecycleObserver {
     final int CAMERA_REQUEST_CODE = 1001;
+    private SlideToActView slide;
 
 
     @Override
@@ -26,9 +28,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         grantCameraAndStoragePermission();
-        SlideToActView slide = findViewById(R.id.slider);
+        initView();
+    }
 
-
+    private void initView() {
         ImageView cameraButton = findViewById(R.id.camera);
         cameraButton.setOnClickListener(view -> {
             Intent switchCameraActivityIntent = new Intent(MainActivity.this,
@@ -36,12 +39,12 @@ public class MainActivity extends AppCompatActivity {
             startActivity(switchCameraActivityIntent);
         });
 
+        slide = findViewById(R.id.slider);
         slide.setOnSlideCompleteListener(view -> {
             Intent switchDetectionActivityIntent = new Intent(MainActivity.this,
                     AwarenessDetectionActivity.class);
             startActivity(switchDetectionActivityIntent);
         });
-
     }
 
     public void grantCameraAndStoragePermission(){
@@ -50,5 +53,10 @@ public class MainActivity extends AppCompatActivity {
                 requestPermissions(new String[]{Manifest.permission.CAMERA}, CAMERA_REQUEST_CODE);
             }
         }
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        slide.resetSlider();
     }
 }
