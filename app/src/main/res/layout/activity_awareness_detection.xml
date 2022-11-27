@@ -10,14 +10,15 @@
         android:orientation="vertical">
 
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="353dp"
+            android:layout_height="43dp"
             android:layout_margin="30dp">
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/back"/>
+                android:id="@+id/back"
+                android:layout_width="34dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/back" />
 
 
         </RelativeLayout>
