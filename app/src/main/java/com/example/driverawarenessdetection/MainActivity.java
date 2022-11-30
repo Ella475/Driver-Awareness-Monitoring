@@ -22,8 +22,11 @@ public class MainActivity extends AppCompatActivity implements LifecycleObserver
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Intent switchLoginActivityIntent = new Intent(MainActivity.this, LoginActivity.class);
-        startActivity(switchLoginActivityIntent);
+        Intent switchStatisticsActivityIntent = new Intent(MainActivity.this,
+                StatisticsActivity.class);
+        startActivity(switchStatisticsActivityIntent);
+//        Intent switchLoginActivityIntent = new Intent(MainActivity.this, LoginActivity.class);
+//        startActivity(switchLoginActivityIntent);
 
         setContentView(R.layout.activity_main);
 
@@ -37,6 +40,13 @@ public class MainActivity extends AppCompatActivity implements LifecycleObserver
             Intent switchCameraActivityIntent = new Intent(MainActivity.this,
                     CameraActivity.class);
             startActivity(switchCameraActivityIntent);
+        });
+
+        ImageView statisticsButton = findViewById(R.id.statistics);
+        statisticsButton.setOnClickListener(view -> {
+            Intent switchStatisticsActivityIntent = new Intent(MainActivity.this,
+                    StatisticsActivity.class);
+            startActivity(switchStatisticsActivityIntent);
         });
 
         slide = findViewById(R.id.slider);
