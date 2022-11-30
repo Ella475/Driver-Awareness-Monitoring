@@ -4,18 +4,59 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".StatisticsActivity"
-    android:background="#003cff">
+    android:background="#0B0BD5"
+    tools:context=".StatisticsActivity">
 
-    <com.github.mikephil.charting.charts.BarChart
-        android:id="@+id/severityBarChart"
-        android:layout_width="365dp"
-        android:layout_height="262dp"
-        android:layout_marginBottom="232dp"
-        android:minHeight="320dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.347"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+    <LinearLayout
+        android:id="@+id/bg"
+        android:layout_width="350dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="400dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginBottom="25dp"
+        android:background="@drawable/white_bg"
+        android:orientation="horizontal"
+        android:selectAllOnFocus="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.737"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpeakableTextPresentCheck">
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/line_chart_graph"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/bg2"
+        android:layout_width="350dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="70dp"
+        android:background="@drawable/white_bg"
+        android:orientation="horizontal"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginBottom="325dp"
+        android:selectAllOnFocus="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.737"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpeakableTextPresentCheck">
+
+        <com.github.mikephil.charting.charts.BarChart        android:id="@+id/bar_chart_graph"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp" />
+
+    </LinearLayout>
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
