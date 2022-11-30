@@ -3,37 +3,36 @@ package com.example.driverawarenessdetection.video_processing.awareness_detectio
 import com.google.mlkit.vision.face.Face;
 
 import java.util.ArrayDeque;
+import java.util.Arrays;
 
-public class FaceDrowsiness {
-    private static final float DROWSINESS_THRESHOLD = 0.5f;
+public class FaceAwareness {
+    private static final float SLEEP_THRESHOLD = 0.5f;
     private static final int MAX_HISTORY = 10;
 
+    // TODO: change to private
     public long lastCheckedAt;
     private final ArrayDeque<Boolean> history = new ArrayDeque<>();
+    private boolean asleep;
 
-    public boolean isDrowsy(Face face) {
-        boolean isDrowsy = true;
+    public boolean isSleepy(Face face) {
         lastCheckedAt = System.currentTimeMillis();
         if (face.getLeftEyeOpenProbability() == null
             || face.getRightEyeOpenProbability() == null) {
             return false;
         }
-        if (face.getLeftEyeOpenProbability() < DROWSINESS_THRESHOLD
-            && face.getRightEyeOpenProbability() < DROWSINESS_THRESHOLD) {
-            history.addLast(true);
-        } else {
-            history.addLast(false);
-        }
+
+        boolean closedEyes = face.getLeftEyeOpenProbability() < SLEEP_THRESHOLD
+                && face.getRightEyeOpenProbability() < SLEEP_THRESHOLD;
+        history.addLast(closedEyes);
+
+
         if (history.size() > MAX_HISTORY) {
             history.removeFirst();
         }
-        if (history.size() == MAX_HISTORY) {
-            for (boolean instance : history) {
-                isDrowsy &= instance;
-            }
-        } else {
+        if (history.size() < MAX_HISTORY) {
             return false;
         }
-        return isDrowsy;
+        asleep = !Arrays.asList(history.toArray()).contains(false);
+        return asleep;
     }
 }

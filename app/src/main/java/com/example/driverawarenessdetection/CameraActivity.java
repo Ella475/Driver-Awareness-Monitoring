@@ -50,37 +50,31 @@ public class CameraActivity extends AppCompatActivity {
         cameraSource.setMachineLearningFrameProcessor(new FaceDetectorProcessor(this));
     }
 
-    /**
-     * Starts or restarts the camera source, if it exists. If the camera source doesn't exist yet
-     * (e.g., because onResume was called before the camera source was created), this will be called
-     * again when the camera source is created.
-     */
     private void startCameraSource() {
-        if (cameraSource != null) {
+        if (cameraSource != null && preview != null && graphicOverlay != null) {
             try {
-                if (preview == null) {
-                    Log.d(TAG, "resume: Preview is null");
-                }
-                if (graphicOverlay == null) {
-                    Log.d(TAG, "resume: graphOverlay is null");
-                }
                 preview.start(cameraSource, graphicOverlay);
             } catch (IOException e) {
-                Log.e(TAG, "Unable to start camera source.", e);
                 cameraSource.release();
                 cameraSource = null;
+                finish();
             }
         }
     }
 
-    public void stopCameraSource() {
+    public void stopCamera() {
         preview.stop();
         preview.release();
+        preview = null;
         cameraSource = null;
     }
 
     public void finishActivity() {
-        stopCameraSource();
+        stopCamera();
         finish();
+    }
+
+    public void onBackPressed() {
+        finishActivity();
     }
 }

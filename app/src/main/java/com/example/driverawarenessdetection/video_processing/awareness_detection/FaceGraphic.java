@@ -22,11 +22,11 @@ import android.graphics.Paint;
 import android.graphics.PointF;
 
 import com.example.driverawarenessdetection.video_processing.camera.GraphicOverlay;
+import com.google.mlkit.vision.camera.CameraXSource;
 import com.google.mlkit.vision.face.Face;
 import com.google.mlkit.vision.face.FaceContour;
 import com.google.mlkit.vision.face.FaceLandmark;
 import com.google.mlkit.vision.face.FaceLandmark.LandmarkType;
-
 import java.util.Locale;
 
 /**
@@ -58,14 +58,16 @@ public class FaceGraphic extends GraphicOverlay.Graphic {
   private final Paint[] idPaints;
   private final Paint[] boxPaints;
   private final Paint[] labelPaints;
-  private boolean isDrowsy;
+  private boolean isSleepy;
 
   private volatile Face face;
 
-  FaceGraphic(GraphicOverlay overlay, Face face, boolean isDrowsy) {
+  FaceGraphic(GraphicOverlay overlay, Face face, boolean isSleepy) {
     super(overlay);
 
-    this.isDrowsy = isDrowsy;
+    CameraXSource camera;
+
+    this.isSleepy = isSleepy;
     this.face = face;
     final int selectedColor = Color.WHITE;
 
@@ -132,7 +134,7 @@ public class FaceGraphic extends GraphicOverlay.Graphic {
             Math.max(
                     textWidth,
                     idPaints[colorID].measureText(
-                            String.format(Locale.US, "Drowsy: %s", isDrowsy)));
+                            String.format(Locale.US, "Sleepy: %s", isSleepy)));
 
     if (face.getLeftEyeOpenProbability() != null) {
       yLabelOffset -= lineHeight;
@@ -202,7 +204,7 @@ public class FaceGraphic extends GraphicOverlay.Graphic {
     }
 
     canvas.drawText(
-            "Drowsy: " + String.format(Locale.US, "%s", isDrowsy),
+            "Drowsy: " + String.format(Locale.US, "%s", isSleepy),
             left,
             top + yLabelOffset,
             idPaints[colorID]);
