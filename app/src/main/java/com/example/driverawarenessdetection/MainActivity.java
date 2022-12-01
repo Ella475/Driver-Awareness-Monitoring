@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements LifecycleObserver
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         Intent switchLoginActivityIntent = new Intent(MainActivity.this, LoginActivity.class);
         startActivity(switchLoginActivityIntent);
 
@@ -38,6 +40,14 @@ public class MainActivity extends AppCompatActivity implements LifecycleObserver
                     CameraActivity.class);
             startActivity(switchCameraActivityIntent);
         });
+
+        ImageView settingsButton = findViewById(R.id.settings);
+        settingsButton.setOnClickListener(view -> {
+            Intent switchSettingsActivityIntent = new Intent(MainActivity.this,
+                    SettingsActivity.class);
+            startActivity(switchSettingsActivityIntent);
+        });
+
 
         slide = findViewById(R.id.slider);
         slide.setOnSlideCompleteListener(view -> {
