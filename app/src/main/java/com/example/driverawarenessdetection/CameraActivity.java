@@ -6,7 +6,7 @@ import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.driverawarenessdetection.video_processing.awareness_detection.FaceDetectorProcessor;
+import com.example.driverawarenessdetection.video_processing.awareness_detection.AwarenessDetectorProcessor;
 import com.example.driverawarenessdetection.video_processing.camera.CameraSource;
 import com.example.driverawarenessdetection.video_processing.camera.CameraSourcePreview;
 import com.example.driverawarenessdetection.video_processing.camera.GraphicOverlay;
@@ -46,7 +46,7 @@ public class CameraActivity extends AppCompatActivity {
     }
 
     protected void setProcessor() {
-        cameraSource.setMachineLearningFrameProcessor(new FaceDetectorProcessor(this));
+        cameraSource.setMachineLearningFrameProcessor(new AwarenessDetectorProcessor(this));
     }
 
     private void startCameraSource() {

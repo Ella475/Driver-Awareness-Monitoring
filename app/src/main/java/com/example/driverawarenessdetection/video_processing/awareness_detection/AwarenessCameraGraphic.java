@@ -16,7 +16,7 @@ import java.util.Locale;
  * Graphic instance for rendering face position, contour, and landmarks within the associated
  * graphic overlay view.
  */
-public class FaceGraphic extends GraphicOverlay.Graphic {
+public class AwarenessCameraGraphic extends GraphicOverlay.Graphic {
   private static final float FACE_POSITION_RADIUS = 8.0f;
   private static final float ID_TEXT_SIZE = 30.0f;
   private static final float ID_Y_OFFSET = 40.0f;
@@ -45,7 +45,7 @@ public class FaceGraphic extends GraphicOverlay.Graphic {
 
   private volatile Face face;
 
-  FaceGraphic(GraphicOverlay overlay, Face face, boolean isSleepy) {
+  AwarenessCameraGraphic(GraphicOverlay overlay, Face face, boolean isSleepy) {
     super(overlay);
 
     this.isSleepy = isSleepy;

@@ -20,12 +20,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-public class FaceDetectorProcessor extends VisionProcessorBase<List<Face>> {
+public class AwarenessDetectorProcessor extends VisionProcessorBase<List<Face>> {
 
     private final FaceDetector detector;
     private final HashMap<Integer, AwarenessManager> awarenessHashMap = new HashMap<>();
 
-    public FaceDetectorProcessor(Context context) {
+    public AwarenessDetectorProcessor(Context context) {
         super(context);
         FaceDetectorOptions faceDetectorOptions = new FaceDetectorOptions.Builder()
                 .setPerformanceMode(FaceDetectorOptions.PERFORMANCE_MODE_FAST)
@@ -56,7 +56,7 @@ public class FaceDetectorProcessor extends VisionProcessorBase<List<Face>> {
                 awarenessHashMap.put(face.getTrackingId(), manager);
             }
             boolean isAware = manager.isNotAware(face);
-            graphicOverlay.add(new FaceGraphic(graphicOverlay, face, isAware));
+            graphicOverlay.add(new AwarenessCameraGraphic(graphicOverlay, face, isAware));
         }
     }
 
