@@ -19,7 +19,6 @@ public class CameraActivity extends AppCompatActivity {
     private CameraSourcePreview preview;
     private GraphicOverlay graphicOverlay;
     protected CameraSource cameraSource;
-    private static final String TAG = "CameraActivity";
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
