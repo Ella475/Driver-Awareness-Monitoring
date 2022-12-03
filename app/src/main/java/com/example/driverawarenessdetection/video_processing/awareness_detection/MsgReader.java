@@ -28,6 +28,6 @@ public class MsgReader implements TextToSpeech.OnInitListener {
     }
 
     public void speak(String msg) {
-        textToSpeech.speak(msg, TextToSpeech.QUEUE_FLUSH, null, null);
+        textToSpeech.speak(msg, TextToSpeech.QUEUE_ADD, null, null);
     }
 }
