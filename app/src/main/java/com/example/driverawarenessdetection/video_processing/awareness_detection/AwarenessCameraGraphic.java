@@ -3,271 +3,184 @@ package com.example.driverawarenessdetection.video_processing.awareness_detectio
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.PointF;
 
 import com.example.driverawarenessdetection.video_processing.camera.GraphicOverlay;
 import com.google.mlkit.vision.face.Face;
-import com.google.mlkit.vision.face.FaceContour;
 import com.google.mlkit.vision.face.FaceLandmark;
 import com.google.mlkit.vision.face.FaceLandmark.LandmarkType;
-import java.util.Locale;
 
 /**
  * Graphic instance for rendering face position, contour, and landmarks within the associated
  * graphic overlay view.
  */
 public class AwarenessCameraGraphic extends GraphicOverlay.Graphic {
-  private static final float FACE_POSITION_RADIUS = 8.0f;
-  private static final float ID_TEXT_SIZE = 30.0f;
-  private static final float ID_Y_OFFSET = 40.0f;
-  private static final float BOX_STROKE_WIDTH = 5.0f;
-  private static final int NUM_COLORS = 10;
-  private static final int[][] COLORS =
-      new int[][] {
-        // {Text color, background color}
-        {Color.BLACK, Color.WHITE},
-        {Color.WHITE, Color.MAGENTA},
-        {Color.BLACK, Color.LTGRAY},
-        {Color.WHITE, Color.RED},
-        {Color.WHITE, Color.BLUE},
-        {Color.WHITE, Color.DKGRAY},
-        {Color.BLACK, Color.CYAN},
-        {Color.BLACK, Color.YELLOW},
-        {Color.WHITE, Color.BLACK},
-        {Color.BLACK, Color.GREEN}
-      };
+    private static final float FACE_POSITION_RADIUS = 8.0f;
+    private static final float ID_TEXT_SIZE = 30.0f;
+    private static final float ID_Y_OFFSET = 40.0f;
+    private static final float BOX_STROKE_WIDTH = 5.0f;
+    private static final int NUM_COLORS = 10;
+    private static final int[][] COLORS =
+            new int[][]{
+                    // {Text color, background color}
+                    {Color.BLACK, Color.WHITE},
+                    {Color.WHITE, Color.MAGENTA},
+                    {Color.BLACK, Color.LTGRAY},
+                    {Color.WHITE, Color.RED},
+                    {Color.WHITE, Color.BLUE},
+                    {Color.WHITE, Color.DKGRAY},
+                    {Color.BLACK, Color.CYAN},
+                    {Color.BLACK, Color.YELLOW},
+                    {Color.WHITE, Color.BLACK},
+                    {Color.BLACK, Color.GREEN}
+            };
+    private static final float ID_TEXT_SIZE_BIG = 100f;
 
-  private final Paint facePositionPaint;
-  private final Paint facePositionOtherPaint;
-  private final Paint[] idPaints;
-  private final Paint[] boxPaints;
-  private final Paint[] labelPaints;
-  private boolean isSleepy;
+    private final Paint facePositionPaint;
+    private final Paint myPaint;
+    private final Paint[] idPaints;
+    private final Paint[] boxPaints;
+    private final Paint[] labelPaints;
 
-  private volatile Face face;
+    private Boolean isAware;
 
-  AwarenessCameraGraphic(GraphicOverlay overlay, Face face, boolean isSleepy) {
-    super(overlay);
+    private volatile Face face;
 
-    this.isSleepy = isSleepy;
-    this.face = face;
+    AwarenessCameraGraphic(GraphicOverlay overlay, Face face, Boolean isAware) {
+        super(overlay);
 
-    facePositionPaint = new Paint();
-    facePositionPaint.setColor(Color.WHITE);
-    facePositionOtherPaint = new Paint();
-    facePositionOtherPaint.setColor(Color.BLACK);
+        this.isAware = isAware;
+        this.face = face;
 
-    int numColors = COLORS.length;
-    idPaints = new Paint[numColors];
-    boxPaints = new Paint[numColors];
-    labelPaints = new Paint[numColors];
-    for (int i = 0; i < numColors; i++) {
-      idPaints[i] = new Paint();
-      idPaints[i].setColor(COLORS[i][0] /* text color */);
-      idPaints[i].setTextSize(ID_TEXT_SIZE);
+        facePositionPaint = new Paint();
+        facePositionPaint.setColor(Color.WHITE);
 
-      boxPaints[i] = new Paint();
-      boxPaints[i].setColor(COLORS[i][1] /* background color */);
-      boxPaints[i].setStyle(Paint.Style.STROKE);
-      boxPaints[i].setStrokeWidth(BOX_STROKE_WIDTH);
+        myPaint = new Paint();
+        myPaint.setColor(COLORS[7][0] /* text color */);
+        myPaint.setTextSize(ID_TEXT_SIZE_BIG);
+        myPaint.setTextAlign(Paint.Align.CENTER);
 
-      labelPaints[i] = new Paint();
-      labelPaints[i].setColor(COLORS[i][1] /* background color */);
-      labelPaints[i].setStyle(Paint.Style.FILL);
-    }
-  }
+        int numColors = COLORS.length;
+        idPaints = new Paint[numColors];
+        boxPaints = new Paint[numColors];
+        labelPaints = new Paint[numColors];
+        for (int i = 0; i < numColors; i++) {
+            idPaints[i] = new Paint();
+            idPaints[i].setColor(COLORS[i][0] /* text color */);
+            idPaints[i].setTextSize(ID_TEXT_SIZE);
 
-  /** Draws the face annotations for position on the supplied canvas. */
-  @Override
-  public void draw(Canvas canvas) {
-    Face face = this.face;
-    if (face == null) {
+            boxPaints[i] = new Paint();
+            boxPaints[i].setColor(COLORS[i][1] /* background color */);
+            boxPaints[i].setStyle(Paint.Style.STROKE);
+            boxPaints[i].setStrokeWidth(BOX_STROKE_WIDTH);
 
-      return;
+            labelPaints[i] = new Paint();
+            labelPaints[i].setColor(COLORS[i][1] /* background color */);
+            labelPaints[i].setStyle(Paint.Style.FILL);
+        }
     }
 
-    // Draws a circle at the position of the detected face, with the face's track id below.
-    float x = translateX(face.getBoundingBox().centerX());
-    float y = translateY(face.getBoundingBox().centerY());
+    @Override
+    public void draw(Canvas canvas) {
+        float offset = 0;
+        Face face = this.face;
+        if (face == null) {
+            drawText(canvas, "Face Not Found.", offset++);
+            drawText(canvas, "Readjust Your Device!", offset++);
+            return;
+        }
+        drawText(canvas, "Face Found. Ready To Go!", offset++);
+
+        if (isAware)
+            drawText(canvas, "Road Awareness Detected!", offset + 0.5f);
+        else
+            drawText(canvas, "Road Awareness Not Detected!", offset + 0.5f);
+
+        // Draws a circle at the position of the detected face, with the face's track id below.
+        float center_x = translateX(face.getBoundingBox().centerX());
+        float center_y = translateY(face.getBoundingBox().centerY());
 //    canvas.drawCircle(x, y, FACE_POSITION_RADIUS, facePositionPaint);
 
-    // Calculate positions.
-    float left = x - scale(face.getBoundingBox().width() / 2.0f);
-    float top = y - scale(face.getBoundingBox().height() / 2.0f);
-    float right = x + scale(face.getBoundingBox().width() / 2.0f);
-    float bottom = y + scale(face.getBoundingBox().height() / 2.0f);
-    float lineHeight = ID_TEXT_SIZE + BOX_STROKE_WIDTH;
-    float yLabelOffset = (face.getTrackingId() == null) ? 0 : -lineHeight;
+        // Calculate positions.
+        float left = center_x - scale(face.getBoundingBox().width() / 2.0f);
+        float top = center_y - scale(face.getBoundingBox().height() / 2.0f);
+        float right = center_x + scale(face.getBoundingBox().width() / 2.0f);
+        float bottom = center_y + scale(face.getBoundingBox().height() / 2.0f);
 
-    // Decide color based on face ID
-    int colorID = (face.getTrackingId() == null) ? 0 : Math.abs(face.getTrackingId() % NUM_COLORS);
+        // Decide color based on face ID
+        int colorID = (face.getTrackingId() == null) ? 0 : Math.abs(face.getTrackingId() % NUM_COLORS);
+        canvas.drawRect(left, top, right, bottom, boxPaints[colorID]);
 
-    // Calculate width and height of label box
-//    float textWidth = idPaints[colorID].measureText("ID: " + face.getTrackingId());
-//    if (face.getSmilingProbability() != null) {
-//      yLabelOffset -= lineHeight;
-//      textWidth =
-//          Math.max(
-//              textWidth,
-//              idPaints[colorID].measureText(
-//                  String.format(Locale.US, "Smiling: %.2f", face.getSmilingProbability())));
-//    }
-    /// add drowsy
-//    yLabelOffset -= lineHeight;
-//    textWidth =
-//            Math.max(
-//                    textWidth,
-//                    idPaints[colorID].measureText(
-//                            String.format(Locale.US, "Sleepy: %s", isSleepy)));
 
-//    if (face.getLeftEyeOpenProbability() != null) {
-//      yLabelOffset -= lineHeight;
-//      textWidth =
-//          Math.max(
-//              textWidth,
-//              idPaints[colorID].measureText(
-//                  String.format(
-//                      Locale.US, "Left eye open: %.2f", face.getLeftEyeOpenProbability())));
-//    }
-//    if (face.getRightEyeOpenProbability() != null) {
-//      yLabelOffset -= lineHeight;
-//      textWidth =
-//          Math.max(
-//              textWidth,
-//              idPaints[colorID].measureText(
-//                  String.format(
-//                      Locale.US, "Right eye open: %.2f", face.getRightEyeOpenProbability())));
-//    }
+        FaceLandmark leftEye = face.getLandmark(FaceLandmark.LEFT_EYE);
+        if (leftEye != null) {
+            float leftEyeLeft =
+                    translateX(leftEye.getPosition().x) - idPaints[colorID].measureText("Left Eye") / 2.0f;
+            canvas.drawRect(
+                    leftEyeLeft - BOX_STROKE_WIDTH,
+                    translateY(leftEye.getPosition().y) + ID_Y_OFFSET - ID_TEXT_SIZE,
+                    leftEyeLeft + idPaints[colorID].measureText("Left Eye") + BOX_STROKE_WIDTH,
+                    translateY(leftEye.getPosition().y) + ID_Y_OFFSET + BOX_STROKE_WIDTH,
+                    labelPaints[colorID]);
+            canvas.drawText(
+                    "Left Eye",
+                    leftEyeLeft,
+                    translateY(leftEye.getPosition().y) + ID_Y_OFFSET,
+                    idPaints[colorID]);
+        }
 
-//    yLabelOffset = yLabelOffset - 3 * lineHeight;
-//    textWidth =
-//        Math.max(
-//            textWidth,
-//            idPaints[colorID].measureText(
-//                String.format(Locale.US, "EulerX: %.2f", face.getHeadEulerAngleX())));
-//    textWidth =
-//        Math.max(
-//            textWidth,
-//            idPaints[colorID].measureText(
-//                String.format(Locale.US, "EulerY: %.2f", face.getHeadEulerAngleY())));
-//    textWidth =
-//        Math.max(
-//            textWidth,
-//            idPaints[colorID].measureText(
-//                String.format(Locale.US, "EulerZ: %.2f", face.getHeadEulerAngleZ())));
-    // Draw labels
-//    canvas.drawRect(
-//        left - BOX_STROKE_WIDTH,
-//        top + yLabelOffset,
-//        left + textWidth + (2 * BOX_STROKE_WIDTH),
-//        top,
-//        labelPaints[colorID]);
-//    yLabelOffset += ID_TEXT_SIZE;
-    canvas.drawRect(left, top, right, bottom, boxPaints[colorID]);
-//    if (face.getTrackingId() != null) {
-//      canvas.drawText("ID: " + face.getTrackingId(), left, top + yLabelOffset, idPaints[colorID]);
-//      yLabelOffset += lineHeight;
-//    }
+        FaceLandmark rightEye = face.getLandmark(FaceLandmark.RIGHT_EYE);
+        if (rightEye != null) {
+            float rightEyeLeft =
+                    translateX(rightEye.getPosition().x) - idPaints[colorID].measureText("Right Eye") / 2.0f;
+            canvas.drawRect(
+                    rightEyeLeft - BOX_STROKE_WIDTH,
+                    translateY(rightEye.getPosition().y) + ID_Y_OFFSET - ID_TEXT_SIZE,
+                    rightEyeLeft + idPaints[colorID].measureText("Right Eye") + BOX_STROKE_WIDTH,
+                    translateY(rightEye.getPosition().y) + ID_Y_OFFSET + BOX_STROKE_WIDTH,
+                    labelPaints[colorID]);
+            canvas.drawText(
+                    "Right Eye",
+                    rightEyeLeft,
+                    translateY(rightEye.getPosition().y) + ID_Y_OFFSET,
+                    idPaints[colorID]);
+        }
 
-//     Draws all face contours.
-//    for (FaceContour contour : face.getAllContours()) {
-//      for (PointF point : contour.getPoints()) {
-//        canvas.drawCircle(
-//            translateX(point.x), translateY(point.y), 20f, facePositionOtherPaint);
-//      }
-//    }
+        float l =
+                translateX(canvas.getWidth() / 2.0f) - idPaints[colorID].measureText("Left Eye") / 2.0f;
+        canvas.drawRect(
+                l - BOX_STROKE_WIDTH,
+                translateY(canvas.getHeight() / 2.0f) + ID_Y_OFFSET - ID_TEXT_SIZE,
+                l + idPaints[colorID].measureText("Left Eye") + BOX_STROKE_WIDTH,
+                translateY(canvas.getHeight() / 2.0f) + ID_Y_OFFSET + BOX_STROKE_WIDTH,
+                labelPaints[colorID]);
+        canvas.drawText(
+                "Left Eye",
+                l,
+                translateY(canvas.getHeight() / 2.0f) + ID_Y_OFFSET,
+                idPaints[colorID]);
 
-    // Draws smiling and left/right eye open probabilities.
-//    if (face.getSmilingProbability() != null) {
-//      canvas.drawText(
-//          "Smiling: " + String.format(Locale.US, "%.2f", face.getSmilingProbability()),
-//          left,
-//          top + yLabelOffset,
-//          idPaints[colorID]);
-//      yLabelOffset += lineHeight;
-//    }
 
-//    canvas.drawText(
-//            "Drowsy: " + String.format(Locale.US, "%s", isSleepy),
-//            left,
-//            top + yLabelOffset,
-//            idPaints[colorID]);
-//    yLabelOffset += lineHeight;
-
-    FaceLandmark leftEye = face.getLandmark(FaceLandmark.LEFT_EYE);
-//    if (face.getLeftEyeOpenProbability() != null) {
-//      canvas.drawText(
-//          "Left eye open: " + String.format(Locale.US, "%.2f", face.getLeftEyeOpenProbability()),
-//          left,
-//          top + yLabelOffset,
-//          idPaints[colorID]);
-//      yLabelOffset += lineHeight;
-//    }
-    if (leftEye != null) {
-      float leftEyeLeft =
-          translateX(leftEye.getPosition().x) - idPaints[colorID].measureText("Left Eye") / 2.0f;
-      canvas.drawRect(
-          leftEyeLeft - BOX_STROKE_WIDTH,
-          translateY(leftEye.getPosition().y) + ID_Y_OFFSET - ID_TEXT_SIZE,
-          leftEyeLeft + idPaints[colorID].measureText("Left Eye") + BOX_STROKE_WIDTH,
-          translateY(leftEye.getPosition().y) + ID_Y_OFFSET + BOX_STROKE_WIDTH,
-          labelPaints[colorID]);
-      canvas.drawText(
-          "Left Eye",
-          leftEyeLeft,
-          translateY(leftEye.getPosition().y) + ID_Y_OFFSET,
-          idPaints[colorID]);
+        // Draw facial landmarks
+        drawFaceLandmark(canvas, FaceLandmark.LEFT_EYE);
+        drawFaceLandmark(canvas, FaceLandmark.RIGHT_EYE);
+        drawFaceLandmark(canvas, FaceLandmark.LEFT_CHEEK);
+        drawFaceLandmark(canvas, FaceLandmark.RIGHT_CHEEK);
     }
 
-    FaceLandmark rightEye = face.getLandmark(FaceLandmark.RIGHT_EYE);
-//    if (face.getRightEyeOpenProbability() != null) {
-//      canvas.drawText(
-//          "Right eye open: " + String.format(Locale.US, "%.2f", face.getRightEyeOpenProbability()),
-//          left,
-//          top + yLabelOffset,
-//          idPaints[colorID]);
-//      yLabelOffset += lineHeight;
-//    }
-    if (rightEye != null) {
-      float rightEyeLeft =
-          translateX(rightEye.getPosition().x) - idPaints[colorID].measureText("Right Eye") / 2.0f;
-      canvas.drawRect(
-          rightEyeLeft - BOX_STROKE_WIDTH,
-          translateY(rightEye.getPosition().y) + ID_Y_OFFSET - ID_TEXT_SIZE,
-          rightEyeLeft + idPaints[colorID].measureText("Right Eye") + BOX_STROKE_WIDTH,
-          translateY(rightEye.getPosition().y) + ID_Y_OFFSET + BOX_STROKE_WIDTH,
-          labelPaints[colorID]);
-      canvas.drawText(
-          "Right Eye",
-          rightEyeLeft,
-          translateY(rightEye.getPosition().y) + ID_Y_OFFSET,
-          idPaints[colorID]);
+    private void drawFaceLandmark(Canvas canvas, @LandmarkType int landmarkType) {
+        FaceLandmark faceLandmark = face.getLandmark(landmarkType);
+        if (faceLandmark != null) {
+            canvas.drawCircle(
+                    translateX(faceLandmark.getPosition().x),
+                    translateY(faceLandmark.getPosition().y),
+                    FACE_POSITION_RADIUS,
+                    facePositionPaint);
+        }
     }
 
-//    canvas.drawText(
-//        "EulerX: " + face.getHeadEulerAngleX(), left, top + yLabelOffset, idPaints[colorID]);
-//    yLabelOffset += lineHeight;
-//    canvas.drawText(
-//        "EulerY: " + face.getHeadEulerAngleY(), left, top + yLabelOffset, idPaints[colorID]);
-//    yLabelOffset += lineHeight;
-//    canvas.drawText(
-//        "EulerZ: " + face.getHeadEulerAngleZ(), left, top + yLabelOffset, idPaints[colorID]);
-
-    // Draw facial landmarks
-    drawFaceLandmark(canvas, FaceLandmark.LEFT_EYE);
-    drawFaceLandmark(canvas, FaceLandmark.RIGHT_EYE);
-    drawFaceLandmark(canvas, FaceLandmark.LEFT_CHEEK);
-    drawFaceLandmark(canvas, FaceLandmark.RIGHT_CHEEK);
-  }
-
-  private void drawFaceLandmark(Canvas canvas, @LandmarkType int landmarkType) {
-    FaceLandmark faceLandmark = face.getLandmark(landmarkType);
-    if (faceLandmark != null) {
-      canvas.drawCircle(
-          translateX(faceLandmark.getPosition().x),
-          translateY(faceLandmark.getPosition().y),
-          FACE_POSITION_RADIUS,
-          facePositionPaint);
+    private void drawText(Canvas canvas, String text, float offset) {
+        int height = canvas.getHeight() / 2;
+        int width = canvas.getWidth() / 2;
+        canvas.drawText(text, 0, text.length(), width, height - 700 + offset * 100, myPaint);
     }
-  }
 }

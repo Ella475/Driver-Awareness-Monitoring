@@ -55,8 +55,11 @@ public class AwarenessDetectorProcessor extends VisionProcessorBase<List<Face>> 
                 manager = new AwarenessManager();
                 awarenessHashMap.put(face.getTrackingId(), manager);
             }
-            boolean isAware = manager.isNotAware(face);
+            boolean isAware = !manager.isNotAware(face);
             graphicOverlay.add(new AwarenessCameraGraphic(graphicOverlay, face, isAware));
+        }
+        if (faces.isEmpty()) {
+            graphicOverlay.add(new AwarenessCameraGraphic(graphicOverlay, null, null));
         }
     }
 
