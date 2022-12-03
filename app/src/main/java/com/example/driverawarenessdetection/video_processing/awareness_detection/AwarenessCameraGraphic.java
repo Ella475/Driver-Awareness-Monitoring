@@ -9,10 +9,7 @@ import com.google.mlkit.vision.face.Face;
 import com.google.mlkit.vision.face.FaceLandmark;
 import com.google.mlkit.vision.face.FaceLandmark.LandmarkType;
 
-/**
- * Graphic instance for rendering face position, contour, and landmarks within the associated
- * graphic overlay view.
- */
+
 public class AwarenessCameraGraphic extends GraphicOverlay.Graphic {
     private static final float FACE_POSITION_RADIUS = 8.0f;
     private static final float BOX_STROKE_WIDTH = 5.0f;
@@ -24,7 +21,6 @@ public class AwarenessCameraGraphic extends GraphicOverlay.Graphic {
     private final Paint bigPaint;
 
     private Boolean isAware;
-
     private volatile Face face;
 
     AwarenessCameraGraphic(GraphicOverlay overlay, Face face, Boolean isAware) {
