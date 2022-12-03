@@ -2,11 +2,12 @@ package com.example.driverawarenessdetection;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.Log;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.driverawarenessdetection.video_processing.awareness_detection.AwarenessDetectorProcessor;
+import com.example.driverawarenessdetection.video_processing.awareness_detection.MsgReader;
 import com.example.driverawarenessdetection.video_processing.camera.CameraSource;
 import com.example.driverawarenessdetection.video_processing.camera.CameraSourcePreview;
 import com.example.driverawarenessdetection.video_processing.camera.GraphicOverlay;
@@ -19,6 +20,7 @@ public class CameraActivity extends AppCompatActivity {
     private CameraSourcePreview preview;
     private GraphicOverlay graphicOverlay;
     protected CameraSource cameraSource;
+    public MsgReader reader;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +29,7 @@ public class CameraActivity extends AppCompatActivity {
         preview = findViewById(R.id.camera_source_preview);
         graphicOverlay = findViewById(R.id.graphic_overlay);
 
+        initCalibration();
         startCamera();
     }
 
@@ -68,7 +71,17 @@ public class CameraActivity extends AppCompatActivity {
         cameraSource = null;
     }
 
+    public void initCalibration() {
+        Button calibrationBtn = findViewById(R.id.calibrationBtn);
+        reader = new MsgReader(CameraActivity.this);
+        calibrationBtn.setOnClickListener(v -> {
+            reader.speak("Starting calibration!");
+            reader.speak("Please look at the road for 5 seconds!");
+        });
+    }
+
     public void finishActivity() {
+        reader.stop();
         stopCamera();
         finish();
     }

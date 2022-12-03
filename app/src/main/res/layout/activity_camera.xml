@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -12,14 +13,22 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" >
 
-    <com.example.driverawarenessdetection.video_processing.camera.GraphicOverlay
-        android:id="@+id/graphic_overlay"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        <com.example.driverawarenessdetection.video_processing.camera.GraphicOverlay
+            android:id="@+id/graphic_overlay"
+            android:layout_width="0dp"
+            android:layout_height="0dp" />
+    </com.example.driverawarenessdetection.video_processing.camera.CameraSourcePreview>
+
+    <Button
+        android:id="@+id/calibrationBtn"
+        android:layout_width="149dp"
+        android:layout_height="68dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/button_bg"
+        android:text="calibrate"
         app:layout_constraintBottom_toBottomOf="@+id/camera_source_preview"
-        app:layout_constraintEnd_toEndOf="@+id/camera_source_preview"
-        app:layout_constraintStart_toStartOf="@+id/camera_source_preview"
-        app:layout_constraintTop_toTopOf="@+id/camera_source_preview" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
