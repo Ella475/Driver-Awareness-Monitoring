@@ -3,6 +3,7 @@ package com.example.driverawarenessdetection.video_processing.awareness_detectio
 import com.google.mlkit.vision.face.Face;
 
 public class AttentionDetector extends AwarenessDetector {
+    public static CalibrationData calibrationData = new CalibrationData();
     float X_ANGLE_MAX_DEVIATION;
     float Y_ANGLE_MAX_DEVIATION;
     float Z_ANGLE_MAX_DEVIATION;
@@ -16,8 +17,8 @@ public class AttentionDetector extends AwarenessDetector {
 
     @Override
     protected boolean isNotAwareInFrame(Face face) {
-        float x_angle = face.getHeadEulerAngleX();
-        float y_angle = face.getHeadEulerAngleY();
+        float x_angle = face.getHeadEulerAngleX() - calibrationData.getCalibratedXAngle();
+        float y_angle = face.getHeadEulerAngleY() - calibrationData.getCalibratedYAngle();
         float z_angle = face.getHeadEulerAngleZ();
 
         return (Math.abs(x_angle) > X_ANGLE_MAX_DEVIATION) ||
@@ -26,9 +27,9 @@ public class AttentionDetector extends AwarenessDetector {
     }
 
     @Override
-    public float getAwareProbability(Face face) {
-        float x_angle = face.getHeadEulerAngleX();
-        float y_angle = face.getHeadEulerAngleY();
+    protected float getAwareProbabilityInFrame(Face face) {
+        float x_angle = face.getHeadEulerAngleX() - calibrationData.getCalibratedXAngle();
+        float y_angle = face.getHeadEulerAngleY() - calibrationData.getCalibratedYAngle();
 
         float xDeviation = Math.abs(Math.abs(x_angle) - X_ANGLE_MAX_DEVIATION) / X_ANGLE_MAX_DEVIATION;
         float yDeviation = Math.abs(Math.abs(y_angle) - Y_ANGLE_MAX_DEVIATION) / Y_ANGLE_MAX_DEVIATION;

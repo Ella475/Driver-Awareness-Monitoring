@@ -3,6 +3,7 @@ package com.example.driverawarenessdetection.video_processing.awareness_detectio
 import com.google.mlkit.vision.face.Face;
 
 public interface AwarenessDetectorInterface {
-    boolean isNotAware(Face face);
-    float getAwareProbability(Face face);
+    void processFace(Face face);
+    boolean isNotAware();
+    float getAwareProbability();
 }

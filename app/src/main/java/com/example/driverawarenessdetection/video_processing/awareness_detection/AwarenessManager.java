@@ -14,18 +14,24 @@ public class AwarenessManager implements AwarenessDetectorInterface{
 
     AwarenessManager() {
         sleep_detector = new SleepDetector(10, 0.5f);
-        attention_detector = new AttentionDetector(10, 20, 20, 50);
+        attention_detector = new AttentionDetector(20, 20, 20, 50);
     }
 
     @Override
-    public boolean isNotAware(Face face) {
-        return sleep_detector.isNotAware(face) || attention_detector.isNotAware(face);
+    public void processFace(Face face) {
+        sleep_detector.processFace(face);
+        attention_detector.processFace(face);
     }
 
     @Override
-    public float getAwareProbability(Face face) {
-        float sleepProbability = sleep_detector.getAwareProbability(face);
-        float attentionProbability = attention_detector.getAwareProbability(face);
+    public boolean isNotAware() {
+        return sleep_detector.isNotAware() || attention_detector.isNotAware();
+    }
+
+    @Override
+    public float getAwareProbability() {
+        float sleepProbability = sleep_detector.getAwareProbability();
+        float attentionProbability = attention_detector.getAwareProbability();
         return sleepProbability * attentionProbability;
     }
 }

@@ -11,18 +11,20 @@ import java.util.List;
 public class DetectorOnSuccess {
     private final HashMap<Integer, AwarenessManager> awarenessHashMap = new HashMap<>();
 
-    protected void apply(@NonNull List<Face> faces, @NonNull GraphicOverlay graphicOverlay) {
+    protected void apply(@NonNull List<Face> faces, GraphicOverlay graphicOverlay) {
         for (Face face : faces) {
             AwarenessManager manager = awarenessHashMap.get(face.getTrackingId());
             if (manager == null) {
                 manager = new AwarenessManager();
                 awarenessHashMap.put(face.getTrackingId(), manager);
             }
-            boolean isAware = !manager.isNotAware(face);
-            graphicOverlay.add(new AwarenessCameraGraphic(graphicOverlay, face, isAware));
-            face.getHeadEulerAngleX();
+            manager.processFace(face);
+            if (graphicOverlay != null) {
+                boolean isAware = !manager.isNotAware();
+                graphicOverlay.add(new AwarenessCameraGraphic(graphicOverlay, face, isAware));
+            }
         }
-        if (faces.isEmpty()) {
+        if (faces.isEmpty() && graphicOverlay != null) {
             graphicOverlay.add(new AwarenessCameraGraphic(graphicOverlay, null, null));
         }
     }

@@ -19,6 +19,7 @@ public class CameraActivity extends AppCompatActivity {
 
     private CameraSourcePreview preview;
     private GraphicOverlay graphicOverlay;
+    private AwarenessDetectorProcessor awarenessProcessor;
     protected CameraSource cameraSource;
     public MsgReader reader;
 
@@ -29,6 +30,7 @@ public class CameraActivity extends AppCompatActivity {
         preview = findViewById(R.id.camera_source_preview);
         graphicOverlay = findViewById(R.id.graphic_overlay);
 
+        awarenessProcessor = new AwarenessDetectorProcessor(this);
         initCalibration();
         startCamera();
     }
@@ -49,7 +51,7 @@ public class CameraActivity extends AppCompatActivity {
     }
 
     protected void setProcessor() {
-        cameraSource.setMachineLearningFrameProcessor(new AwarenessDetectorProcessor(this));
+        cameraSource.setMachineLearningFrameProcessor(awarenessProcessor);
     }
 
     private void startCameraSource() {
@@ -77,7 +79,7 @@ public class CameraActivity extends AppCompatActivity {
         calibrationBtn.setOnClickListener(v -> {
             reader.speak("Starting calibration!");
             reader.speak("Please look at the road for 5 seconds!");
-
+            // TODO: save calibration data
         });
     }
 

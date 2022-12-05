@@ -24,6 +24,7 @@ public class AwarenessDetectorProcessor extends VisionProcessorBase<List<Face>> 
 
     private final FaceDetector detector;
     private final DetectorOnSuccess onSuccessDetector = new DetectorOnSuccess();
+    private boolean updateLayout = true;
 
     public AwarenessDetectorProcessor(Context context) {
         super(context);
@@ -49,7 +50,7 @@ public class AwarenessDetectorProcessor extends VisionProcessorBase<List<Face>> 
 
     @Override
     protected void onSuccess(@NonNull List<Face> faces, @NonNull GraphicOverlay graphicOverlay) {
-        onSuccessDetector.apply(faces, graphicOverlay);
+            onSuccessDetector.apply(faces, updateLayout ? graphicOverlay : null);
     }
 
     @Override
