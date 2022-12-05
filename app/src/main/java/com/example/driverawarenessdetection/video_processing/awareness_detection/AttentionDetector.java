@@ -24,4 +24,21 @@ public class AttentionDetector extends AwarenessDetector {
                 (Math.abs(y_angle) > Y_ANGLE_MAX_DEVIATION) ||
                 (Math.abs(z_angle) > Z_ANGLE_MAX_DEVIATION);
     }
+
+    @Override
+    public float getAwareProbability(Face face) {
+        float x_angle = face.getHeadEulerAngleX();
+        float y_angle = face.getHeadEulerAngleY();
+
+        float xDeviation = Math.abs(Math.abs(x_angle) - X_ANGLE_MAX_DEVIATION) / X_ANGLE_MAX_DEVIATION;
+        float yDeviation = Math.abs(Math.abs(y_angle) - Y_ANGLE_MAX_DEVIATION) / Y_ANGLE_MAX_DEVIATION;
+
+        float xFactor = (Math.abs(x_angle) <= X_ANGLE_MAX_DEVIATION) ? 5 : 10;
+        float yFactor = (Math.abs(y_angle) <= Y_ANGLE_MAX_DEVIATION) ? 5 : 10;
+
+        int awarePercentage = (int) (100 - xFactor * Math.pow(xDeviation, 2) -
+                yFactor * Math.pow(yDeviation, 2));
+
+        return Math.max(awarePercentage / 100.0f, 0.0f);
+    }
 }

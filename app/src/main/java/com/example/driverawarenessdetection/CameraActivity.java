@@ -77,6 +77,7 @@ public class CameraActivity extends AppCompatActivity {
         calibrationBtn.setOnClickListener(v -> {
             reader.speak("Starting calibration!");
             reader.speak("Please look at the road for 5 seconds!");
+
         });
     }
 

@@ -12,12 +12,19 @@ public class SleepDetector extends AwarenessDetector {
 
     @Override
     protected boolean isNotAwareInFrame(Face face) {
+        return getAwareProbability(face) < SLEEP_THRESHOLD;
+    }
+
+    @Override
+    public float getAwareProbability(Face face) {
         if (face.getLeftEyeOpenProbability() == null
                 || face.getRightEyeOpenProbability() == null) {
-            return false;
+            return 1;
         }
 
-        return face.getLeftEyeOpenProbability() < SLEEP_THRESHOLD
-                && face.getRightEyeOpenProbability() < SLEEP_THRESHOLD;
+        float eyesOpenProbability = (face.getLeftEyeOpenProbability() +
+                face.getRightEyeOpenProbability()) / 2.0f;
+
+        return (eyesOpenProbability > SLEEP_THRESHOLD) ? 1 : eyesOpenProbability;
     }
 }

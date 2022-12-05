@@ -21,4 +21,11 @@ public class AwarenessManager implements AwarenessDetectorInterface{
     public boolean isNotAware(Face face) {
         return sleep_detector.isNotAware(face) || attention_detector.isNotAware(face);
     }
+
+    @Override
+    public float getAwareProbability(Face face) {
+        float sleepProbability = sleep_detector.getAwareProbability(face);
+        float attentionProbability = attention_detector.getAwareProbability(face);
+        return sleepProbability * attentionProbability;
+    }
 }

@@ -23,7 +23,7 @@ import java.util.Locale;
 public class AwarenessDetectorProcessor extends VisionProcessorBase<List<Face>> {
 
     private final FaceDetector detector;
-    private final HashMap<Integer, AwarenessManager> awarenessHashMap = new HashMap<>();
+    private final DetectorOnSuccess onSuccessDetector = new DetectorOnSuccess();
 
     public AwarenessDetectorProcessor(Context context) {
         super(context);
@@ -49,18 +49,7 @@ public class AwarenessDetectorProcessor extends VisionProcessorBase<List<Face>> 
 
     @Override
     protected void onSuccess(@NonNull List<Face> faces, @NonNull GraphicOverlay graphicOverlay) {
-        for (Face face : faces) {
-            AwarenessManager manager = awarenessHashMap.get(face.getTrackingId());
-            if (manager == null) {
-                manager = new AwarenessManager();
-                awarenessHashMap.put(face.getTrackingId(), manager);
-            }
-            boolean isAware = !manager.isNotAware(face);
-            graphicOverlay.add(new AwarenessCameraGraphic(graphicOverlay, face, isAware));
-        }
-        if (faces.isEmpty()) {
-            graphicOverlay.add(new AwarenessCameraGraphic(graphicOverlay, null, null));
-        }
+        onSuccessDetector.apply(faces, graphicOverlay);
     }
 
     @Override
