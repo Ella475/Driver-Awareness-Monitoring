@@ -1,4 +1,4 @@
-package com.example.driverawarenessdetection.video_processing.awareness_detection;
+package com.example.driverawarenessdetection.video_processing.awareness_detection.utils;
 
 public class HistoryObject {
     private boolean isNotAware;

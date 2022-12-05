@@ -1,5 +1,6 @@
 package com.example.driverawarenessdetection.video_processing.awareness_detection;
 
+import com.example.driverawarenessdetection.video_processing.awareness_detection.utils.CalibrationData;
 import com.google.mlkit.vision.face.Face;
 
 public class AttentionDetector extends AwarenessDetector {

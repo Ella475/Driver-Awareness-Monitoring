@@ -7,7 +7,7 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.driverawarenessdetection.video_processing.awareness_detection.AwarenessDetectorProcessor;
-import com.example.driverawarenessdetection.video_processing.awareness_detection.MsgReader;
+import com.example.driverawarenessdetection.video_processing.awareness_detection.utils.MsgReader;
 import com.example.driverawarenessdetection.video_processing.camera.CameraSource;
 import com.example.driverawarenessdetection.video_processing.camera.CameraSourcePreview;
 import com.example.driverawarenessdetection.video_processing.camera.GraphicOverlay;

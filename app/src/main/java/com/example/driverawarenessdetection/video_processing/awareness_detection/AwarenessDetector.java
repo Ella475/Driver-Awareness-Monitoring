@@ -2,6 +2,7 @@ package com.example.driverawarenessdetection.video_processing.awareness_detectio
 
 import android.os.Build;
 
+import com.example.driverawarenessdetection.video_processing.awareness_detection.utils.HistoryObject;
 import com.google.mlkit.vision.face.Face;
 
 import java.util.ArrayDeque;
