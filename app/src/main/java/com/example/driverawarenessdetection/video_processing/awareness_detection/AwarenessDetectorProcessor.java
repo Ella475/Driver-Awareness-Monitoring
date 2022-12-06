@@ -23,7 +23,7 @@ import java.util.Locale;
 public class AwarenessDetectorProcessor extends VisionProcessorBase<List<Face>> {
 
     private final FaceDetector detector;
-    private final DetectorOnSuccess onSuccessDetector = new DetectorOnSuccess();
+    public final DetectorOnSuccess onSuccessDetector = new DetectorOnSuccess();
     private boolean updateLayout = true;
 
     public AwarenessDetectorProcessor(Context context) {
@@ -35,6 +35,10 @@ public class AwarenessDetectorProcessor extends VisionProcessorBase<List<Face>> 
                 .enableTracking()
                 .build();
         detector = FaceDetection.getClient(faceDetectorOptions);
+    }
+
+    public void turnOffLayoutUpdate() {
+        updateLayout = false;
     }
 
     @Override

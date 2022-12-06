@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class DetectorOnSuccess {
-    private final HashMap<Integer, AwarenessManager> awarenessHashMap = new HashMap<>();
+    public final HashMap<Integer, AwarenessManager> awarenessHashMap = new HashMap<>();
 
     protected void apply(@NonNull List<Face> faces, GraphicOverlay graphicOverlay) {
         for (Face face : faces) {

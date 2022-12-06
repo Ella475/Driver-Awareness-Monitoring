@@ -13,6 +13,7 @@ import com.example.driverawarenessdetection.video_processing.camera.CameraSource
 import com.example.driverawarenessdetection.video_processing.camera.GraphicOverlay;
 
 import java.io.IOException;
+import java.util.Objects;
 
 
 public class CameraActivity extends AppCompatActivity {
@@ -78,8 +79,10 @@ public class CameraActivity extends AppCompatActivity {
         reader = new MsgReader(CameraActivity.this);
         calibrationBtn.setOnClickListener(v -> {
             reader.speak("Starting calibration!");
-            reader.speak("Please look at the road for 5 seconds!");
-            // TODO: save calibration data
+            reader.speak("Please look at the road for a few seconds!");
+            reader.speak("5, 4, 3, 2, 1");
+            Objects.requireNonNull(awarenessProcessor.onSuccessDetector.awarenessHashMap.get(0)).onCalibration();
+            reader.speak("Calibration finished!");
         });
     }
 
