@@ -9,6 +9,7 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="hello">HELLO</string>
+    <string name="calibrate">calibrate</string>
     <string name="remind_to_take_a_break">Remind me to take a break</string>
     <string name="key_upload_quality">key_upload_quality</string>
     <string name="remind_me">after driving for a certain time</string>

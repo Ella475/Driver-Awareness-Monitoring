@@ -1,13 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
+        <com.example.driverawarenessdetection.video_processing.camera.CameraSourcePreview
+            android:id="@+id/camera_source_preview"
+            android:layout_width="1dp"
+            android:layout_height="1dp" />
+
+        <com.example.driverawarenessdetection.video_processing.camera.GraphicOverlay
+            android:id="@+id/graphic_overlay"
+            android:layout_width="1dp"
+            android:layout_height="1dp" />
 
         <RelativeLayout
             android:layout_width="353dp"
@@ -33,19 +43,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
                 android:fontFamily="sans-serif-black"
                 android:letterSpacing="0.06"
                 android:text="ROAD AWARENESS PERCENTAGE"
-                android:layout_marginBottom="10dp"
                 android:textColor="#003cff"
                 android:textSize="20dp" />
 
             <RelativeLayout
                 android:layout_width="300dp"
                 android:layout_height="300dp"
-                android:background="@drawable/circle"
+                android:layout_gravity="center"
                 android:layout_marginTop="20dp"
-                android:layout_gravity="center">
+                android:background="@drawable/circle">
 
 
                 <com.mikhaellopez.circularprogressbar.CircularProgressBar
@@ -79,32 +89,32 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="80dp">
+            android:layout_marginTop="80dp"
+            android:orientation="horizontal">
 
             <RelativeLayout
                 android:layout_width="160dp"
                 android:layout_height="160dp"
-                android:background="@drawable/ac_bg"
-                android:layout_marginLeft="30dp">
+                android:layout_marginLeft="30dp"
+                android:background="@drawable/ac_bg">
 
                 <ImageView
                     android:id="@+id/i2"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
-                    android:src="@drawable/fatigue"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="30dp"/>
+                    android:layout_marginTop="30dp"
+                    android:src="@drawable/fatigue" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="FATIGUE STATE"
-                    android:textColor="#fff"
-                    android:textStyle="bold"
                     android:layout_below="@id/i2"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="10dp"/>
+                    android:layout_marginTop="10dp"
+                    android:text="FATIGUE STATE"
+                    android:textColor="#fff"
+                    android:textStyle="bold" />
 
             </RelativeLayout>
 
@@ -139,7 +149,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"/>
+            android:orientation="vertical" />
 
     </LinearLayout>
 
