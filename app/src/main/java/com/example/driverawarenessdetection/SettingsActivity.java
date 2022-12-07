@@ -5,6 +5,8 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.driverawarenessdetection.settings.SettingsFragment;
+
 public class SettingsActivity extends AppCompatActivity {
 
     @Override
