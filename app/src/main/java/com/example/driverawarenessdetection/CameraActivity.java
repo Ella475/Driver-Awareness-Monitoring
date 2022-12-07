@@ -7,6 +7,7 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.driverawarenessdetection.video_processing.awareness_detection.AwarenessDetectorProcessor;
+import com.example.driverawarenessdetection.video_processing.awareness_detection.utils.CameraSourceWrapper;
 import com.example.driverawarenessdetection.video_processing.awareness_detection.utils.MsgReader;
 import com.example.driverawarenessdetection.video_processing.camera.CameraSource;
 import com.example.driverawarenessdetection.video_processing.camera.CameraSourcePreview;
@@ -18,60 +19,19 @@ import java.util.Objects;
 
 public class CameraActivity extends AppCompatActivity {
 
-    private CameraSourcePreview preview;
-    private GraphicOverlay graphicOverlay;
-    private AwarenessDetectorProcessor awarenessProcessor;
-    protected CameraSource cameraSource;
-    public MsgReader reader;
+    private MsgReader reader;
+    private CameraSourceWrapper csw;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
 
-        preview = findViewById(R.id.camera_source_preview);
-        graphicOverlay = findViewById(R.id.graphic_overlay);
+        CameraSourcePreview preview = findViewById(R.id.camera_source_preview);
+        GraphicOverlay graphicOverlay = findViewById(R.id.graphic_overlay);
 
-        awarenessProcessor = new AwarenessDetectorProcessor(this);
+        csw = new CameraSourceWrapper(preview, graphicOverlay, this);
+        csw.start();
         initCalibration();
-        startCamera();
-    }
-
-    @SuppressLint("QueryPermissionsNeeded")
-    private void startCamera() {
-        initSource();
-        startCameraSource();
-    }
-
-    private void initSource() {
-        if (cameraSource == null) {
-            cameraSource = new CameraSource(this, graphicOverlay);
-            cameraSource.setFacing(CameraSource.CAMERA_FACING_FRONT);
-            cameraSource.setStartingDegrees(180);
-        }
-        setProcessor();
-    }
-
-    protected void setProcessor() {
-        cameraSource.setMachineLearningFrameProcessor(awarenessProcessor);
-    }
-
-    private void startCameraSource() {
-        if (cameraSource != null && preview != null && graphicOverlay != null) {
-            try {
-                preview.start(cameraSource, graphicOverlay);
-            } catch (IOException e) {
-                cameraSource.release();
-                cameraSource = null;
-                finish();
-            }
-        }
-    }
-
-    public void stopCamera() {
-        preview.stop();
-        preview.release();
-        preview = null;
-        cameraSource = null;
     }
 
     public void initCalibration() {
@@ -81,14 +41,14 @@ public class CameraActivity extends AppCompatActivity {
             reader.speak("Starting calibration!");
             reader.speak("Please look at the road for a few seconds!");
             reader.speak("5, 4, 3, 2, 1");
-            Objects.requireNonNull(awarenessProcessor.onSuccessDetector.awarenessHashMap.get(0)).onCalibration();
+            Objects.requireNonNull(csw.awarenessProcessor.onSuccessDetector.awarenessHashMap.get(0)).onCalibration();
             reader.speak("Calibration finished!");
         });
     }
 
     public void finishActivity() {
         reader.stop();
-        stopCamera();
+        csw.stop();
         finish();
     }
 

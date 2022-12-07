@@ -3,7 +3,7 @@ package com.example.driverawarenessdetection.video_processing.awareness_detectio
 import com.google.mlkit.vision.face.Face;
 
 public class SleepDetector extends AwarenessDetector {
-    private float SLEEP_THRESHOLD;
+    private final float SLEEP_THRESHOLD;
 
     SleepDetector(int max_history, float sleep_threshold) {
         super(max_history);

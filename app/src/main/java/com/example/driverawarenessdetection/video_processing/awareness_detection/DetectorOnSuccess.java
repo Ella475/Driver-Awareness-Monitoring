@@ -12,20 +12,21 @@ public class DetectorOnSuccess {
     public final HashMap<Integer, AwarenessManager> awarenessHashMap = new HashMap<>();
 
     protected void apply(@NonNull List<Face> faces, GraphicOverlay graphicOverlay) {
-        for (Face face : faces) {
-            AwarenessManager manager = awarenessHashMap.get(face.getTrackingId());
-            if (manager == null) {
-                manager = new AwarenessManager();
-                awarenessHashMap.put(face.getTrackingId(), manager);
-            }
-            manager.processFace(face);
-            if (graphicOverlay != null) {
-                boolean isAware = !manager.isNotAware();
-                graphicOverlay.add(new AwarenessCameraGraphic(graphicOverlay, face, isAware));
-            }
+        if (faces.isEmpty()) {
+            if (graphicOverlay != null)
+                graphicOverlay.add(new AwarenessCameraGraphic(graphicOverlay, null, null));
+            return;
         }
-        if (faces.isEmpty() && graphicOverlay != null) {
-            graphicOverlay.add(new AwarenessCameraGraphic(graphicOverlay, null, null));
+        Face face = faces.get(0);
+        AwarenessManager manager = awarenessHashMap.get(face.getTrackingId());
+        if (manager == null) {
+            manager = new AwarenessManager();
+            awarenessHashMap.put(face.getTrackingId(), manager);
+        }
+        manager.processFace(face);
+        if (graphicOverlay != null) {
+            boolean isAware = !manager.isNotAware();
+            graphicOverlay.add(new AwarenessCameraGraphic(graphicOverlay, face, isAware));
         }
     }
 }
