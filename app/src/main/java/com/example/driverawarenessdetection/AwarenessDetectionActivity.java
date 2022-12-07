@@ -8,11 +8,13 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.driverawarenessdetection.video_processing.awareness_detection.AwarenessManager;
 import com.example.driverawarenessdetection.video_processing.awareness_detection.utils.CameraSourceWrapper;
 import com.example.driverawarenessdetection.video_processing.camera.CameraSourcePreview;
 import com.example.driverawarenessdetection.video_processing.camera.GraphicOverlay;
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 
+import java.util.HashMap;
 import java.util.Objects;
 
 
@@ -22,7 +24,8 @@ public class AwarenessDetectionActivity extends AppCompatActivity {
     private TextView awarenessPercentageText;
     private CameraSourceWrapper csw;
     private final Handler handler = new Handler();
-    private final int update_every = 1000; // 1000 milliseconds == 1 second
+    private final int updateEvery = 5000; // 1000 milliseconds == 1 second
+    private final long animationDuration = 3000;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,10 +42,10 @@ public class AwarenessDetectionActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     private void onPercentageChanged() {
-//        awarenessPercentage = (int) (100 * Objects.requireNonNull(csw.awarenessProcessor.
-//                onSuccessDetector.awarenessHashMap.get(0)).getAwareProbability());
-        awarenessPercentage += 10;
-        this.circularProgressBar.setProgressWithAnimation((float) awarenessPercentage, 300L);
+        HashMap<Integer, AwarenessManager> managerHashMap = csw.awarenessProcessor.onSuccessDetector.awarenessHashMap;
+        if (!managerHashMap.isEmpty())
+            awarenessPercentage = (int) (100 * Objects.requireNonNull(managerHashMap.get(0)).getAwareProbability());
+        this.circularProgressBar.setProgressWithAnimation((float) awarenessPercentage, animationDuration);
         this.awarenessPercentageText.setText(awarenessPercentage + "%");
     }
 
@@ -64,9 +67,9 @@ public class AwarenessDetectionActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             public void run() {
                 onPercentageChanged();
-                handler.postDelayed(this, update_every);
+                handler.postDelayed(this, updateEvery);
             }
-        }, update_every);
+        }, updateEvery);
     }
 
     public void finishActivity() {
