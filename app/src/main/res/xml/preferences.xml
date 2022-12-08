@@ -2,25 +2,25 @@
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory >
+    <PreferenceCategory>
 
         <ListPreference
-            android:defaultValue="3"
+            android:defaultValue="1"
             android:dialogTitle="@string/remind_to_take_a_break"
             android:entries="@array/pref_remind_me_to_take_a_break"
             android:entryValues="@array/pref_duration"
-            android:key="@string/key_upload_quality"
+            android:key="break_alert"
             android:summary="@string/remind_me"
             android:title="@string/remind_to_take_a_break" />
 
         <SwitchPreference
-            android:defaultValue="false"
-            android:key="@string/alert_me_if_falling_asleep"
+            android:defaultValue="true"
+            android:key="asleep_alert"
             android:title="@string/alert_falling_asleep" />
 
         <SwitchPreference
-            android:defaultValue="false"
-            android:key="@string/alert_me_if_I_am_distracted"
+            android:defaultValue="true"
+            android:key="distracted_alert"
             android:summary="@string/not_paying_attention_to_the_road"
             android:title="@string/alert_me_if_I_am_distracted" />
 

@@ -15,6 +15,7 @@ public class AwarenessManager implements AwarenessDetectorInterface{
     private Instant start_calibration_time;
     private long calibrationDelay = 5;
 
+
     AwarenessManager(int max_history, float sleep_threshold,
                       float x_max_dev, float y_max_dev, float z_max_dev) {
         sleep_detector = new SleepDetector(max_history, sleep_threshold);
@@ -24,6 +25,7 @@ public class AwarenessManager implements AwarenessDetectorInterface{
     AwarenessManager() {
         sleep_detector = new SleepDetector(10, 0.5f);
         attention_detector = new AttentionDetector(20, 20, 20, 50);
+
     }
 
     public void onCalibration() {
@@ -65,4 +67,13 @@ public class AwarenessManager implements AwarenessDetectorInterface{
         float attentionProbability = attention_detector.getAwareProbability();
         return sleepProbability * attentionProbability;
     }
+
+    public boolean isAsleep() {
+        return sleep_detector.isNotAware() ;
+    }
+
+    public boolean isInattentive() {
+        return attention_detector.isNotAware() ;
+    }
+
 }
