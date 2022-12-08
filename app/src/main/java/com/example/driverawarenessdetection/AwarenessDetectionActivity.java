@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.ColorInt;
@@ -29,6 +30,9 @@ public class AwarenessDetectionActivity extends AppCompatActivity {
     private final int updateEvery = 5000; // 1000 milliseconds == 1 second
     private final long animationDuration = 3000;
     private int percentageCutOff = 20;
+    private boolean fatigued = false;
+    private HashMap<Integer, AwarenessManager> managerHashMap = null;
+    private AwarenessManager manager = null;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,15 +43,17 @@ public class AwarenessDetectionActivity extends AppCompatActivity {
 
         csw = new CameraSourceWrapper(preview, graphicOverlay, this);
         csw.start();
+        managerHashMap = csw.awarenessProcessor.onSuccessDetector.awarenessHashMap;
 
         initView();
     }
 
     @SuppressLint("SetTextI18n")
     private void onPercentageChanged() {
-        HashMap<Integer, AwarenessManager> managerHashMap = csw.awarenessProcessor.onSuccessDetector.awarenessHashMap;
-        if (!managerHashMap.isEmpty())
-            awarenessPercentage = (int) (100 * Objects.requireNonNull(managerHashMap.get(0)).getAwareProbability());
+        if (!managerHashMap.isEmpty()) {
+            manager = managerHashMap.get(0);
+            awarenessPercentage = (int) (100 * Objects.requireNonNull(manager.getAwareProbability()));
+        }
         if (awarenessPercentage < percentageCutOff) {
             this.circularProgressBar.setBackgroundProgressBarColor(getColor(0xFF, 0xFF, 0x00, 0x00));
         }
@@ -74,12 +80,43 @@ public class AwarenessDetectionActivity extends AppCompatActivity {
             finishActivity();
         });
 
+        RelativeLayout fatigueBtn = findViewById(R.id.fatigue_btn);
+        RelativeLayout normalBtn = findViewById(R.id.normal_btn);
+        normalBtn.setBackgroundResource(R.drawable.pressed_push_bg);
+
+        fatigueBtn.setOnClickListener(view -> {
+            fatigueBtn.setBackgroundResource(R.drawable.pressed_ac_bg);
+            normalBtn.setBackgroundResource(R.drawable.push_bg);
+            fatigued = true;
+            onFatigueChange();
+        });
+
+        normalBtn.setOnClickListener(view -> {
+            fatigueBtn.setBackgroundResource(R.drawable.ac_bg);
+            normalBtn.setBackgroundResource(R.drawable.pressed_push_bg);
+            fatigued = false;
+            onFatigueChange();
+        });
+
         handler.postDelayed(new Runnable() {
             public void run() {
                 onPercentageChanged();
                 handler.postDelayed(this, updateEvery);
             }
         }, updateEvery);
+    }
+
+    private void onFatigueChange() {
+        if (manager != null) {
+            if (fatigued) {
+                percentageCutOff = 40;
+                manager.sleep_detector.SLEEP_THRESHOLD = 0.7f;
+            }
+            else {
+                percentageCutOff = 20;
+                manager.sleep_detector.SLEEP_THRESHOLD = 0.5f;
+            }
+        }
     }
 
     public void finishActivity() {

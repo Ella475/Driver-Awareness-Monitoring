@@ -9,8 +9,8 @@ import java.time.Duration;
 import java.time.Instant;
 
 public class AwarenessManager implements AwarenessDetectorInterface{
-    private final AwarenessDetectorInterface sleep_detector;
-    private final AwarenessDetectorInterface attention_detector;
+    public SleepDetector sleep_detector;
+    private final AttentionDetector attention_detector;
     private volatile boolean invokeCalibration = false;
     private Instant start_calibration_time;
     private long calibrationDelay = 5;
