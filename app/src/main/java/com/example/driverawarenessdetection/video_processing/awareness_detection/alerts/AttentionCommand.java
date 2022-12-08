@@ -13,7 +13,6 @@ public class AttentionCommand implements CommandInterface {
     @Override
     public void OnPositiveCommand() {
         reader.speak("You are attentive to the road, keep up the good driving");
-
     }
 
     @Override

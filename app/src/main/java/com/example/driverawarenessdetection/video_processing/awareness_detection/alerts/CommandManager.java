@@ -108,9 +108,14 @@ public class CommandManager {
                     lastAlertTime = Instant.now();
                 }
             }
-            long durationWithoutAlerts = 10 * 60;
+            long durationWithoutAlerts = 20 * 60;
             if (Duration.between(lastAlertTime, Instant.now()).getSeconds() > durationWithoutAlerts) {
-                inattentiveCommand(false);
+                if (awarenessPercentage > 90) {
+                    unawareCommand(false);
+                }
+                else {
+                    inattentiveCommand(false);
+                }
                 lastAlertTime = Instant.now();
             }
         }
