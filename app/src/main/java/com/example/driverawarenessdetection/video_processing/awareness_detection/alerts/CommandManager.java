@@ -2,6 +2,7 @@ package com.example.driverawarenessdetection.video_processing.awareness_detectio
 
 import android.content.Context;
 import android.os.Build;
+import android.util.Log;
 
 import com.example.driverawarenessdetection.video_processing.awareness_detection.utils.MsgReader;
 
@@ -18,6 +19,7 @@ public class CommandManager {
     private final int percentageCutOff;
     private Instant lastAlertTime;
     private Thread takeBreakThread;
+    private volatile boolean alertDriving = false;
 
     public CommandManager(Context context, int percentageCutOff) {
         MsgReader reader = new MsgReader(context);
@@ -33,14 +35,20 @@ public class CommandManager {
             this.lastAlertTime = Instant.now();
         }
 
+        startDrivingAlertThread();
+    }
+
+    private void startDrivingAlertThread() {
         long delay = getDrivingAlertDelayMillis();
+        Log.i("DrivingAlert delay", String.valueOf(delay));
         if (delay == 0) {
             return;
         }
         takeBreakThread = new Thread(() -> {
             try {
                 Thread.sleep(delay);
-                breakCommand.OnNegativeCommand();
+                alertDriving = true;
+                Log.i("DrivingAlert", "Finished");
             }
             catch (Exception e){
                 System.err.println(e);
@@ -50,12 +58,12 @@ public class CommandManager {
     }
 
     public void stop() {
-        takeBreakThread.stop();
+        takeBreakThread.interrupt();
     }
 
     private long getDrivingAlertDelayMillis() {
         DrivingAlertTiming t = alertsData.getDurationTimeAlert();
-        return (long) t.hashCode() * 3600 * 1000;
+        return (long) t.ordinal() * 3600 * 1000;
     }
 
     public void asleepCommand(boolean asleep) {
@@ -111,6 +119,11 @@ public class CommandManager {
                     inattentiveCommand(false);
                 }
                 lastAlertTime = Instant.now();
+            }
+            if (alertDriving) {
+                breakCommand.OnNegativeCommand();
+                alertDriving = false;
+                startDrivingAlertThread();
             }
         }
     }
