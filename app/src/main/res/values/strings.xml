@@ -23,6 +23,7 @@
     <string name="fatigue_state">FATIGUE STATE</string>
     <string name="monitor_your_driving_style">Monitor Your Driving Style</string>
     <string name="drive_safe_be_safe">Drive Safe, Be Safe</string>
+    <string name="statistics"> STATISTICS</string>
 
 
     <string-array name="pref_remind_me_to_take_a_break">
