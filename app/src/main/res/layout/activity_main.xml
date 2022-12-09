@@ -49,7 +49,7 @@
 
     <RelativeLayout
         android:layout_width="60dp"
-        android:layout_height="75dp"
+        android:layout_height="80dp"
         android:orientation="vertical"
         app:layout_constraintLeft_toLeftOf="@+id/guideline_v_0.5"
         app:layout_constraintRight_toRightOf="@+id/guideline_v_0.5"
@@ -62,7 +62,7 @@
             android:src="@drawable/camera" />
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="15dp"
+            android:layout_height="20dp"
             android:layout_marginTop="5dp"
             android:layout_below="@id/camera"
             android:text="    CAMERA"
@@ -73,7 +73,7 @@
 
     <RelativeLayout
         android:layout_width="60dp"
-        android:layout_height="75dp"
+        android:layout_height="80dp"
         android:orientation="vertical"
         app:layout_constraintLeft_toLeftOf="@+id/guideline_v_0.25"
         app:layout_constraintRight_toRightOf="@+id/guideline_v_0.25"
@@ -86,7 +86,7 @@
             android:src="@drawable/settings" />
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="15dp"
+            android:layout_height="20dp"
             android:layout_below="@id/settings"
             android:layout_marginTop="5dp"
             android:text="  SETTINGS"
@@ -97,7 +97,7 @@
 
     <RelativeLayout
         android:layout_width="60dp"
-        android:layout_height="75dp"
+        android:layout_height="80dp"
         android:orientation="vertical"
         app:layout_constraintLeft_toLeftOf="@+id/guideline_v_0.75"
         app:layout_constraintRight_toRightOf="@+id/guideline_v_0.75"
@@ -110,7 +110,7 @@
             android:src="@drawable/statistics" />
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="15dp"
+            android:layout_height="20dp"
             android:layout_marginTop="5dp"
             android:layout_below="@id/statistics"
             android:text="@string/statistics"
