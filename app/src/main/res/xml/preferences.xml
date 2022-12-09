@@ -11,7 +11,7 @@
             android:entryValues="@array/pref_duration"
             android:key="break_alert"
             android:summary="@string/remind_me"
-            android:title="@string/remind_to_take_a_break" />
+            android:title="@string/remind_to_take_a_break"/>
 
         <SwitchPreference
             android:defaultValue="true"

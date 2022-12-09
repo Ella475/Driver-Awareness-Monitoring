@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DriverAwarenessDetection</string>
+    <string name="app_name">Driver Awareness Monitoring</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in or register</string>
@@ -24,6 +24,7 @@
     <string name="monitor_your_driving_style">Monitor Your Driving Style</string>
     <string name="drive_safe_be_safe">Drive Safe, Be Safe</string>
     <string name="statistics"> STATISTICS</string>
+    <string name="choose_which_audio_alerts_you_would_like_to_receive">Choose which audio alerts you would like to receive</string>
 
 
     <string-array name="pref_remind_me_to_take_a_break">
