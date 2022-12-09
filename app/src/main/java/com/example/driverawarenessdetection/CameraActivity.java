@@ -39,7 +39,7 @@ public class CameraActivity extends AppCompatActivity {
         calibrationBtn.setOnClickListener(v -> {
             reader.speak("Starting calibration!");
             reader.speak("Please look at the road for a few seconds!");
-            reader.speak("5, 4, 3, 2, 1");
+            reader.speak("five. four. three. two. one.");
             Objects.requireNonNull(csw.awarenessProcessor.onSuccessDetector.awarenessHashMap.get(0)).onCalibration();
             reader.speak("Calibration finished!");
         });

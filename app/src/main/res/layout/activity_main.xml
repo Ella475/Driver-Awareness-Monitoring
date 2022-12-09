@@ -22,29 +22,15 @@
             android:layout_gravity="center"
             android:layout_centerHorizontal="true"
             android:src="@drawable/car" />
-        <TextView
-            android:id="@+id/t1"
+        <ImageView
+            android:id="@+id/title"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
             android:layout_below="@id/car"
             android:layout_centerHorizontal="true"
-            android:fontFamily="sans-serif-medium"
-            android:text="@string/monitor_your_driving_style"
-            android:textColor="#fff"
-            android:textSize="25dp"
-            android:textStyle="italic" />
-        <TextView
-            android:id="@+id/t2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/t1"
-            android:layout_marginTop="5dp"
-            android:layout_centerHorizontal="true"
-            android:fontFamily="sans-serif-medium"
-            android:text="@string/drive_safe_be_safe"
-            android:textColor="#fff"
-            android:textSize="14dp"
-            android:textStyle="italic" />
+            android:src="@drawable/sentence" />
+
     </RelativeLayout>
 
     <RelativeLayout
@@ -128,7 +114,7 @@
         app:layout_constraintTop_toTopOf="@+id/guideline_h_0.6"
         app:layout_constraintBottom_toBottomOf="@+id/guideline_h_0.6"
         app:area_margin="3dp"
-        app:inner_color="#003cff"
+        app:inner_color="#6887EA"
         app:outer_color="#FFFFFF"
         app:text="               SWIPE FOR AWARENESS DETECTION"
         app:text_size="13sp"
@@ -147,14 +133,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.75" />
+        app:layout_constraintGuide_percent="0.8" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_v_0.25"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.25" />
+        app:layout_constraintGuide_percent="0.2" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_h_0.5"

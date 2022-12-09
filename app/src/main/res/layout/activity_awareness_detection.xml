@@ -1,155 +1,205 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <com.example.driverawarenessdetection.video_processing.camera.CameraSourcePreview
+        android:id="@+id/camera_source_preview"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        tools:ignore="MissingConstraints" />
+
+    <com.example.driverawarenessdetection.video_processing.camera.GraphicOverlay
+        android:id="@+id/graphic_overlay"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/back"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/back"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline_v_back"
+        app:layout_constraintRight_toRightOf="@+id/guideline_v_back"
+        app:layout_constraintBottom_toBottomOf="@+id/guideline_h_back"
+        app:layout_constraintTop_toTopOf="@+id/guideline_h_back"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_h_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.03" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_v_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@color/white">
+        app:layout_constraintGuide_percent="0.93" />
 
-        <com.example.driverawarenessdetection.video_processing.camera.CameraSourcePreview
-            android:id="@+id/camera_source_preview"
-            android:layout_width="1dp"
-            android:layout_height="1dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline_v_title"
+        app:layout_constraintRight_toRightOf="@+id/guideline_v_title"
+        app:layout_constraintBottom_toBottomOf="@+id/guideline_h_title"
+        app:layout_constraintTop_toTopOf="@+id/guideline_h_title"
+        android:fontFamily="sans-serif-black"
+        android:textStyle="italic"
+        android:letterSpacing="0.06"
+        android:text="@string/road_awareness_percentage"
+        android:textColor="@color/blue"
+        android:textSize="23dp" />
 
-        <com.example.driverawarenessdetection.video_processing.camera.GraphicOverlay
-            android:id="@+id/graphic_overlay"
-            android:layout_width="1dp"
-            android:layout_height="1dp" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_h_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.1" />
 
-        <RelativeLayout
-            android:layout_width="353dp"
-            android:layout_height="43dp"
-            android:layout_margin="30dp">
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_v_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
 
-            <ImageView
-                android:id="@+id/back"
-                android:layout_width="34dp"
-                android:layout_height="match_parent"
-                android:src="@drawable/back" />
-
-
-        </RelativeLayout>
-
-        <LinearLayout
-            android:layout_width="347dp"
-            android:layout_height="370dp"
-            android:layout_gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="10dp"
-                android:fontFamily="sans-serif-black"
-                android:textStyle="italic"
-                android:letterSpacing="0.06"
-                android:text="@string/road_awareness_percentage"
-                android:textColor="@color/blue"
-                android:textSize="23dp" />
-
-            <RelativeLayout
-                android:layout_width="300dp"
-                android:layout_height="300dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/circle">
+    <RelativeLayout
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_gravity="center"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline_v_circle"
+        app:layout_constraintRight_toRightOf="@+id/guideline_v_circle"
+        app:layout_constraintBottom_toBottomOf="@+id/guideline_h_circle"
+        app:layout_constraintTop_toTopOf="@+id/guideline_h_circle"
+        android:background="@drawable/circle">
 
 
-                <com.mikhaellopez.circularprogressbar.CircularProgressBar
-                    android:id="@+id/awarenessCircularProgressbar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:cpb_background_progressbar_color="#A4AFF4"
-                    app:cpb_background_progressbar_width="25dp"
-                    app:cpb_progress_direction="to_right"
-                    app:cpb_progressbar_color="#0827CF"
-                    app:cpb_progressbar_width="10dp"
-                    app:cpb_round_border="false" />
-
-                <TextView
-                    android:id="@+id/awarenessPercentage"
-                    android:layout_width="wrap_content"
-                    android:layout_height="117dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="110dp"
-                    android:fontFamily="sans-serif-black"
-                    android:letterSpacing="0.06"
-                    android:text="100%"
-                    android:textColor="#F1F1F4"
-                    android:textSize="55dp" />
-
-            </RelativeLayout>
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
+        <com.mikhaellopez.circularprogressbar.CircularProgressBar
+            android:id="@+id/awarenessCircularProgressbar"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:orientation="horizontal">
+            app:cpb_background_progressbar_color="#A4AFF4"
+            app:cpb_background_progressbar_width="25dp"
+            app:cpb_progress_direction="to_right"
+            app:cpb_progressbar_color="#0827CF"
+            app:cpb_progressbar_width="10dp"
+            app:cpb_round_border="false" />
 
-            <RelativeLayout
-                android:id="@+id/fatigue_btn"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:layout_marginLeft="15dp"
-                android:background="@drawable/ac_bg">
+        <TextView
+            android:id="@+id/awarenessPercentage"
+            android:layout_width="wrap_content"
+            android:layout_height="117dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="110dp"
+            android:fontFamily="sans-serif-black"
+            android:letterSpacing="0.06"
+            android:text="100%"
+            android:textColor="#F1F1F4"
+            android:textSize="55dp" />
 
-                <ImageView
-                    android:id="@+id/i2"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="50dp"
-                    android:src="@drawable/fatigue" />
+    </RelativeLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/i2"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/fatigue_state"
-                    android:textColor="#fff"
-                    android:textStyle="bold" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_h_circle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.4" />
 
-            </RelativeLayout>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_v_circle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
 
-            <RelativeLayout
-                android:id="@+id/normal_btn"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:layout_marginLeft="-20dp"
-                android:background="@drawable/push_bg">
+    <RelativeLayout
+        android:id="@+id/fatigue_btn"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline_v_btn1"
+        app:layout_constraintRight_toRightOf="@+id/guideline_v_btn1"
+        app:layout_constraintBottom_toBottomOf="@+id/guideline_h_btn"
+        app:layout_constraintTop_toTopOf="@+id/guideline_h_btn"
+        android:background="@drawable/ac_bg">
 
-                <ImageView
-                    android:id="@+id/i1"
-                    android:layout_width="200dp"
-                    android:layout_height="70dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="50dp"
-                    android:src="@drawable/normal" />
+        <ImageView
+            android:id="@+id/i2"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
+            android:src="@drawable/fatigue" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/i1"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/normal_state"
-                    android:textColor="#003cff"
-                    android:textStyle="bold" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/i2"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="@string/fatigue_state"
+            android:textColor="#fff"
+            android:textStyle="bold" />
 
-            </RelativeLayout>
+    </RelativeLayout>
 
-        </LinearLayout>
 
-    </LinearLayout>
+    <RelativeLayout
+        android:id="@+id/normal_btn"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline_v_btn2"
+        app:layout_constraintRight_toRightOf="@+id/guideline_v_btn2"
+        app:layout_constraintBottom_toBottomOf="@+id/guideline_h_btn"
+        app:layout_constraintTop_toTopOf="@+id/guideline_h_btn"
+        android:background="@drawable/push_bg">
+        <ImageView
+            android:id="@+id/i1"
+            android:layout_width="200dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:src="@drawable/normal" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/i1"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="@string/normal_state"
+            android:textColor="#003cff"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_h_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.83" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_v_btn1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.25" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_v_btn2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.75" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
