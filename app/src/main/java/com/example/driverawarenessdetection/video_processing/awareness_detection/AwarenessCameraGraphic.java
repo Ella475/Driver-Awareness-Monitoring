@@ -15,7 +15,7 @@ public class AwarenessCameraGraphic extends GraphicOverlay.Graphic {
     private static final float BOX_STROKE_WIDTH = 5.0f;
 
     private static final float TEXT_SIZE = 30.0f;
-    private static final float TEXT_SIZE_BIG = 100f;
+    private static final float TEXT_SIZE_BIG = 70f;
 
     private final Paint smallPaint;
     private final Paint bigPaint;
