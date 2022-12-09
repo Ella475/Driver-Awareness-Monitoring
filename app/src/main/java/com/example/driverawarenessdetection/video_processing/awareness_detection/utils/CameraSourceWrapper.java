@@ -35,7 +35,7 @@ public class CameraSourceWrapper {
         if (cameraSource == null) {
             cameraSource = new CameraSource(activity, graphicOverlay);
             cameraSource.setFacing(CameraSource.CAMERA_FACING_FRONT);
-            cameraSource.setStartingDegrees(180);
+            cameraSource.setStartingDegrees(270);
         }
         setProcessor();
     }

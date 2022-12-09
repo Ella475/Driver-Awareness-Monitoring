@@ -1,19 +1,16 @@
 package com.example.driverawarenessdetection;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.WindowManager;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.driverawarenessdetection.video_processing.awareness_detection.AwarenessDetectorProcessor;
 import com.example.driverawarenessdetection.video_processing.awareness_detection.utils.CameraSourceWrapper;
 import com.example.driverawarenessdetection.video_processing.awareness_detection.utils.MsgReader;
-import com.example.driverawarenessdetection.video_processing.camera.CameraSource;
 import com.example.driverawarenessdetection.video_processing.camera.CameraSourcePreview;
 import com.example.driverawarenessdetection.video_processing.camera.GraphicOverlay;
 
-import java.io.IOException;
 import java.util.Objects;
 
 
@@ -25,6 +22,8 @@ public class CameraActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        getSupportActionBar().hide();
 
         CameraSourcePreview preview = findViewById(R.id.camera_source_preview);
         GraphicOverlay graphicOverlay = findViewById(R.id.graphic_overlay);
