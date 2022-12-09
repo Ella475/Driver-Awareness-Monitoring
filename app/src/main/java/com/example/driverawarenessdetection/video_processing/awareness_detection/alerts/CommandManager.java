@@ -59,9 +59,6 @@ public class CommandManager {
     }
 
     public void asleepCommand(boolean asleep) {
-        if (!alertsData.getSleepAlert())
-            return;
-
         if (asleep)
             sleepCommand.OnNegativeCommand();
         else
@@ -70,9 +67,6 @@ public class CommandManager {
     }
 
     public void inattentiveCommand(boolean inattentive) {
-        if (!alertsData.getAttentionAlert())
-            return;
-
         if (inattentive)
             attentionCommand.OnNegativeCommand();
         else
@@ -95,11 +89,11 @@ public class CommandManager {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             long lastNegativeAlert = 10;
             if (Duration.between(lastAlertTime, Instant.now()).getSeconds() > lastNegativeAlert) {
-                if (asleep) {
+                if (asleep && alertsData.getSleepAlert()) {
                     asleepCommand(true);
                     lastAlertTime = Instant.now();
                 }
-                else if (inattentive) {
+                else if (inattentive && alertsData.getAttentionAlert()) {
                     inattentiveCommand(true);
                     lastAlertTime = Instant.now();
                 }
