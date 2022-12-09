@@ -48,7 +48,7 @@
                 android:textStyle="italic"
                 android:letterSpacing="0.06"
                 android:text="@string/road_awareness_percentage"
-                android:textColor="#003cff"
+                android:textColor="@color/blue"
                 android:textSize="23dp" />
 
             <RelativeLayout
