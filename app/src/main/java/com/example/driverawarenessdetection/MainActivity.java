@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.LayoutDirection;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -24,10 +25,12 @@ public class MainActivity extends AppCompatActivity implements LifecycleObserver
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        Intent switchLoginActivityIntent = new Intent(MainActivity.this, LoginActivity.class);
-//        startActivity(switchLoginActivityIntent);
+        Intent switchLoginActivityIntent = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(switchLoginActivityIntent);
 
         setContentView(R.layout.activity_main);
+        findViewById(R.id.main_id).getRootView().setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         getSupportActionBar().hide();
 

@@ -3,6 +3,7 @@ package com.example.driverawarenessdetection;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -41,6 +42,7 @@ public class AwarenessDetectionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_awareness_detection);
+        findViewById(R.id.awareness).getRootView().setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         getSupportActionBar().hide();
 

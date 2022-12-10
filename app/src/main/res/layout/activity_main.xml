@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_id"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#003cff"
@@ -34,7 +35,7 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_width="60dp"
+        android:layout_width="65dp"
         android:layout_height="80dp"
         android:orientation="vertical"
         app:layout_constraintLeft_toLeftOf="@+id/guideline_v_0.5"
@@ -47,11 +48,11 @@
             android:layout_height="60dp"
             android:src="@drawable/camera" />
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_below="@id/camera"
-            android:text="    CAMERA"
+            android:text="CALIBRATION"
             android:textColor="#fff"
             android:textSize="10dp"
             android:textStyle="bold" />
