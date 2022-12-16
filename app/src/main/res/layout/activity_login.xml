@@ -96,6 +96,7 @@
             android:layout_height="60dp"
             android:background="@drawable/ac_bg"
             android:enabled="false"
+            android:textColor="@color/white"
             app:backgroundTint="#E6E5E5"
             android:text="@string/action_sign_in"
             app:layout_constraintLeft_toLeftOf="@+id/guideline_v_middle_b"
