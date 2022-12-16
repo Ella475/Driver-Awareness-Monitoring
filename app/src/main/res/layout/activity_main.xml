@@ -5,7 +5,7 @@
     android:id="@+id/main_id"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#003cff"
+    android:background="@color/blue"
     tools:context=".MainActivity">
 
     <RelativeLayout
@@ -115,7 +115,7 @@
         app:layout_constraintTop_toTopOf="@+id/guideline_h_0.6"
         app:layout_constraintBottom_toBottomOf="@+id/guideline_h_0.6"
         app:area_margin="3dp"
-        app:inner_color="#6887EA"
+        app:inner_color="@color/black"
         app:outer_color="#FFFFFF"
         app:text="               SWIPE FOR AWARENESS DETECTION"
         app:text_size="13sp"

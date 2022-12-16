@@ -35,6 +35,7 @@ public class CameraActivity extends AppCompatActivity {
 
     public void initCalibration() {
         Button calibrationBtn = findViewById(R.id.calibrationBtn);
+        calibrationBtn.setBackgroundTintMode(null);
         reader = new MsgReader(CameraActivity.this);
         calibrationBtn.setOnClickListener(v -> {
             reader.speak("Starting calibration!");
