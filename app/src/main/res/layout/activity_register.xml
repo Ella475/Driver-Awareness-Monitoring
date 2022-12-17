@@ -42,7 +42,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/login_title"
+        android:text="@string/register_title"
         android:textColor="@color/white"
         android:textSize="30dp"
         android:textStyle="bold"
@@ -61,7 +61,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/bg"
         android:layout_width="346dp"
-        android:layout_height="344dp"
+        android:layout_height="400dp"
         android:background="@drawable/white_bg"
         android:selectAllOnFocus="true"
         android:orientation="horizontal"
@@ -109,6 +109,22 @@
             app:layout_constraintTop_toTopOf="@+id/guideline_h_password"
             app:layout_constraintBottom_toBottomOf="@+id/guideline_h_password"/>
 
+        <EditText
+            android:id="@+id/confirm_password"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:background="@drawable/grey_bg"
+            android:hint="@string/prompt_confirm_password"
+            android:drawableStart="@android:drawable/ic_lock_idle_lock"
+            android:drawablePadding="10dp"
+            android:paddingStart="@dimen/activity_horizontal_margin"
+            android:inputType="textPassword"
+            android:selectAllOnFocus="true"
+            app:layout_constraintLeft_toLeftOf="@+id/guideline_v_middle_b"
+            app:layout_constraintRight_toRightOf="@+id/guideline_v_middle_b"
+            app:layout_constraintTop_toTopOf="@+id/guideline_h_confirm_password"
+            app:layout_constraintBottom_toBottomOf="@+id/guideline_h_confirm_password"/>
+
         <Button
             android:id="@+id/login"
             android:layout_width="152dp"
@@ -117,7 +133,7 @@
             android:enabled="false"
             android:textColor="@color/white"
             app:backgroundTint="#E6E5E5"
-            android:text="@string/action_sign_in_short"
+            android:text="@string/action_sign_up_short"
             app:layout_constraintLeft_toLeftOf="@+id/guideline_v_middle_b"
             app:layout_constraintRight_toRightOf="@+id/guideline_v_middle_b"
             app:layout_constraintTop_toTopOf="@+id/guideline_h_btn"
@@ -128,21 +144,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.25" />
+            app:layout_constraintGuide_percent="0.15" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_h_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.5" />
+            app:layout_constraintGuide_percent="0.4" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_h_confirm_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.65" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_h_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.8" />
+            app:layout_constraintGuide_percent="0.87" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -151,26 +174,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.65" />
-
-    <Button
-        android:id="@+id/register"
-        android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:background="@android:color/transparent"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:text="@string/action_login_register"
-        app:layout_constraintLeft_toLeftOf="@+id/guideline_v_middle"
-        app:layout_constraintRight_toRightOf="@+id/guideline_v_middle"
-        app:layout_constraintTop_toTopOf="@+id/guideline_h_register"
-        app:layout_constraintBottom_toBottomOf="@+id/guideline_h_register"/>
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_h_register"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.95" />
+        app:layout_constraintGuide_percent="0.68" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
