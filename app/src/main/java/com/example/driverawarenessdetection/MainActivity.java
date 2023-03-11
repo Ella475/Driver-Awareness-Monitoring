@@ -23,8 +23,8 @@ public class MainActivity extends AppCompatActivity implements LifecycleObserver
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        Intent switchLoginActivityIntent = new Intent(MainActivity.this, LoginActivity.class);
-//        startActivity(switchLoginActivityIntent);
+        Intent switchLoginActivityIntent = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(switchLoginActivityIntent);
 
         setContentView(R.layout.activity_main);
 
