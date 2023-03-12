@@ -3,6 +3,11 @@ package com.example.driverawarenessdetection.client;
 import android.os.AsyncTask;
 
 import com.example.driverawarenessdetection.login.data.Result;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -11,20 +16,22 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
 public class HttpAsyncTask extends AsyncTask<Void, Void, HashMap<String, String>> {
-    private String url;
+    private String url = "http://10.0.2.2:5000/";
     private HashMap<String, String> payload;
     private String method;
     private OnResponseListener onResponseListener;
 
-    public HttpAsyncTask(String url, HashMap<String, String> payload, String method, OnResponseListener onResponseListener) {
-        this.url = url;
+    public HttpAsyncTask(String endpoint, HashMap<String, String> payload, String method, OnResponseListener onResponseListener) {
+        this.url = this.url + endpoint;
         this.payload = payload;
         this.method = method;
         this.onResponseListener = onResponseListener;
@@ -36,6 +43,14 @@ public class HttpAsyncTask extends AsyncTask<Void, Void, HashMap<String, String>
         HashMap<String, String> responseMap = new HashMap<>();
 
         try {
+            // Sent GET request
+            if (method.equals("GET")) {
+                String encodedParams = getParamsString(payload);
+                if (!encodedParams.isEmpty()) {
+                    this.url += "?" + encodedParams;
+                }
+            }
+
             // Create URL object
             URL requestUrl = new URL(url);
 
@@ -44,17 +59,27 @@ public class HttpAsyncTask extends AsyncTask<Void, Void, HashMap<String, String>
             urlConnection.setRequestMethod(method);
             urlConnection.setConnectTimeout(5000);
             urlConnection.setReadTimeout(5000);
-            urlConnection.setDoOutput(true);
+            urlConnection.addRequestProperty("Content-Type", "application/json; utf-8");
 
-            // Set request body
-            if (payload != null && !payload.isEmpty()) {
-                OutputStream outputStream = urlConnection.getOutputStream();
-                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-                writer.write(getPostDataString(payload));
-                writer.flush();
-                writer.close();
-                outputStream.close();
+
+            // Send POST request
+            if (method.equals("POST")) {
+                urlConnection.setDoOutput(true);
+
+                if (!payload.isEmpty()) {
+                    JSONObject postData = new JSONObject();
+                    for (Map.Entry<String, String> entry : payload.entrySet()) {
+                        postData.put(entry.getKey(), entry.getValue());
+                    }
+                    String jsonInputString = postData.toString();
+                    OutputStream os = urlConnection.getOutputStream();
+                    byte[] input = jsonInputString.getBytes(StandardCharsets.UTF_8);
+                    os.write(input, 0, input.length);
+                    os.close();
+                }
             }
+
+            urlConnection.connect();
 
             // Get response
             int responseCode = urlConnection.getResponseCode();
@@ -67,7 +92,12 @@ public class HttpAsyncTask extends AsyncTask<Void, Void, HashMap<String, String>
                 }
                 in.close();
 
-                responseMap.put("response", response.toString());
+                // Create a new Gson instance
+                Gson gson = new Gson();
+
+                // Parse the JSON response string into a HashMap
+                Type type = new TypeToken<HashMap<String, String>>() {}.getType();
+                responseMap.putAll(gson.fromJson(response.toString(), type));
                 responseMap.put("success", "true");
             } else {
                 responseMap.put("success", "false");
@@ -77,6 +107,8 @@ public class HttpAsyncTask extends AsyncTask<Void, Void, HashMap<String, String>
             e.printStackTrace();
             responseMap.put("success", "false");
             responseMap.put("error", "Exception: " + e.getMessage());
+        } catch (JSONException e) {
+            e.printStackTrace();
         } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();
@@ -91,25 +123,49 @@ public class HttpAsyncTask extends AsyncTask<Void, Void, HashMap<String, String>
         onResponseListener.onResponse(responseMap);
     }
 
-    private String getPostDataString(HashMap<String, String> params) throws UnsupportedEncodingException {
-        StringBuilder result = new StringBuilder();
-        boolean first = true;
-        for (Map.Entry<String, String> entry : params.entrySet()) {
-            if (first) {
-                first = false;
-            } else {
-                result.append("&");
-            }
+//    private String getPostDataString(HashMap<String, String> params) throws UnsupportedEncodingException {
+//        StringBuilder result = new StringBuilder();
+//        result.append("{");
+//        for (Map.Entry<String, String> entry : params.entrySet()) {
+//            result.append("\"");
+//            result.append(URLEncoder.encode(entry.getKey(), "UTF-8"));  // key
+//            result.append("\"");
+//            result.append(":");
+//            result.append("\"");
+//            result.append(URLEncoder.encode(entry.getValue(), "UTF-8")); // value
+//            result.append("\"");
+//            result.append(",");
+//        }
+//        result.deleteCharAt(result.length() - 1);
+//        result.append("}");
+//
+//        return result.toString();
+//    }
 
-            result.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
+    private String getParamsString(HashMap<String, String> params) throws UnsupportedEncodingException {
+        StringBuilder result = new StringBuilder();
+        for (Map.Entry<String, String> entry : params.entrySet()) {
+            result.append(URLEncoder.encode(entry.getKey(), "UTF-8"));  // key
             result.append("=");
-            result.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
+            result.append(URLEncoder.encode(entry.getValue(), "UTF-8")); // value
+            result.append("&");
         }
+        result.deleteCharAt(result.length() - 1);
 
         return result.toString();
     }
 
+    private HashMap<String, String> extractResponseMapFromJsonString(String jsonResponse) {
+        HashMap<String, String> responseMap = new HashMap<>();
+        String[] responseArray = jsonResponse.split(",");
+        for (String response : responseArray) {
+            String[] responsePair = response.split(":");
+            responseMap.put(responsePair[0], responsePair[1]);
+        }
+        return responseMap;
+    }
+
     public interface OnResponseListener {
-        Result onResponse(HashMap<String, String> responseMap);
+        void onResponse(HashMap<String, String> responseMap);
     }
 }
