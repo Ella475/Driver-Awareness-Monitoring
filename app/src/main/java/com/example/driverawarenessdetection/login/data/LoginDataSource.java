@@ -6,13 +6,14 @@ import com.example.driverawarenessdetection.login.data.model.LoggedInUser;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Class that handles authentication w/ login credentials and retrieves user information.
  */
 public class LoginDataSource {
 
-    private volatile HashMap<String, String> response;
+    private HashMap<String, String> response;
 
     public Result<LoggedInUser> handleUser(String username, String password) {
         // check if username exists
@@ -37,25 +38,17 @@ public class LoginDataSource {
         String method = "GET";
 
         // Create a new HttpAsyncTask with the specified parameters
-        HttpAsyncTask httpAsyncTask = new HttpAsyncTask(endpoint, payload, method,
-                responseMap -> {
-                    if (Objects.equals(responseMap.get("success"), "true")) {
-                        this.response = responseMap;
-                    } else {
-                        this.response = null;
-                    }
-                });
+        HttpAsyncTask httpAsyncTask = new HttpAsyncTask(endpoint, payload, method, responseMap -> {});
 
         // Execute the HttpAsyncTask
         httpAsyncTask.execute();
 
         // Wait for the response
-        while (this.response == null) {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        try {
+            response = httpAsyncTask.get();
+            // Do something with the response
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
         }
 
         // if response is success and response is false, user does not exist
