@@ -1,5 +1,8 @@
 package com.example.driverawarenessdetection.login.data;
 
+import android.util.Log;
+
+import com.example.driverawarenessdetection.client.HttpAsyncTask;
 import com.example.driverawarenessdetection.login.data.model.LoggedInUser;
 import com.example.driverawarenessdetection.client.Client;
 
@@ -26,61 +29,92 @@ public class LoginDataSource {
         // TODO: revoke authentication
     }
 
-    private boolean checkUserExists(String username) {
-        Client client = Client.getInstance();
-        try {
-            HashMap<String, String> response =
-                    client.sendGetRequest("users", new HashMap<String, String>() {{
-                        put("username", username);
-                    }});
-            if (Objects.equals(response.get("response"), "false")) {
-                return false;
+    private Result checkUserExists(String username) {
+        String url = "http://127.0.0.1/users";
+        HashMap<String, String> payload = new HashMap<String, String>() {{
+            put("username", username);
+        }};
+
+        String method = "POST";
+
+        // Create a new HttpAsyncTask with the specified parameters
+        HttpAsyncTask httpAsyncTask = new HttpAsyncTask(url, payload, method, new HttpAsyncTask.OnResponseListener() {
+            @Override
+            public Result onResponse(HashMap<String, String> responseMap) {
+                // Handle the response from the server
+                if (Objects.equals(responseMap.get("response"), "false")) {
+                    return new Result.Error(new IOException("Error registering user"));
+                } else {
+                    return new Result.Success(new LoggedInUser(
+                            responseMap.get("response"),
+                            username));
+                }
+
             }
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-            return false;
-        }
-        return true;
+
+        });
+
+        // Execute the HttpAsyncTask
+      return httpAsyncTask.execute();
+
     }
 
     public Result<LoggedInUser> register(String username, String password) {
-        Client client = Client.getInstance();
-        try {
-            HashMap<String, String> response =
-                    client.sendPostRequest("users", new HashMap<String, String>() {{
-                        put("username", username);
-                        put("password", password);
-                    }});
-            if (Objects.equals(response.get("response"), "false")) {
-                return new Result.Error(new IOException("Error registering user"));
-            } else {
-                return new Result.Success(new LoggedInUser(
-                        response.get("response"),
-                        username));
+        String url = "http://192.168.48.1:5000/users";
+        HashMap<String, String> payload = new HashMap<String, String>() {{
+            put("username", username);
+            put("password", password);
+        }};
+
+        String method = "POST";
+
+        // Create a new HttpAsyncTask with the specified parameters
+        HttpAsyncTask httpAsyncTask = new HttpAsyncTask(url, payload, method, new HttpAsyncTask.OnResponseListener() {
+            @Override
+            public Result onResponse(HashMap<String, String> responseMap) {
+                // Handle the response from the server
+                if (Objects.equals(responseMap.get("response"), "false")) {
+                    return new Result.Error(new IOException("Error registering user"));
+                } else {
+                    return new Result.Success(new LoggedInUser(
+                            responseMap.get("response"),
+                            username));
+                }
+
             }
-        } catch (Exception e) {
-            return new Result.Error(new IOException("Error registering user", e));
-        }
+
+        });
+
+        // Execute the HttpAsyncTask
+        return httpAsyncTask.execute();
+
     }
 
     public Result<LoggedInUser> login(String username, String password) {
-        Client client = Client.getInstance();
-        try {
-            HashMap<String, String> response =
-                    client.sendGetRequest("users", new HashMap<String, String>() {{
-                        put("username", username);
-                        put("password", password);
-                    }});
-            if (Objects.equals(response.get("response"), "false")) {
-                return new Result.Error(new IOException("Username already exists. Password incorrect!"));
-            } else {
-                return new Result.Success<>(new LoggedInUser(
-                        response.get("response"),
-                        username));
+
+        String url = "http://192.168.48.1:5000/users";
+        HashMap<String, String> payload = new HashMap<String, String>() {{
+            put("username", username);
+            put("password", password);
+        }};
+
+        String method = "POST";
+
+        // Create a new HttpAsyncTask with the specified parameters
+        return new HttpAsyncTask(url, payload, method, new HttpAsyncTask.OnResponseListener() {
+            @Override
+            public Result onResponse(HashMap<String, String> responseMap) {
+                // Handle the response from the server
+                if (Objects.equals(response.get("response"), "false")) {
+                    return new Result.Error(new IOException("Username already exists. Password incorrect!"));
+                } else {
+                    return new Result.Success<>(new LoggedInUser(
+                            response.get("response"),
+                            username));
+
             }
-        } catch (Exception e) {
-            return new Result.Error(new IOException("Error logging in", e));
+
+        }).execute();
         }
-    }
 
 }
