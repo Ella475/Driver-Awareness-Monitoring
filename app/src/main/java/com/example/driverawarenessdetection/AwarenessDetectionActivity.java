@@ -3,6 +3,8 @@ package com.example.driverawarenessdetection;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -26,8 +28,8 @@ public class AwarenessDetectionActivity extends AppCompatActivity {
     private TextView awarenessPercentageText;
     private CameraSourceWrapper csw;
     private final Handler handler = new Handler();
-    private final int updateEvery = 5000; // 1000 milliseconds == 1 second
-    private final long animationDuration = 3000;
+    private final int updateEvery = 2000; // 1000 milliseconds == 1 second
+    private final long animationDuration = 1000;
     private int percentageCutOff = 20;
     private boolean fatigued = false;
     private HashMap<Integer, AwarenessManager> managerHashMap = null;
@@ -35,10 +37,14 @@ public class AwarenessDetectionActivity extends AppCompatActivity {
     public CommandManager commandManager;
     boolean asleep = false;
     boolean inattentive = false;
+    private volatile boolean stop = false;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_awareness_detection);
+        findViewById(R.id.awareness).getRootView().setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        getSupportActionBar().hide();
 
         CameraSourcePreview preview = findViewById(R.id.camera_source_preview);
         GraphicOverlay graphicOverlay = findViewById(R.id.graphic_overlay);
@@ -109,7 +115,9 @@ public class AwarenessDetectionActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             public void run() {
                 onPercentageChanged();
-                handler.postDelayed(this, updateEvery);
+                if (!stop) {
+                    handler.postDelayed(this, updateEvery);
+                }
             }
         }, updateEvery);
     }
@@ -127,6 +135,7 @@ public class AwarenessDetectionActivity extends AppCompatActivity {
     }
 
     public void finishActivity() {
+        stop = true;
         csw.stop();
         commandManager.stop();
         finish();

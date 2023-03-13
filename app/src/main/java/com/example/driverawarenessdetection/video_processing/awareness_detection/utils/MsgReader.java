@@ -11,7 +11,6 @@ public class MsgReader implements TextToSpeech.OnInitListener {
 
     public MsgReader(Context context) {
         textToSpeech = new TextToSpeech(context, this);
-        textToSpeech.setSpeechRate(0.75f);
         c = context;
     }
 

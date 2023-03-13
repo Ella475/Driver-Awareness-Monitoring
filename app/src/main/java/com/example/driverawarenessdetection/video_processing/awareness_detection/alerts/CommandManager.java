@@ -58,7 +58,9 @@ public class CommandManager {
     }
 
     public void stop() {
-        takeBreakThread.interrupt();
+        if (takeBreakThread != null) {
+            takeBreakThread.interrupt();
+        }
     }
 
     private long getDrivingAlertDelayMillis() {

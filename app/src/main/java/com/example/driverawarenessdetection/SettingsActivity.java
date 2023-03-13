@@ -3,6 +3,8 @@ package com.example.driverawarenessdetection;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,8 +19,10 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+        findViewById(R.id.settings).getRootView().setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        getSupportActionBar().setTitle("Settings");
+        getSupportActionBar().hide();
 
         if (findViewById(R.id.idFrameLayout) != null) {
             if (savedInstanceState != null) {

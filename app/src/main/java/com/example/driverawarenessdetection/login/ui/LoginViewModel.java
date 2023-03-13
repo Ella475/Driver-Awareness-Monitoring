@@ -11,21 +11,21 @@ import com.example.driverawarenessdetection.login.data.Result;
 import com.example.driverawarenessdetection.login.data.model.LoggedInUser;
 import com.example.driverawarenessdetection.R;
 
-class LoginViewModel extends ViewModel {
+public class LoginViewModel extends ViewModel {
 
     private final MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>();
     private final MutableLiveData<LoginResult> loginResult = new MutableLiveData<>();
     private final LoginRepository loginRepository;
 
-    LoginViewModel(LoginRepository loginRepository) {
+    public LoginViewModel(LoginRepository loginRepository) {
         this.loginRepository = loginRepository;
     }
 
-    LiveData<LoginFormState> getLoginFormState() {
+    public LiveData<LoginFormState> getLoginFormState() {
         return loginFormState;
     }
 
-    LiveData<LoginResult> getLoginResult() {
+    public LiveData<LoginResult> getLoginResult() {
         return loginResult;
     }
 

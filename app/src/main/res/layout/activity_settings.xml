@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#D0D8F4"
+    android:id="@+id/settings"
+    android:background="#003cff"
     tools:context=".SettingsActivity">
 
     <LinearLayout
@@ -15,16 +16,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         tools:layout_editor_absoluteY="16dp">
 
-        <ImageView
-            android:id="@+id/back"
-            android:layout_width="34dp"
-            android:layout_height="34dp"
-            android:src="@drawable/back" />
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="360dp"
-            android:layout_margin="15dp"
+            android:layout_margin="30dp"
             android:background="@drawable/white_bg"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
@@ -37,9 +32,9 @@
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
-                android:text="Choose which audio alerts you would like to receive"
+                android:text="@string/choose_which_audio_alerts_you_would_like_to_receive"
                 android:textAlignment="center"
-                android:textColor="#162B9F"
+                android:textColor="#003cff"
                 android:textFontWeight="@integer/material_motion_duration_long_2"
                 android:textSize="25dp"
                 tools:layout_editor_absoluteX="76dp"
@@ -61,5 +56,30 @@
         </FrameLayout>
     </LinearLayout>
 
+    <ImageView
+        android:id="@+id/back"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/back_white"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline_v_back"
+        app:layout_constraintRight_toRightOf="@+id/guideline_v_back"
+        app:layout_constraintBottom_toBottomOf="@+id/guideline_h_back"
+        app:layout_constraintTop_toTopOf="@+id/guideline_h_back"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"/>
 
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_h_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.03" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_v_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.07" />
 </androidx.constraintlayout.widget.ConstraintLayout>

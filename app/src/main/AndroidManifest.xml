@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -11,7 +12,6 @@
         android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:roundIcon="@drawable/icon"
-        android:supportsRtl="true"
         android:theme="@style/Theme.DriverAwarenessDetection"
         tools:targetApi="31"
         android:usesCleartextTraffic="true">
@@ -31,7 +31,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".login.ui.LoginActivity" />
+        <activity android:name=".LoginActivity" />
         <activity android:name=".AwarenessDetectionActivity" />
         <activity android:name=".CameraActivity" />
     </application>
