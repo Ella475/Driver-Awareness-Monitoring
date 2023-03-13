@@ -38,7 +38,7 @@ public class HttpAsyncTask extends AsyncTask<Void, Void, HashMap<String, String>
             System.out.println("Running on emulator");
         } else {
             // running on a real device
-            this.url = "http://192.168.48.1:5000/";
+            this.url = "http://192.168.1.11:5000/";
             System.out.println("Running on real device");
         }
         this.url += endpoint;
