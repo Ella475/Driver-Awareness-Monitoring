@@ -14,8 +14,6 @@ import java.util.concurrent.ExecutionException;
  */
 public class LoginDataSource {
 
-    private HashMap<String, String> response;
-
     public Result<LoggedInUser> handleUser(String username, String password) {
         Client client = Client.getInstance();
         // check if username exists
@@ -25,9 +23,5 @@ public class LoginDataSource {
         } else {
             return client.register(username, password);
         }
-    }
-
-    public void logout() {
-        // TODO: revoke authentication
     }
 }

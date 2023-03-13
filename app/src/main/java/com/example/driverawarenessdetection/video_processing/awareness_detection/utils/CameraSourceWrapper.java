@@ -2,6 +2,7 @@ package com.example.driverawarenessdetection.video_processing.awareness_detectio
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.os.Build;
 
 import com.example.driverawarenessdetection.video_processing.awareness_detection.AwarenessDetectorProcessor;
 import com.example.driverawarenessdetection.video_processing.camera.CameraSource;
@@ -35,7 +36,16 @@ public class CameraSourceWrapper {
         if (cameraSource == null) {
             cameraSource = new CameraSource(activity, graphicOverlay);
             cameraSource.setFacing(CameraSource.CAMERA_FACING_FRONT);
-            cameraSource.setStartingDegrees(270);
+            if (Build.FINGERPRINT.contains("generic") || Build.FINGERPRINT.contains("emulator")) {
+                // running on an emulator
+                // running on a real device
+                cameraSource.setStartingDegrees(180);
+                System.out.println("Running on real device." + " Starting degrees: 180");
+            } else {
+                // running on a real device
+                cameraSource.setStartingDegrees(270);
+                System.out.println("Running on real device." + " Starting degrees: 270");
+            }
         }
         setProcessor();
     }

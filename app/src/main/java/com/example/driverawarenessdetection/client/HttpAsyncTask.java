@@ -1,6 +1,7 @@
 package com.example.driverawarenessdetection.client;
 
 import android.os.AsyncTask;
+import android.os.Build;
 
 import com.example.driverawarenessdetection.login.data.Result;
 import com.google.gson.Gson;
@@ -25,13 +26,22 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class HttpAsyncTask extends AsyncTask<Void, Void, HashMap<String, String>> {
-    private String url = "http://10.0.2.2:5000/";
+    private String url;
     private HashMap<String, String> payload;
     private String method;
     private OnResponseListener onResponseListener;
 
     public HttpAsyncTask(String endpoint, HashMap<String, String> payload, String method, OnResponseListener onResponseListener) {
-        this.url = this.url + endpoint;
+        if (Build.FINGERPRINT.contains("generic") || Build.FINGERPRINT.contains("emulator")) {
+            // running on an emulator
+            this.url = "http://10.0.2.2:5000/";
+            System.out.println("Running on emulator");
+        } else {
+            // running on a real device
+            this.url = "http://192.168.48.1:5000/";
+            System.out.println("Running on real device");
+        }
+        this.url += endpoint;
         this.payload = payload;
         this.method = method;
         this.onResponseListener = onResponseListener;
@@ -154,16 +164,6 @@ public class HttpAsyncTask extends AsyncTask<Void, Void, HashMap<String, String>
 
         return result.toString();
     }
-
-//    private HashMap<String, String> extractResponseMapFromJsonString(String jsonResponse) {
-//        HashMap<String, String> responseMap = new HashMap<>();
-//        String[] responseArray = jsonResponse.split(",");
-//        for (String response : responseArray) {
-//            String[] responsePair = response.split(":");
-//            responseMap.put(responsePair[0], responsePair[1]);
-//        }
-//        return responseMap;
-//    }
 
     public interface OnResponseListener {
         void onResponse(HashMap<String, String> responseMap);
