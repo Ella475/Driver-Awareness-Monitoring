@@ -1,6 +1,7 @@
 package com.example.driverawarenessdetection.client;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -8,12 +9,16 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.Objects;
+import java.util.concurrent.ExecutionException;
+
+import com.example.driverawarenessdetection.login.data.Result;
+import com.example.driverawarenessdetection.login.data.model.LoggedInUser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Client {
 
     private static Client instance = null;
-    private final String serverUrl = "http://192.168.48.1:5000/";
 
     private Client() {
         // Private constructor to prevent instantiation from outside
@@ -26,88 +31,114 @@ public class Client {
         return instance;
     }
 
-    public HashMap<String, String> sendPostRequest(String endpoint, HashMap<String, String> payload) throws Exception {
-        URL url = new URL(serverUrl + endpoint);
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("POST");
-        connection.setDoOutput(true);
+    public boolean checkUserExists(String username){
+        String endpoint = "users";
+        HashMap<String, String> payload = new HashMap<String, String>() {{
+            put("username", username);
+        }};
 
-        // Convert the request body to JSON
-        ObjectMapper mapper = new ObjectMapper();
-        String requestBody = mapper.writeValueAsString(payload);
-        // Send the request payload
-        connection.setDoOutput(true);
-        connection.setRequestProperty("Content-Type", "application/json");
-        try (OutputStream os = connection.getOutputStream()) {
-            byte[] input = requestBody.getBytes(StandardCharsets.UTF_8);
-            os.write(input, 0, input.length);
+        String method = "GET";
+
+        // Create a new HttpAsyncTask with the specified parameters
+        HttpAsyncTask httpAsyncTask = new HttpAsyncTask(endpoint, payload, method, responseMap -> {});
+
+        // Execute the HttpAsyncTask
+        httpAsyncTask.execute();
+
+        HashMap<String, String> response = new HashMap<>();
+        // Wait for the response
+        try {
+            response = httpAsyncTask.get();
+            // Do something with the response
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
         }
 
-        BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-        String line;
-        StringBuilder response = new StringBuilder();
-        while ((line = reader.readLine()) != null) {
-            response.append(line);
+        // if response is success and response is false, user does not exist
+        if ((Objects.equals(response.get("success"), "true")) &&
+                Objects.equals(response.get("response"), "false")) {
+            System.out.println("User " + username + " does not exist");
+            return false;
         }
-        reader.close();
 
-        // Convert response to HashMap
-        String responseString = response.toString();
-        HashMap<String, String> responseMap = new HashMap<>();
-        String[] keyValuePairs = responseString.split(",");
-        for (String pair : keyValuePairs) {
-            String[] entry = pair.split(":");
-            // remove quotes from response
-            entry[0] = entry[0].replace("\"", "");
-            entry[1] = entry[1].replace("\"", "");
-            responseMap.put(entry[0].trim(), entry[1].trim());
-        }
-        return responseMap;
+        System.out.println("User " + username + " exists");
+        return true;
+
     }
 
-    public HashMap<String, String> sendGetRequest(String endpoint, HashMap<String, String> payload) throws Exception {
-        URL url = new URL(serverUrl + endpoint);
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("GET");
+    public Result register(String username, String password){
+        String endpoint = "users";
+        HashMap<String, String> payload = new HashMap<String, String>() {{
+            put("username", username);
+            put("password", password);
+        }};
 
-        // Convert the request body to JSON
-        ObjectMapper mapper = new ObjectMapper();
-        String requestBody = mapper.writeValueAsString(payload);
-        // Send the request payload
-        connection.setDoOutput(true);
-        connection.setRequestProperty("Content-Type", "application/json");
-        try (OutputStream os = connection.getOutputStream()) {
-            byte[] input = requestBody.getBytes(StandardCharsets.UTF_8);
-            os.write(input, 0, input.length);
+        String method = "POST";
+
+        // Create a new HttpAsyncTask with the specified parameters
+        HttpAsyncTask httpAsyncTask = new HttpAsyncTask(endpoint, payload, method, responseMap -> {});
+
+        // Execute the HttpAsyncTask
+        httpAsyncTask.execute();
+
+        HashMap<String, String> response = new HashMap<>();
+
+        // Wait for the response
+        try {
+            response = httpAsyncTask.get();
+            // Do something with the response
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
         }
 
-        BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-        String line;
-        StringBuilder response = new StringBuilder();
-        while ((line = reader.readLine()) != null) {
-            response.append(line);
+        // if  we succeeded and response is not false, user was created
+        if ((Objects.equals(response.get("success"), "true")) &&
+                !Objects.equals(response.get("response"), "false")) {
+            System.out.println("User " + username + " was created successfully!");
+            return new Result.Success(new LoggedInUser(
+                    response.get("response"),
+                    username));
         }
-        reader.close();
+        System.out.println("User " + username + " failed to register");
+        return new Result.Error(new IOException("Error registering user"));
 
-        // Convert response to HashMap
-        String responseString = response.toString();
-        HashMap<String, String> responseMap = new HashMap<>();
-        String[] keyValuePairs = responseString.split(",");
-        for (String pair : keyValuePairs) {
-            String[] entry = pair.split(":");
-            // remove quotes from response
-            entry[0] = entry[0].replace("\"", "");
-            entry[1] = entry[1].replace("\"", "");
-            responseMap.put(entry[0].trim(), entry[1].trim());
-        }
-        return responseMap;
     }
 
-    private String getPayloadString(HashMap<String, String> payload) {
-        StringBuilder payloadString = new StringBuilder();
-        for (String key : payload.keySet()) {
-            payloadString.append(key).append("=").append(payload.get(key)).append("&");
+    public Result login (String username, String password){
+        String endpoint = "users";
+        HashMap<String, String> payload = new HashMap<String, String>() {{
+            put("username", username);
+            put("password", password);
+        }};
+
+        String method = "GET";
+
+        // Create a new HttpAsyncTask with the specified parameters
+        HttpAsyncTask httpAsyncTask = new HttpAsyncTask(endpoint, payload, method, responseMap -> {});
+
+        // Execute the HttpAsyncTask
+        httpAsyncTask.execute();
+
+        HashMap<String, String> response = new HashMap<>();
+
+        // Wait for the response
+        try {
+            response = httpAsyncTask.get();
+            // Do something with the response
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
         }
-        return payloadString.toString();
+
+        // if  we succeeded and response is not false, allow login
+        if ((Objects.equals(response.get("success"), "true")) &&
+                !Objects.equals(response.get("response"), "false")) {
+            System.out.println("User " + username + " logged in successfully!");
+            return new Result.Success(new LoggedInUser(
+                    response.get("response"),
+                    username));
+        }
+        System.out.println("User " + username + " failed to login");
+        return new Result.Error(new IOException("Username already exists. Password incorrect!"));
+
     }
 }

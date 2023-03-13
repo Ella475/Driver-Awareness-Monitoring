@@ -60,6 +60,7 @@ public class HttpAsyncTask extends AsyncTask<Void, Void, HashMap<String, String>
             urlConnection.setConnectTimeout(5000);
             urlConnection.setReadTimeout(5000);
             urlConnection.addRequestProperty("Content-Type", "application/json; utf-8");
+            urlConnection.addRequestProperty("Accept", "application/json");
 
 
             // Send POST request
@@ -94,7 +95,6 @@ public class HttpAsyncTask extends AsyncTask<Void, Void, HashMap<String, String>
 
                 // Create a new Gson instance
                 Gson gson = new Gson();
-
                 // Parse the JSON response string into a HashMap
                 Type type = new TypeToken<HashMap<String, String>>() {}.getType();
                 responseMap.putAll(gson.fromJson(response.toString(), type));
@@ -155,15 +155,15 @@ public class HttpAsyncTask extends AsyncTask<Void, Void, HashMap<String, String>
         return result.toString();
     }
 
-    private HashMap<String, String> extractResponseMapFromJsonString(String jsonResponse) {
-        HashMap<String, String> responseMap = new HashMap<>();
-        String[] responseArray = jsonResponse.split(",");
-        for (String response : responseArray) {
-            String[] responsePair = response.split(":");
-            responseMap.put(responsePair[0], responsePair[1]);
-        }
-        return responseMap;
-    }
+//    private HashMap<String, String> extractResponseMapFromJsonString(String jsonResponse) {
+//        HashMap<String, String> responseMap = new HashMap<>();
+//        String[] responseArray = jsonResponse.split(",");
+//        for (String response : responseArray) {
+//            String[] responsePair = response.split(":");
+//            responseMap.put(responsePair[0], responsePair[1]);
+//        }
+//        return responseMap;
+//    }
 
     public interface OnResponseListener {
         void onResponse(HashMap<String, String> responseMap);

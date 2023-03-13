@@ -68,4 +68,10 @@ public class MainActivity extends AppCompatActivity implements LifecycleObserver
         super.onResume();
         slide.resetSlider();
     }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
+
 }

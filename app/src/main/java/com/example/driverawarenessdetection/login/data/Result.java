@@ -15,7 +15,7 @@ public class Result<T> {
             return "Success[data=" + success.getData().toString() + "]";
         } else if (this instanceof Result.Error) {
             Result.Error error = (Result.Error) this;
-            return "Error: " + error.getError().getMessage();
+            return error.getError().getMessage();
         }
         return "";
     }
