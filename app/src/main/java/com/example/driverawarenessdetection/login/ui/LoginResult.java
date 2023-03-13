@@ -7,25 +7,26 @@ import androidx.annotation.Nullable;
  */
 class LoginResult {
     @Nullable
-    private LoggedInUserView success;
+    private String success;
     @Nullable
-    private Integer error;
+    private String error;
 
-    LoginResult(@Nullable Integer error) {
+    LoginResult(@Nullable String error) {
         this.error = error;
     }
 
     LoginResult(@Nullable LoggedInUserView success) {
-        this.success = success;
+        assert success != null;
+        this.success = success.getDisplayName();
     }
 
     @Nullable
-    LoggedInUserView getSuccess() {
+    String getSuccess() {
         return success;
     }
 
     @Nullable
-    Integer getError() {
+    String getError() {
         return error;
     }
 }
