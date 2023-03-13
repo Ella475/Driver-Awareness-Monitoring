@@ -1,26 +1,29 @@
 package com.example.driverawarenessdetection.login.data;
 
+import com.example.driverawarenessdetection.client.Client;
+import com.example.driverawarenessdetection.client.HttpAsyncTask;
 import com.example.driverawarenessdetection.login.data.model.LoggedInUser;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Objects;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Class that handles authentication w/ login credentials and retrieves user information.
  */
 public class LoginDataSource {
 
-    public Result<LoggedInUser> login(String username, String password) {
+    private HashMap<String, String> response;
 
-        try {
-            // TODO: handle loggedInUser authentication
-            LoggedInUser newUser =
-                    new LoggedInUser(
-                            java.util.UUID.randomUUID().toString(),
-                            username);
-            // TODO: save credentials
-            return new Result.Success<>(newUser);
-        } catch (Exception e) {
-            return new Result.Error(new IOException("Error logging in", e));
+    public Result<LoggedInUser> handleUser(String username, String password) {
+        Client client = Client.getInstance();
+        // check if username exists
+        boolean userExists = client.checkUserExists(username);
+        if (userExists) {
+            return client.login(username, password);
+        } else {
+            return client.register(username, password);
         }
     }
 
