@@ -44,6 +44,10 @@ public class LoginRepository {
         this.user = user;
     }
 
+    public LoggedInUser getLoggedInUser() {
+        return user;
+    }
+
     public Result login(String username, String password) {
         Result result = dataSource.handleUser(username, password);
         if (result instanceof Result.Success) {

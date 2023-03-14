@@ -13,7 +13,6 @@ public class AwarenessManager implements AwarenessDetectorInterface{
     private final AttentionDetector attention_detector;
     private volatile boolean invokeCalibration = false;
     private Instant start_calibration_time;
-    private long calibrationDelay = 5;
 
 
     AwarenessManager(int max_history, float sleep_threshold,
@@ -39,6 +38,8 @@ public class AwarenessManager implements AwarenessDetectorInterface{
 
     @Override
     public void processFace(Face face) {
+        long calibrationDelay = 5;
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             if (invokeCalibration &&
                     Duration.between(start_calibration_time, Instant.now()).getSeconds() > calibrationDelay) {
