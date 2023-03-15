@@ -11,8 +11,8 @@
         android:id="@+id/bg"
         android:layout_width="350dp"
         android:layout_height="300dp"
-        android:layout_marginTop="400dp"
         android:layout_marginLeft="25dp"
+        android:layout_marginTop="400dp"
         android:layout_marginRight="25dp"
         android:layout_marginBottom="25dp"
         android:background="@drawable/white_bg"
@@ -36,12 +36,12 @@
         android:id="@+id/bg2"
         android:layout_width="350dp"
         android:layout_height="300dp"
-        android:layout_marginTop="70dp"
-        android:background="@drawable/white_bg"
-        android:orientation="horizontal"
         android:layout_marginLeft="25dp"
+        android:layout_marginTop="70dp"
         android:layout_marginRight="25dp"
         android:layout_marginBottom="325dp"
+        android:background="@drawable/white_bg"
+        android:orientation="horizontal"
         android:selectAllOnFocus="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.737"
@@ -49,14 +49,13 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="SpeakableTextPresentCheck">
 
-        <com.github.mikephil.charting.charts.BarChart        android:id="@+id/bar_chart_graph"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="10dp" />
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/bar_chart_graph"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp" />
 
     </LinearLayout>
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

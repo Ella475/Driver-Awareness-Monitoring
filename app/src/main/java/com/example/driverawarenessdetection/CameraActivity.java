@@ -23,7 +23,7 @@ public class CameraActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        getSupportActionBar().hide();
+        Objects.requireNonNull(getSupportActionBar()).hide();
 
         CameraSourcePreview preview = findViewById(R.id.camera_source_preview);
         GraphicOverlay graphicOverlay = findViewById(R.id.graphic_overlay);

@@ -18,6 +18,7 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class StatisticsActivity extends AppCompatActivity {
 
@@ -26,6 +27,7 @@ public class StatisticsActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
+        Objects.requireNonNull(getSupportActionBar()).hide();
         initLineChart();
         initBarChart();
 

@@ -16,6 +16,8 @@ import com.example.driverawarenessdetection.login.data.LoginDataSource;
 import com.example.driverawarenessdetection.login.data.LoginRepository;
 import com.ncorti.slidetoact.SlideToActView;
 
+import java.util.Objects;
+
 public class MainActivity extends AppCompatActivity implements LifecycleObserver {
     final int CAMERA_REQUEST_CODE = 1001;
     private SlideToActView slide;
@@ -35,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements LifecycleObserver
         findViewById(R.id.main_id).getRootView().setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        getSupportActionBar().hide();
+        Objects.requireNonNull(getSupportActionBar()).hide();
 
         grantCameraAndStoragePermission();
         initView();
