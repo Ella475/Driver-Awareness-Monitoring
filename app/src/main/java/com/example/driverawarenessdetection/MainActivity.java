@@ -49,6 +49,13 @@ public class MainActivity extends AppCompatActivity implements LifecycleObserver
             startActivity(switchCameraActivityIntent);
         });
 
+        ImageView statisticsButton = findViewById(R.id.statistics);
+        statisticsButton.setOnClickListener(view -> {
+            Intent switchStatisticsActivityIntent = new Intent(MainActivity.this,
+                    StatisticsActivity.class);
+            startActivity(switchStatisticsActivityIntent);
+        });
+
         ImageView settingsButton = findViewById(R.id.settings);
         settingsButton.setOnClickListener(view -> {
             Intent switchSettingsActivityIntent = new Intent(MainActivity.this,
