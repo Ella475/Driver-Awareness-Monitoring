@@ -5,6 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.Color;
 import android.os.Bundle;
 
+import com.example.driverawarenessdetection.client.DriveData;
+import com.example.driverawarenessdetection.client.DriveDataPoint;
+import com.example.driverawarenessdetection.client.DriveDataReceiver;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
@@ -17,10 +20,14 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
+import org.json.JSONException;
+
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class StatisticsActivity extends AppCompatActivity {
+    private DriveDataReceiver driveDataReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,53 +35,41 @@ public class StatisticsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
         Objects.requireNonNull(getSupportActionBar()).hide();
+
+        this.driveDataReceiver = new DriveDataReceiver();
+        try {
+            driveDataReceiver.receiveDriveData();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         initLineChart();
         initBarChart();
-
-
     }
 
     private void initBarChart() {
+        List<DriveDataPoint> driveDataList = driveDataReceiver.getDriveData().getDriveDataList();
         BarChart barChart = findViewById(R.id.bar_chart_graph);
         ArrayList<Double> valueList = new ArrayList<>();
         ArrayList<BarEntry> entries = new ArrayList<>();
-        String title = " Avg Obtain Marks";
+        String title = "Awareness Percentage";
         ArrayList<String> xAxisValues = new ArrayList<>();
-        xAxisValues.add("2001");
-        xAxisValues.add("2002");
-        xAxisValues.add("2003");
-        xAxisValues.add("2004");
-        xAxisValues.add("2005");
-        xAxisValues.add("2006");
-        xAxisValues.add("2007");
-        xAxisValues.add("2008");
-        xAxisValues.add("2009");
-        xAxisValues.add("2010");
-        xAxisValues.add("2011");
-        xAxisValues.add("2012");
-        xAxisValues.add("2013");
-        xAxisValues.add("2014");
-        xAxisValues.add("2015");
+
+
+        // loop through the driveDataList and add awarenessPercentage to valueList
+        int i = 0;
+        for (DriveDataPoint driveDataPoint : driveDataList) {
+            valueList.add((double) driveDataPoint.getAwarenessPercentage());
+            i++;
+            xAxisValues.add(Integer.toString(i));
+        }
+
 
         barChart.getXAxis().setValueFormatter(new com.github.mikephil.charting.formatter.IndexAxisValueFormatter(xAxisValues));
 
-        //input data
-        valueList.add(20.1);
-        valueList.add(30.1);
-        valueList.add(50.1);
-        valueList.add(30.1);
-        valueList.add(60.1);
-        valueList.add(60.1);
-        valueList.add(60.1);
-        valueList.add(60.1);
-        valueList.add(65.1);
-        valueList.add(60.1);
-        valueList.add(55.1);
-        valueList.add(60.1);
-        valueList.add(50.1);
 
         //fit the data into a bar
-        for (int i = 0; i < valueList.size(); i++) {
+        for (i = 0; i < valueList.size(); i++) {
             BarEntry barEntry = new BarEntry(i, valueList.get(i).floatValue());
             entries.add(barEntry);
 

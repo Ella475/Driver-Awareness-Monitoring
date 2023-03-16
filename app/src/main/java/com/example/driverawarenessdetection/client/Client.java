@@ -26,7 +26,8 @@ public class Client {
 
     private HttpAsyncTask sendAsyncTask(String endpoint, HashMap<String, String> payload, String method) {
         // Create a new HttpAsyncTask with the specified parameters
-        HttpAsyncTask httpAsyncTask = new HttpAsyncTask(endpoint, payload, method, responseMap -> {});
+        HttpAsyncTask httpAsyncTask = new HttpAsyncTask(endpoint, payload, method, responseMap -> {
+        });
 
         // Execute the HttpAsyncTask
         httpAsyncTask.execute();
@@ -45,7 +46,7 @@ public class Client {
         return response;
     }
 
-    public boolean checkUserExists(String username){
+    public boolean checkUserExists(String username) {
         String endpoint = "users";
         HashMap<String, String> payload = new HashMap<String, String>() {{
             put("username", username);
@@ -67,7 +68,7 @@ public class Client {
 
     }
 
-    public Result register(String username, String password){
+    public Result register(String username, String password) {
         String endpoint = "users";
         HashMap<String, String> payload = new HashMap<String, String>() {{
             put("username", username);
@@ -92,7 +93,7 @@ public class Client {
 
     }
 
-    public Result login (String username, String password){
+    public Result login(String username, String password) {
         String endpoint = "users";
         HashMap<String, String> payload = new HashMap<String, String>() {{
             put("username", username);
@@ -118,8 +119,8 @@ public class Client {
     }
 
     public String startDrive(String userId) {
-    String endpoint = "drives";
-        HashMap<String, String> payload =  new HashMap<String, String>() {{
+        String endpoint = "drives";
+        HashMap<String, String> payload = new HashMap<String, String>() {{
             put("user_id", userId);
         }};
 
@@ -138,9 +139,8 @@ public class Client {
         return null;
     }
 
-
     public void sendDriveData(String drive_id, int awarenessPercentage, boolean asleep,
-                              boolean inattentive){
+                              boolean inattentive) {
         String endpoint = "drives_data";
 
         HashMap<String, String> payload = new HashMap<String, String>() {{
@@ -154,4 +154,48 @@ public class Client {
 
         sendAsyncTask(endpoint, payload, method);
     }
+
+    public String getLastDriveData(String userId) {
+        String endpoint = "drives_data";
+        HashMap<String, String> payload = new HashMap<String, String>() {{
+            put("user_id", userId);
+        }};
+
+        String method = "GET";
+
+        HashMap<String, String> response = getResponse(sendAsyncTask(endpoint, payload, method));
+
+        if (Objects.equals(response.get("success"), "true")) {
+            System.out.println("Last drive data retrieved successfully!");
+            return response.get("response");
+
+        } else {
+            System.out.println("Last drive data failed to retrieve");
+            return null;
+        }
+    }
+
+    public String getDriveData(String drive_id) {
+
+        String endpoint = "drives_data";
+        HashMap<String, String> payload = new HashMap<String, String>() {{
+            put("drive_id", drive_id);
+        }};
+
+        String method = "GET";
+
+        sendAsyncTask(endpoint, payload, method);
+
+        HashMap<String, String> response = getResponse(sendAsyncTask(endpoint, payload, method));
+
+        if (Objects.equals(response.get("success"), "true")) {
+            System.out.println("Drive data retrieved successfully!");
+            return response.get("response");
+
+        } else {
+            System.out.println("Drive data failed to retrieve");
+            return null;
+        }
+    }
+
 }

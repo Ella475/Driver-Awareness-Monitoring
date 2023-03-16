@@ -12,7 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.ColorInt;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.driverawarenessdetection.client.DriveDataCollector;
+import com.example.driverawarenessdetection.client.DriveDataSender;
 import com.example.driverawarenessdetection.video_processing.awareness_detection.AwarenessManager;
 import com.example.driverawarenessdetection.video_processing.awareness_detection.alerts.CommandManager;
 import com.example.driverawarenessdetection.video_processing.awareness_detection.utils.CameraSourceWrapper;
@@ -39,7 +39,7 @@ public class AwarenessDetectionActivity extends AppCompatActivity {
     boolean asleep = false;
     boolean inattentive = false;
     private volatile boolean stop = false;
-    private DriveDataCollector driveDataCollector;
+    private DriveDataSender driveDataSender;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +56,7 @@ public class AwarenessDetectionActivity extends AppCompatActivity {
         managerHashMap = csw.awarenessProcessor.onSuccessDetector.awarenessHashMap;
         commandManager = new CommandManager(this, percentageCutOff);
         commandManager.start();
-        driveDataCollector = new DriveDataCollector();
+        driveDataSender = new DriveDataSender();
 
         initView();
     }
@@ -70,7 +70,7 @@ public class AwarenessDetectionActivity extends AppCompatActivity {
                 asleep = manager.isAsleep();
                 inattentive = manager.isInattentive();
                 // send to DriveDataCollector
-                driveDataCollector.sendDriveData(awarenessPercentage, asleep, inattentive);
+                driveDataSender.sendDriveData(awarenessPercentage, asleep, inattentive);
             }
         }
 
