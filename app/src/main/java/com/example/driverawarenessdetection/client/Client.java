@@ -1,20 +1,19 @@
 package com.example.driverawarenessdetection.client;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
 import com.example.driverawarenessdetection.login.data.Result;
 import com.example.driverawarenessdetection.login.data.model.LoggedInUser;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 
 public class Client {
 
@@ -31,20 +30,17 @@ public class Client {
         return instance;
     }
 
-    public boolean checkUserExists(String username){
-        String endpoint = "users";
-        HashMap<String, String> payload = new HashMap<String, String>() {{
-            put("username", username);
-        }};
-
-        String method = "GET";
-
+    private HttpAsyncTask sendAsyncTask(String endpoint, HashMap<String, String> payload, String method) {
         // Create a new HttpAsyncTask with the specified parameters
-        HttpAsyncTask httpAsyncTask = new HttpAsyncTask(endpoint, payload, method, responseMap -> {});
+        HttpAsyncTask httpAsyncTask = new HttpAsyncTask(endpoint, payload, method, responseMap -> {
+        });
 
         // Execute the HttpAsyncTask
         httpAsyncTask.execute();
+        return httpAsyncTask;
+    }
 
+    private HashMap<String, String> getResponse(HttpAsyncTask httpAsyncTask) {
         HashMap<String, String> response = new HashMap<>();
         // Wait for the response
         try {
@@ -53,6 +49,18 @@ public class Client {
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
+        return response;
+    }
+
+    public boolean checkUserExists(String username) {
+        String endpoint = "users";
+        HashMap<String, String> payload = new HashMap<String, String>() {{
+            put("username", username);
+        }};
+
+        String method = "GET";
+
+        HashMap<String, String> response = getResponse(sendAsyncTask(endpoint, payload, method));
 
         // if response is success and response is false, user does not exist
         if ((Objects.equals(response.get("success"), "true")) &&
@@ -66,7 +74,7 @@ public class Client {
 
     }
 
-    public Result register(String username, String password){
+    public Result register(String username, String password) {
         String endpoint = "users";
         HashMap<String, String> payload = new HashMap<String, String>() {{
             put("username", username);
@@ -75,36 +83,23 @@ public class Client {
 
         String method = "POST";
 
-        // Create a new HttpAsyncTask with the specified parameters
-        HttpAsyncTask httpAsyncTask = new HttpAsyncTask(endpoint, payload, method, responseMap -> {});
-
-        // Execute the HttpAsyncTask
-        httpAsyncTask.execute();
-
-        HashMap<String, String> response = new HashMap<>();
-
-        // Wait for the response
-        try {
-            response = httpAsyncTask.get();
-            // Do something with the response
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
+        HashMap<String, String> response = getResponse(sendAsyncTask(endpoint, payload, method));
 
         // if  we succeeded and response is not false, user was created
         if ((Objects.equals(response.get("success"), "true")) &&
                 !Objects.equals(response.get("response"), "false")) {
             System.out.println("User " + username + " was created successfully!");
-            return new Result.Success(new LoggedInUser(
+            LoggedInUser user = new LoggedInUser(
                     response.get("response"),
-                    username));
+                    username);
+            return new Result.Success(user);
         }
         System.out.println("User " + username + " failed to register");
         return new Result.Error(new IOException("Error registering user"));
 
     }
 
-    public Result login (String username, String password){
+    public Result login(String username, String password) {
         String endpoint = "users";
         HashMap<String, String> payload = new HashMap<String, String>() {{
             put("username", username);
@@ -113,32 +108,111 @@ public class Client {
 
         String method = "GET";
 
-        // Create a new HttpAsyncTask with the specified parameters
-        HttpAsyncTask httpAsyncTask = new HttpAsyncTask(endpoint, payload, method, responseMap -> {});
-
-        // Execute the HttpAsyncTask
-        httpAsyncTask.execute();
-
-        HashMap<String, String> response = new HashMap<>();
-
-        // Wait for the response
-        try {
-            response = httpAsyncTask.get();
-            // Do something with the response
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
+        HashMap<String, String> response = getResponse(sendAsyncTask(endpoint, payload, method));
 
         // if  we succeeded and response is not false, allow login
         if ((Objects.equals(response.get("success"), "true")) &&
                 !Objects.equals(response.get("response"), "false")) {
             System.out.println("User " + username + " logged in successfully!");
-            return new Result.Success(new LoggedInUser(
+            LoggedInUser user = new LoggedInUser(
                     response.get("response"),
-                    username));
+                    username);
+            return new Result.Success(user);
         }
         System.out.println("User " + username + " failed to login");
         return new Result.Error(new IOException("Username already exists. Password incorrect!"));
 
     }
+
+    public String startDrive(String userId) {
+        String endpoint = "drives";
+        HashMap<String, String> payload = new HashMap<String, String>() {{
+            put("user_id", userId);
+        }};
+
+        String method = "POST";
+
+        HashMap<String, String> response = getResponse(sendAsyncTask(endpoint, payload, method));
+
+        // if we succeeded and response is not false, return drive id
+        if ((Objects.equals(response.get("success"), "true")) &&
+                !Objects.equals(response.get("response"), "false")) {
+            String drive_id = response.get("response");
+            System.out.println("Started drive " + drive_id + "for user " + userId);
+            return drive_id;
+        }
+        System.out.println("Drive failed to start");
+        return null;
+    }
+
+    public List<String> getDrives(String userId) throws JSONException {
+        String endpoint = "drives";
+        HashMap<String, String> payload = new HashMap<String, String>() {{
+            put("user_id", userId);
+        }};
+
+        String method = "GET";
+
+        HashMap<String, String> response = getResponse(sendAsyncTask(endpoint, payload, method));
+
+        if (Objects.equals(response.get("success"), "true")) {
+            System.out.println("Drives retrieved successfully!");
+            return parseDriveIds(response.get("response"));
+
+        } else {
+            System.out.println("Drives failed to retrieve");
+            return null;
+        }
+    }
+
+    private List<String> parseDriveIds(String jsonString) throws JSONException {
+        if (jsonString == null) {
+            return null;
+        }
+        JSONArray jsonArray = new JSONArray(jsonString);
+        List<String> driveIds = new ArrayList<>();
+        for (int i = 0; i < jsonArray.length(); i++) {
+            JSONObject jsonObject = jsonArray.getJSONObject(i);
+            int driveId = jsonObject.getInt("id");
+            driveIds.add(Integer.toString(driveId));
+        }
+        return driveIds;
+    }
+
+    public void sendDriveData(String drive_id, int awarenessPercentage, boolean asleep,
+                              boolean inattentive) {
+        String endpoint = "drives_data";
+
+        HashMap<String, String> payload = new HashMap<String, String>() {{
+            put("drive_id", drive_id);
+            put("awareness_percentage", Integer.toString(awarenessPercentage));
+            put("asleep", Boolean.toString(asleep));
+            put("inattentive", Boolean.toString(inattentive));
+        }};
+
+        String method = "POST";
+
+        sendAsyncTask(endpoint, payload, method);
+    }
+
+    public String getDriveData(String driveId) {
+        String endpoint = "drives_data";
+        HashMap<String, String> payload = new HashMap<String, String>() {{
+            put("drive_id", driveId);
+        }};
+
+        String method = "GET";
+
+        HashMap<String, String> response = getResponse(sendAsyncTask(endpoint, payload, method));
+
+        if (Objects.equals(response.get("success"), "true")) {
+            System.out.println("Drive data retrieved successfully!");
+            return response.get("response");
+
+        } else {
+            System.out.println("Drive data failed to retrieve");
+            return null;
+        }
+    }
+
 }

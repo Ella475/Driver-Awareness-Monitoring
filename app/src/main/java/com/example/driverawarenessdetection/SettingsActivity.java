@@ -13,6 +13,8 @@ import com.example.driverawarenessdetection.settings.SettingsFragment;
 import com.example.driverawarenessdetection.video_processing.awareness_detection.alerts.CommandManager;
 import com.example.driverawarenessdetection.video_processing.awareness_detection.alerts.DrivingAlertTiming;
 
+import java.util.Objects;
+
 public class SettingsActivity extends AppCompatActivity {
 
     @Override
@@ -22,7 +24,7 @@ public class SettingsActivity extends AppCompatActivity {
         findViewById(R.id.settings).getRootView().setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        getSupportActionBar().hide();
+        Objects.requireNonNull(getSupportActionBar()).hide();
 
         if (findViewById(R.id.idFrameLayout) != null) {
             if (savedInstanceState != null) {

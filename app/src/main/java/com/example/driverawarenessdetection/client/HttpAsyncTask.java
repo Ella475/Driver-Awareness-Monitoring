@@ -3,6 +3,7 @@ package com.example.driverawarenessdetection.client;
 import android.os.AsyncTask;
 import android.os.Build;
 
+import com.example.driverawarenessdetection.ServerIpAddress;
 import com.example.driverawarenessdetection.login.data.Result;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -38,7 +39,7 @@ public class HttpAsyncTask extends AsyncTask<Void, Void, HashMap<String, String>
             System.out.println("Running on emulator");
         } else {
             // running on a real device
-            this.url = "http://192.168.1.11:5000/";
+            this.url = "http://" + ServerIpAddress.IP_ADDRESS + ":5000/";
             System.out.println("Running on real device");
         }
         this.url += endpoint;
@@ -132,25 +133,6 @@ public class HttpAsyncTask extends AsyncTask<Void, Void, HashMap<String, String>
     protected void onPostExecute(HashMap<String, String> responseMap) {
         onResponseListener.onResponse(responseMap);
     }
-
-//    private String getPostDataString(HashMap<String, String> params) throws UnsupportedEncodingException {
-//        StringBuilder result = new StringBuilder();
-//        result.append("{");
-//        for (Map.Entry<String, String> entry : params.entrySet()) {
-//            result.append("\"");
-//            result.append(URLEncoder.encode(entry.getKey(), "UTF-8"));  // key
-//            result.append("\"");
-//            result.append(":");
-//            result.append("\"");
-//            result.append(URLEncoder.encode(entry.getValue(), "UTF-8")); // value
-//            result.append("\"");
-//            result.append(",");
-//        }
-//        result.deleteCharAt(result.length() - 1);
-//        result.append("}");
-//
-//        return result.toString();
-//    }
 
     private String getParamsString(HashMap<String, String> params) throws UnsupportedEncodingException {
         StringBuilder result = new StringBuilder();

@@ -4,7 +4,6 @@ import android.app.Activity;
 
 import android.os.Bundle;
 
-import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.text.Editable;
@@ -15,11 +14,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.driverawarenessdetection.databinding.ActivityLoginBinding;
 import com.example.driverawarenessdetection.login.data.LoginDataSource;
 import com.example.driverawarenessdetection.login.data.LoginRepository;
-import com.example.driverawarenessdetection.login.ui.LoggedInUserView;
 import com.example.driverawarenessdetection.login.ui.LoginViewModel;
+
+import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -32,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         findViewById(R.id.container).getRootView().setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        getSupportActionBar().hide();
+        Objects.requireNonNull(getSupportActionBar()).hide();
 
         loginViewModel = new LoginViewModel(LoginRepository.getInstance(new LoginDataSource()));
 
