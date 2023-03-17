@@ -7,21 +7,94 @@
     android:background="#0B0BD5"
     tools:context=".StatisticsActivity">
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_v_0.5"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_h_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.3" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_h_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.75" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_h_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_v_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.1" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_v_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.9" />
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/right_button"
+        android:src="@drawable/right_enabeled"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline_v_right"
+        app:layout_constraintRight_toRightOf="@+id/guideline_v_right"
+        app:layout_constraintTop_toTopOf="@+id/guideline_h_text"
+        app:layout_constraintBottom_toBottomOf="@+id/guideline_h_text" />
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/left_button"
+        android:src="@drawable/left_enabeled"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline_v_left"
+        app:layout_constraintRight_toRightOf="@+id/guideline_v_left"
+        app:layout_constraintTop_toTopOf="@+id/guideline_h_text"
+        app:layout_constraintBottom_toBottomOf="@+id/guideline_h_text" />
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/title"
+        android:textColor="#FFFFFF"
+        android:text="Statistics"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline_v_0.5"
+        app:layout_constraintRight_toRightOf="@+id/guideline_v_0.5"
+        app:layout_constraintTop_toTopOf="@+id/guideline_h_text"
+        app:layout_constraintBottom_toBottomOf="@+id/guideline_h_text" />
+
     <LinearLayout
         android:id="@+id/bg"
         android:layout_width="350dp"
         android:layout_height="300dp"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="400dp"
-        android:layout_marginRight="25dp"
-        android:layout_marginBottom="25dp"
         android:background="@drawable/white_bg"
         android:orientation="horizontal"
         android:selectAllOnFocus="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.737"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline_v_0.5"
+        app:layout_constraintRight_toRightOf="@+id/guideline_v_0.5"
+        app:layout_constraintBottom_toBottomOf="@+id/guideline_h_bottom"
+        app:layout_constraintTop_toTopOf="@+id/guideline_h_bottom"
         tools:ignore="SpeakableTextPresentCheck">
 
         <com.github.mikephil.charting.charts.PieChart
@@ -36,17 +109,13 @@
         android:id="@+id/bg2"
         android:layout_width="350dp"
         android:layout_height="300dp"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="70dp"
-        android:layout_marginRight="25dp"
-        android:layout_marginBottom="325dp"
         android:background="@drawable/white_bg"
         android:orientation="horizontal"
         android:selectAllOnFocus="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.737"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline_v_0.5"
+        app:layout_constraintRight_toRightOf="@+id/guideline_v_0.5"
+        app:layout_constraintBottom_toBottomOf="@+id/guideline_h_top"
+        app:layout_constraintTop_toTopOf="@+id/guideline_h_top"
         tools:ignore="SpeakableTextPresentCheck">
 
         <com.github.mikephil.charting.charts.BarChart

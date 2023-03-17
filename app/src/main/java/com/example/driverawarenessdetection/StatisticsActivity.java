@@ -2,6 +2,7 @@ package com.example.driverawarenessdetection;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.driverawarenessdetection.client.DriveData;
@@ -20,6 +21,7 @@ import java.util.Objects;
 
 public class StatisticsActivity extends AppCompatActivity {
     private ArrayList<DriveData> driveDataList;
+    private int driveIndex = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,13 +31,27 @@ public class StatisticsActivity extends AppCompatActivity {
 
         DriveDataReceiver driveDataReceiver = new DriveDataReceiver();
         driveDataList = driveDataReceiver.getDriveDataList();
+        driveIndex = driveDataList.size() - 1;
 
         presentAllDrives();
     }
 
     private void presentSingleDrive() {
         setContentView(R.layout.activity_statistics_1);
-        DriveData driveData = driveDataList.get(0);
+
+        ImageView leftArrow = findViewById(R.id.left_button);
+        ImageView rightArrow = findViewById(R.id.right_button);
+
+        if (driveIndex == 0) {
+            rightArrow.setImageResource(R.drawable.right_disabeled);
+            rightArrow.setEnabled(false);
+        } else {
+            rightArrow.setImageResource(R.drawable.right_enabeled);
+            rightArrow.setEnabled(true);
+        }
+
+
+        DriveData driveData = driveDataList.get(driveIndex);
 
         BarChart barChart = findViewById(R.id.bar_chart_graph);
         String barChartTitle = "Awareness Percentage vs. Time";
@@ -48,6 +64,26 @@ public class StatisticsActivity extends AppCompatActivity {
 
         ChartCreator pieChartCreator = new PieChartCreator(driveData, pieChartTitle);
         pieChartCreator.initChart(pieChart);
+
+        TextView title = findViewById(R.id.title);
+        String drive = getString(R.string.drive) + " " + (driveIndex + 1);
+        title.setText(drive);
+
+        leftArrow.setOnClickListener(v -> {
+            if (driveIndex < driveDataList.size() - 1) {
+                driveIndex++;
+                presentSingleDrive();
+            } else {
+                presentAllDrives();
+            }
+        });
+
+        rightArrow.setOnClickListener(v -> {
+            if (driveIndex > 0) {
+                driveIndex--;
+                presentSingleDrive();
+            }
+        });
     }
 
     private void presentAllDrives() {
@@ -64,35 +100,11 @@ public class StatisticsActivity extends AppCompatActivity {
 
         ChartCreator lineChartCreator = new MultiLineChartCreator(driveDataList, lineChartTitle);
         lineChartCreator.initChart(lineChart);
+
+        TextView title = findViewById(R.id.title);
+        title.setText(R.string.all_drives);
+
+        ImageView rightArrow = findViewById(R.id.right_button);
+        rightArrow.setOnClickListener(v -> presentSingleDrive());
     }
-
-//    private void presentBarChart() {
-//        List<DriveDataPoint> driveDataList = driveDataReceiver.getLasDriveData().getDriveDataList();
-//        BarChart barChart = findViewById(R.id.bar_chart_graph);
-//        String title = "Awareness Percentage";
-//
-//        BarChartCreator barChartCreator = new BarChartCreator(driveDataList, title);
-//        barChartCreator.initBarChart(barChart);
-//
-//    }
-
-//    private void presentLineChart() {
-//        List<DriveDataPoint> driveDataList = driveDataReceiver.getDriveData().getDriveDataList();
-//        LineChart mChart = findViewById(R.id.line_chart_graph);
-//        String title = "Awareness Percentage";
-//
-//        LineChartCreator lineChartCreator = new LineChartCreator(driveDataList, title);
-//        lineChartCreator.initLineChart(mChart);
-//
-//    }
-
-//    private void presentPieChart() {
-//        List<DriveDataPoint> driveDataList = driveDataReceiver.getLasDriveData().getDriveDataList();
-//        PieChart pieChart = findViewById(R.id.pie_chart_graph);
-//        String title = "Awareness Percentage";
-//
-//        PieChartCreator pieChartCreator = new PieChartCreator(driveDataList, title);
-//        pieChartCreator.initPieChart(pieChart);
-//
-//    }
 }

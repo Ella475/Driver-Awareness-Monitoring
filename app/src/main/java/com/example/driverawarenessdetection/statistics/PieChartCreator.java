@@ -102,10 +102,14 @@ public class PieChartCreator extends ChartCreator{
 
 
         // add the entries to the pie chart
-        entries.add(new PieEntry(asleepAndInattentive, "Asleep & Distracted"));
-        entries.add(new PieEntry(asleepAndAttentive, "Asleep & Attentive"));
-        entries.add(new PieEntry(awakeAndInattentive, "Awake & Distracted"));
-        entries.add(new PieEntry(awakeAndAttentive, "Awake & Attentive"));
+        if (asleepAndInattentive != 0)
+            entries.add(new PieEntry(asleepAndInattentive, "Asleep & Distracted"));
+        if (asleepAndAttentive != 0)
+            entries.add(new PieEntry(asleepAndAttentive, "Asleep & Attentive"));
+        if (awakeAndInattentive != 0)
+            entries.add(new PieEntry(awakeAndInattentive, "Awake & Distracted"));
+        if (awakeAndAttentive != 0)
+            entries.add(new PieEntry(awakeAndAttentive, "Awake & Attentive"));
 
 
         ArrayList<Integer> colors = new ArrayList<>();
