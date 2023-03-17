@@ -4,23 +4,38 @@ import com.example.driverawarenessdetection.login.data.LoginRepository;
 
 import org.json.JSONException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DriveDataReceiver {
-    private final Client client = Client.getInstance();
-    private final String userId = LoginRepository.getInstance(null).getLoggedInUser().getUserId();
-    private DriveData driveData;
+    private final Client client;
+    private final String userId;
+    private ArrayList<DriveData> driveDataList;
 
-    public void receiveDriveData() throws JSONException {
-        driveData = new DriveData(client.getLastDriveData(userId));
+    public DriveDataReceiver() {
+        client = Client.getInstance();
+        userId = LoginRepository.getInstance(null).getLoggedInUser().getUserId();
+        initDriveDataList();
     }
 
-    public DriveData getDriveData(){
-        return this.driveData;
+    private void initDriveDataList() {
+        try {
+            driveDataList = new ArrayList<>();
+            List<String> driveIds = client.getDrives(userId);
+            for (String driveId : driveIds) {
+                driveDataList.add(new DriveData(client.getDriveData(driveId)));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
-//    public string getLastDriveId(){
-//        // TODO: get the last drive id from the database
-//
-//    }
+    public ArrayList<DriveData> getDriveDataList() {
+        return driveDataList;
+    }
 
+    public DriveData getDriveData(int index) {
+        return driveDataList.get(index);
+    }
 
 }

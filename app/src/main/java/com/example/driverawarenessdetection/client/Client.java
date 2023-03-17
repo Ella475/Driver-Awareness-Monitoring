@@ -1,12 +1,18 @@
 package com.example.driverawarenessdetection.client;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
 import com.example.driverawarenessdetection.login.data.Result;
 import com.example.driverawarenessdetection.login.data.model.LoggedInUser;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 public class Client {
@@ -139,6 +145,40 @@ public class Client {
         return null;
     }
 
+    public List<String> getDrives(String userId) throws JSONException {
+        String endpoint = "drives";
+        HashMap<String, String> payload = new HashMap<String, String>() {{
+            put("user_id", userId);
+        }};
+
+        String method = "GET";
+
+        HashMap<String, String> response = getResponse(sendAsyncTask(endpoint, payload, method));
+
+        if (Objects.equals(response.get("success"), "true")) {
+            System.out.println("Drives retrieved successfully!");
+            return parseDriveIds(response.get("response"));
+
+        } else {
+            System.out.println("Drives failed to retrieve");
+            return null;
+        }
+    }
+
+    private List<String> parseDriveIds(String jsonString) throws JSONException {
+        if (jsonString == null) {
+            return null;
+        }
+        JSONArray jsonArray = new JSONArray(jsonString);
+        List<String> driveIds = new ArrayList<>();
+        for (int i = 0; i < jsonArray.length(); i++) {
+            JSONObject jsonObject = jsonArray.getJSONObject(i);
+            int driveId = jsonObject.getInt("id");
+            driveIds.add(Integer.toString(driveId));
+        }
+        return driveIds;
+    }
+
     public void sendDriveData(String drive_id, int awarenessPercentage, boolean asleep,
                               boolean inattentive) {
         String endpoint = "drives_data";
@@ -155,36 +195,13 @@ public class Client {
         sendAsyncTask(endpoint, payload, method);
     }
 
-    public String getLastDriveData(String userId) {
+    public String getDriveData(String driveId) {
         String endpoint = "drives_data";
         HashMap<String, String> payload = new HashMap<String, String>() {{
-            put("user_id", userId);
+            put("drive_id", driveId);
         }};
 
         String method = "GET";
-
-        HashMap<String, String> response = getResponse(sendAsyncTask(endpoint, payload, method));
-
-        if (Objects.equals(response.get("success"), "true")) {
-            System.out.println("Last drive data retrieved successfully!");
-            return response.get("response");
-
-        } else {
-            System.out.println("Last drive data failed to retrieve");
-            return null;
-        }
-    }
-
-    public String getDriveData(String drive_id) {
-
-        String endpoint = "drives_data";
-        HashMap<String, String> payload = new HashMap<String, String>() {{
-            put("drive_id", drive_id);
-        }};
-
-        String method = "GET";
-
-        sendAsyncTask(endpoint, payload, method);
 
         HashMap<String, String> response = getResponse(sendAsyncTask(endpoint, payload, method));
 

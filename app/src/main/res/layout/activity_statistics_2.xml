@@ -24,8 +24,8 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="SpeakableTextPresentCheck">
 
-        <com.github.mikephil.charting.charts.PieChart
-            android:id="@+id/pie_chart_graph"
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/line_chart_graph"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="10dp" />
