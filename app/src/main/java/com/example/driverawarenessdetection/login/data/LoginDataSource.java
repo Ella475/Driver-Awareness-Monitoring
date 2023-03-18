@@ -19,10 +19,16 @@ public class LoginDataSource {
         Client client = Client.getInstance();
         // check if username exists
         boolean userExists = client.checkUserExists(username);
+        String loginType = LoginType.getLoginType();
+
         if (userExists) {
-            return client.login(username, password);
+            Result result = client.login(username, password);
+            if (loginType.equals("user") | result instanceof Result.Success) {
+                return result;
+            } else {
+                return new Result.Error(new IOException("Incorrect password"));
+            }
         } else {
-            String loginType = LoginType.getLoginType();
             if (!loginType.equals("user")) {
                 return new Result.Error(new IOException("User does not exist"));
             } else {
