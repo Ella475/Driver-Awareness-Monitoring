@@ -10,10 +10,11 @@ import android.widget.Button;
 import com.example.driverawarenessdetection.login.data.LoginDataSource;
 import com.example.driverawarenessdetection.login.data.LoginRepository;
 import com.example.driverawarenessdetection.login.ui.LoginType;
+import com.example.driverawarenessdetection.utils.ConfirmationDialog;
 
 import java.util.Objects;
 
-public class WelcomeScreen extends AppCompatActivity {
+public class WelcomeScreenActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +29,7 @@ public class WelcomeScreen extends AppCompatActivity {
             LoginType.setLoginType("user");
             LoginRepository loginRepository = LoginRepository.getInstance(new LoginDataSource());
             if (!loginRepository.isLoggedIn()) {
-                Intent switchLoginActivityIntent = new Intent(WelcomeScreen.this, LoginActivity.class);
+                Intent switchLoginActivityIntent = new Intent(WelcomeScreenActivity.this, LoginActivity.class);
                 startActivity(switchLoginActivityIntent);
             }
         });
@@ -37,7 +38,7 @@ public class WelcomeScreen extends AppCompatActivity {
             LoginType.setLoginType("admin");
             LoginRepository loginRepository = LoginRepository.getInstance(new LoginDataSource());
             if (!loginRepository.isLoggedIn()) {
-                Intent switchLoginActivityIntent = new Intent(WelcomeScreen.this, LoginActivity.class);
+                Intent switchLoginActivityIntent = new Intent(WelcomeScreenActivity.this, LoginActivity.class);
                 startActivity(switchLoginActivityIntent);
             }
         });
@@ -45,6 +46,9 @@ public class WelcomeScreen extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        finishAffinity();
+        ConfirmationDialog dialog = new ConfirmationDialog();
+        dialog.setMessage("Are you sure you want to exit?");
+        dialog.setListener(this::finishAffinity);
+        dialog.show(getSupportFragmentManager(), "ConfirmationDialog");
     }
 }

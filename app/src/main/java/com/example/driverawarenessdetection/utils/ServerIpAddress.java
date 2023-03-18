@@ -1,4 +1,4 @@
-package com.example.driverawarenessdetection;
+package com.example.driverawarenessdetection.utils;
 
 
 // This class is used to store the server IP address -

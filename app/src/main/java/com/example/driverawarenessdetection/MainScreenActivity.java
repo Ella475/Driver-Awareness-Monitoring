@@ -1,9 +1,6 @@
 package com.example.driverawarenessdetection;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -12,14 +9,12 @@ import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LifecycleObserver;
 
-import com.example.driverawarenessdetection.login.data.LoginDataSource;
-import com.example.driverawarenessdetection.login.data.LoginRepository;
-import com.example.driverawarenessdetection.login.ui.LoginType;
+import com.example.driverawarenessdetection.utils.ConfirmationDialog;
 import com.ncorti.slidetoact.SlideToActView;
 
 import java.util.Objects;
 
-public class MainScreen extends AppCompatActivity implements LifecycleObserver {
+public class MainScreenActivity extends AppCompatActivity implements LifecycleObserver {
     private SlideToActView slide;
 
 
@@ -39,21 +34,21 @@ public class MainScreen extends AppCompatActivity implements LifecycleObserver {
     private void initView() {
         ImageView cameraButton = findViewById(R.id.camera);
         cameraButton.setOnClickListener(view -> {
-            Intent switchCameraActivityIntent = new Intent(MainScreen.this,
+            Intent switchCameraActivityIntent = new Intent(MainScreenActivity.this,
                     CameraActivity.class);
             startActivity(switchCameraActivityIntent);
         });
 
         ImageView statisticsButton = findViewById(R.id.statistics);
         statisticsButton.setOnClickListener(view -> {
-            Intent switchStatisticsActivityIntent = new Intent(MainScreen.this,
+            Intent switchStatisticsActivityIntent = new Intent(MainScreenActivity.this,
                     StatisticsActivity.class);
             startActivity(switchStatisticsActivityIntent);
         });
 
         ImageView settingsButton = findViewById(R.id.settings);
         settingsButton.setOnClickListener(view -> {
-            Intent switchSettingsActivityIntent = new Intent(MainScreen.this,
+            Intent switchSettingsActivityIntent = new Intent(MainScreenActivity.this,
                     SettingsActivity.class);
             startActivity(switchSettingsActivityIntent);
         });
@@ -61,7 +56,7 @@ public class MainScreen extends AppCompatActivity implements LifecycleObserver {
 
         slide = findViewById(R.id.slider);
         slide.setOnSlideCompleteListener(view -> {
-            Intent switchDetectionActivityIntent = new Intent(MainScreen.this,
+            Intent switchDetectionActivityIntent = new Intent(MainScreenActivity.this,
                     AwarenessDetectionActivity.class);
             startActivity(switchDetectionActivityIntent);
         });
@@ -75,7 +70,10 @@ public class MainScreen extends AppCompatActivity implements LifecycleObserver {
 
     @Override
     public void onBackPressed() {
-        finishAffinity();
+        ConfirmationDialog dialog = new ConfirmationDialog();
+        dialog.setMessage("Are you sure you want to exit?");
+        dialog.setListener(this::finishAffinity);
+        dialog.show(getSupportFragmentManager(), "ConfirmationDialog");
     }
 
 }

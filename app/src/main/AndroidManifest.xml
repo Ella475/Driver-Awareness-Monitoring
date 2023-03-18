@@ -16,7 +16,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".MainScreen"
+            android:name=".MainScreenActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -46,7 +46,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".LoginActivity" />
-        <activity android:name=".WelcomeScreen" />
+        <activity android:name=".WelcomeScreenActivity" />
         <activity android:name=".AwarenessDetectionActivity" />
         <activity android:name=".CameraActivity" />
     </application>

@@ -21,6 +21,7 @@ import com.example.driverawarenessdetection.login.data.LoginDataSource;
 import com.example.driverawarenessdetection.login.data.LoginRepository;
 import com.example.driverawarenessdetection.login.ui.LoginType;
 import com.example.driverawarenessdetection.login.ui.LoginViewModel;
+import com.example.driverawarenessdetection.utils.ConfirmationDialog;
 
 import java.util.Objects;
 
@@ -87,7 +88,7 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(switchStatisticsActivityIntent);
             } else {
                 Intent switchMainScreenIntent = new Intent(LoginActivity.this,
-                        MainScreen.class);
+                        MainScreenActivity.class);
                 startActivity(switchMainScreenIntent);
             }
         });
@@ -113,8 +114,17 @@ public class LoginActivity extends AppCompatActivity {
         passwordEditText.addTextChangedListener(afterTextChangedListener);
 
         loginButton.setOnClickListener(v -> {
-            loginViewModel.login(usernameEditText.getText().toString(),
-                    passwordEditText.getText().toString());
+            boolean userExist = loginViewModel.userExists(usernameEditText.getText().toString());
+            if (userExist || !Objects.equals(loginType, "user")) {
+                loginViewModel.handleUser(usernameEditText.getText().toString(),
+                        passwordEditText.getText().toString(), userExist);
+            } else {
+                ConfirmationDialog dialog = new ConfirmationDialog();
+                dialog.setMessage("Are you sure you want to register?");
+                dialog.setListener(() -> loginViewModel.handleUser(usernameEditText.getText().toString(),
+                        passwordEditText.getText().toString(), false));
+                dialog.show(getSupportFragmentManager(), "ConfirmationDialog");
+            }
         });
     }
 
@@ -142,6 +152,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onBackPressed() {
-        finishAffinity();
+        ConfirmationDialog dialog = new ConfirmationDialog();
+        dialog.setMessage("Are you sure you want to exit?");
+        dialog.setListener(this::finishAffinity);
+        dialog.show(getSupportFragmentManager(), "ConfirmationDialog");
     }
 }

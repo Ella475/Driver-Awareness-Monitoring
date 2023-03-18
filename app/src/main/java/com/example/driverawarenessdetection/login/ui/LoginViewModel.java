@@ -29,8 +29,8 @@ public class LoginViewModel extends ViewModel {
         return loginResult;
     }
 
-    public void login(String username, String password) {
-        Result result = loginRepository.login(username, password);
+    public void handleUser(String username, String password, boolean userExists) {
+        Result result = loginRepository.handleUser(username, password, userExists);
 
         if (result instanceof Result.Success) {
             LoggedInUser data = ((Result.Success<LoggedInUser>) result).getData();
@@ -38,6 +38,10 @@ public class LoginViewModel extends ViewModel {
         } else {
             loginResult.setValue(new LoginResult(result.toString()));
         }
+    }
+
+    public boolean userExists(String username) {
+        return loginRepository.userExists(username);
     }
 
     public void loginDataChanged(String username, String password) {

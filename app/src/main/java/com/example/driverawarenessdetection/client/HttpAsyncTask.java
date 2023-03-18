@@ -3,8 +3,7 @@ package com.example.driverawarenessdetection.client;
 import android.os.AsyncTask;
 import android.os.Build;
 
-import com.example.driverawarenessdetection.ServerIpAddress;
-import com.example.driverawarenessdetection.login.data.Result;
+import com.example.driverawarenessdetection.utils.ServerIpAddress;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -12,11 +11,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;

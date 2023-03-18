@@ -48,8 +48,12 @@ public class LoginRepository {
         return user;
     }
 
-    public Result login(String username, String password) {
-        Result result = dataSource.handleUser(username, password);
+    public boolean userExists(String username) {
+        return dataSource.checkUserExists(username);
+    }
+
+    public Result handleUser(String username, String password, boolean userExists) {
+        Result result = dataSource.handleUser(username, password, userExists);
         if (result instanceof Result.Success) {
             setLoggedInUser(((Result.Success<LoggedInUser>) result).getData());
         }

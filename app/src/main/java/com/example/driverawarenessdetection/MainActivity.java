@@ -5,19 +5,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
-import android.view.WindowManager;
-import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LifecycleObserver;
-
-import com.example.driverawarenessdetection.login.data.LoginDataSource;
-import com.example.driverawarenessdetection.login.data.LoginRepository;
-import com.example.driverawarenessdetection.login.ui.LoginType;
-import com.ncorti.slidetoact.SlideToActView;
-
-import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
     final int CAMERA_REQUEST_CODE = 1001;
@@ -29,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
         grantCameraAndStoragePermission();
 
         Intent switchWelcomeScreenIntent = new Intent(MainActivity.this,
-                WelcomeScreen.class);
+                WelcomeScreenActivity.class);
         startActivity(switchWelcomeScreenIntent);
     }
 

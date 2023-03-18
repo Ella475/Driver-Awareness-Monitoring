@@ -13,6 +13,7 @@ import com.example.driverawarenessdetection.statistics.BarChartCreator;
 import com.example.driverawarenessdetection.statistics.ChartCreator;
 import com.example.driverawarenessdetection.statistics.MultiLineChartCreator;
 import com.example.driverawarenessdetection.statistics.PieChartCreator;
+import com.example.driverawarenessdetection.utils.ConfirmationDialog;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.charts.BarChart;
@@ -112,7 +113,10 @@ public class StatisticsActivity extends AppCompatActivity {
     public void onBackPressed() {
         String loginType = LoginType.getLoginType();
         if (!loginType.equals("user")) {
-            finishAffinity();
+            ConfirmationDialog dialog = new ConfirmationDialog();
+            dialog.setMessage("Are you sure you want to exit?");
+            dialog.setListener(this::finishAffinity);
+            dialog.show(getSupportFragmentManager(), "ConfirmationDialog");
         } else {
             super.onBackPressed();
         }

@@ -1,24 +1,28 @@
 package com.example.driverawarenessdetection.login.data;
 
+import android.os.Bundle;
+
+import androidx.fragment.app.FragmentManager;
+
 import com.example.driverawarenessdetection.client.Client;
-import com.example.driverawarenessdetection.client.HttpAsyncTask;
 import com.example.driverawarenessdetection.login.data.model.LoggedInUser;
 import com.example.driverawarenessdetection.login.ui.LoginType;
+import com.example.driverawarenessdetection.utils.ConfirmationDialog;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Objects;
-import java.util.concurrent.ExecutionException;
 
 /**
  * Class that handles authentication w/ login credentials and retrieves user information.
  */
 public class LoginDataSource {
 
-    public Result<LoggedInUser> handleUser(String username, String password) {
+    public boolean checkUserExists(String username) {
         Client client = Client.getInstance();
-        // check if username exists
-        boolean userExists = client.checkUserExists(username);
+        return client.checkUserExists(username);
+    }
+
+    public Result<LoggedInUser> handleUser(String username, String password, boolean userExists) {
+        Client client = Client.getInstance();
         String loginType = LoginType.getLoginType();
 
         if (userExists) {
