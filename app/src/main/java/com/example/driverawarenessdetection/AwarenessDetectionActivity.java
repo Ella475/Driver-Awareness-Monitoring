@@ -33,7 +33,6 @@ public class AwarenessDetectionActivity extends AppCompatActivity {
     private final long animationDuration = 1000;
     private int percentageCutOff = 20;
     private boolean fatigued = false;
-    private HashMap<Integer, AwarenessManager> managerHashMap = null;
     private AwarenessManager manager = null;
     public CommandManager commandManager;
     boolean asleep = false;
@@ -53,7 +52,7 @@ public class AwarenessDetectionActivity extends AppCompatActivity {
 
         csw = new CameraSourceWrapper(preview, graphicOverlay, this);
         csw.start();
-        managerHashMap = csw.awarenessProcessor.onSuccessDetector.awarenessHashMap;
+        manager = csw.awarenessProcessor.onSuccessDetector.getManager();
         commandManager = new CommandManager(this, percentageCutOff);
         commandManager.start();
         driveDataSender = new DriveDataSender();
@@ -63,15 +62,12 @@ public class AwarenessDetectionActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     private void onPercentageChanged() {
-        if (!managerHashMap.isEmpty()) {
-            manager = managerHashMap.get(0);
-            if (manager != null) {
-                awarenessPercentage = (int) (100 * manager.getAwareProbability());
-                asleep = manager.isAsleep();
-                inattentive = manager.isInattentive();
-                // send to DriveDataCollector
-                driveDataSender.sendDriveData(awarenessPercentage, asleep, inattentive);
-            }
+        if (manager != null) {
+            awarenessPercentage = (int) (100 * manager.getAwareProbability());
+            asleep = manager.isAsleep();
+            inattentive = manager.isInattentive();
+            // send to DriveDataCollector
+            driveDataSender.sendDriveData(awarenessPercentage, asleep, inattentive);
         }
 
         commandManager.onDetectorNotify(asleep, inattentive, awarenessPercentage);

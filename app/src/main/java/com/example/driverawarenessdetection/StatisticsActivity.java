@@ -2,6 +2,7 @@ package com.example.driverawarenessdetection;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,7 +15,6 @@ import com.example.driverawarenessdetection.statistics.PieChartCreator;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.charts.BarChart;
-import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -89,11 +89,11 @@ public class StatisticsActivity extends AppCompatActivity {
     private void presentAllDrives() {
         setContentView(R.layout.activity_statistics_2);
 
-        BarChart barChart = findViewById(R.id.bar_chart_graph);
-        String barChartTitle = "Awareness Percentage mean vs. Drive time";
+        View chart = findViewById(R.id.chart_graph_mean);
+        String chartTitleMean = "Awareness Percentage mean vs. Drive time [m]";
 
-        ChartCreator barChartCreator = new BarChartCreator(driveDataList, barChartTitle);
-        barChartCreator.initChart(barChart);
+        ChartCreator chartMeanCreator = new BarChartCreator(driveDataList, chartTitleMean);
+        chartMeanCreator.initChart(chart);
 
         LineChart lineChart = findViewById(R.id.line_chart_graph);
         String lineChartTitle = "Awareness Percentage vs. Time";

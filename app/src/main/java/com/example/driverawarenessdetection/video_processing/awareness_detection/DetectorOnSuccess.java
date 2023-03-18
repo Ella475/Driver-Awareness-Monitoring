@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class DetectorOnSuccess {
-    public final HashMap<Integer, AwarenessManager> awarenessHashMap = new HashMap<>();
+    private final AwarenessManager manager = new AwarenessManager();
 
     protected void apply(@NonNull List<Face> faces, GraphicOverlay graphicOverlay) {
         if (faces.isEmpty()) {
@@ -18,15 +18,14 @@ public class DetectorOnSuccess {
             return;
         }
         Face face = faces.get(0);
-        AwarenessManager manager = awarenessHashMap.get(face.getTrackingId());
-        if (manager == null) {
-            manager = new AwarenessManager();
-            awarenessHashMap.put(face.getTrackingId(), manager);
-        }
         manager.processFace(face);
         if (graphicOverlay != null) {
             boolean isAware = !manager.isNotAware();
             graphicOverlay.add(new AwarenessCameraGraphic(graphicOverlay, face, isAware));
         }
+    }
+
+    public AwarenessManager getManager() {
+        return manager;
     }
 }
