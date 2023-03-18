@@ -10,9 +10,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.ColorInt;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.driverawarenessdetection.client.DriveDataSender;
+import com.example.driverawarenessdetection.utils.BaseActivity;
 import com.example.driverawarenessdetection.video_processing.awareness_detection.AwarenessManager;
 import com.example.driverawarenessdetection.video_processing.awareness_detection.alerts.CommandManager;
 import com.example.driverawarenessdetection.video_processing.awareness_detection.utils.CameraSourceWrapper;
@@ -23,7 +23,7 @@ import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 import java.util.HashMap;
 
 
-public class AwarenessDetectionActivity extends AppCompatActivity {
+public class AwarenessDetectionActivity extends BaseActivity {
     private int awarenessPercentage = 100;
     private CircularProgressBar circularProgressBar;
     private TextView awarenessPercentageText;

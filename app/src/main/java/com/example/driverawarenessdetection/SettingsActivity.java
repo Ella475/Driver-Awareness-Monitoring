@@ -7,15 +7,15 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.driverawarenessdetection.settings.SettingsFragment;
+import com.example.driverawarenessdetection.utils.BaseActivity;
 import com.example.driverawarenessdetection.video_processing.awareness_detection.alerts.CommandManager;
 import com.example.driverawarenessdetection.video_processing.awareness_detection.alerts.DrivingAlertTiming;
 
 import java.util.Objects;
 
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -6,8 +6,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -21,11 +19,12 @@ import com.example.driverawarenessdetection.login.data.LoginDataSource;
 import com.example.driverawarenessdetection.login.data.LoginRepository;
 import com.example.driverawarenessdetection.login.ui.LoginType;
 import com.example.driverawarenessdetection.login.ui.LoginViewModel;
+import com.example.driverawarenessdetection.utils.BaseActivity;
 import com.example.driverawarenessdetection.utils.ConfirmationDialog;
 
 import java.util.Objects;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity {
 
     private LoginViewModel loginViewModel;
     private final String loginType = LoginType.getLoginType();

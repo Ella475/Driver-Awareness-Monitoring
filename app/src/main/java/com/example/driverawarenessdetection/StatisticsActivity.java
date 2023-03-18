@@ -1,6 +1,5 @@
 package com.example.driverawarenessdetection;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,6 +12,7 @@ import com.example.driverawarenessdetection.statistics.BarChartCreator;
 import com.example.driverawarenessdetection.statistics.ChartCreator;
 import com.example.driverawarenessdetection.statistics.MultiLineChartCreator;
 import com.example.driverawarenessdetection.statistics.PieChartCreator;
+import com.example.driverawarenessdetection.utils.BaseActivity;
 import com.example.driverawarenessdetection.utils.ConfirmationDialog;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
@@ -21,7 +21,7 @@ import com.github.mikephil.charting.charts.BarChart;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class StatisticsActivity extends AppCompatActivity {
+public class StatisticsActivity extends BaseActivity {
     private ArrayList<DriveData> driveDataList;
     private int driveIndex = 0;
 

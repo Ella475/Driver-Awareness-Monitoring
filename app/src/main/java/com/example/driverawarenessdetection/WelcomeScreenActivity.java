@@ -1,7 +1,5 @@
 package com.example.driverawarenessdetection;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.WindowManager;
@@ -10,11 +8,12 @@ import android.widget.Button;
 import com.example.driverawarenessdetection.login.data.LoginDataSource;
 import com.example.driverawarenessdetection.login.data.LoginRepository;
 import com.example.driverawarenessdetection.login.ui.LoginType;
+import com.example.driverawarenessdetection.utils.BaseActivity;
 import com.example.driverawarenessdetection.utils.ConfirmationDialog;
 
 import java.util.Objects;
 
-public class WelcomeScreenActivity extends AppCompatActivity {
+public class WelcomeScreenActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

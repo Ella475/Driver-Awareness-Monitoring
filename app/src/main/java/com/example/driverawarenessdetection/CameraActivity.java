@@ -4,8 +4,8 @@ import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.Button;
 
-import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.driverawarenessdetection.utils.BaseActivity;
 import com.example.driverawarenessdetection.video_processing.awareness_detection.utils.CameraSourceWrapper;
 import com.example.driverawarenessdetection.video_processing.awareness_detection.utils.MsgReader;
 import com.example.driverawarenessdetection.video_processing.camera.CameraSourcePreview;
@@ -14,7 +14,7 @@ import com.example.driverawarenessdetection.video_processing.camera.GraphicOverl
 import java.util.Objects;
 
 
-public class CameraActivity extends AppCompatActivity {
+public class CameraActivity extends BaseActivity {
 
     private MsgReader reader;
     private CameraSourceWrapper csw;

@@ -6,15 +6,15 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LifecycleObserver;
 
+import com.example.driverawarenessdetection.utils.BaseActivity;
 import com.example.driverawarenessdetection.utils.ConfirmationDialog;
 import com.ncorti.slidetoact.SlideToActView;
 
 import java.util.Objects;
 
-public class MainScreenActivity extends AppCompatActivity implements LifecycleObserver {
+public class MainScreenActivity extends BaseActivity implements LifecycleObserver {
     private SlideToActView slide;
 
 
