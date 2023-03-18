@@ -3,6 +3,7 @@ package com.example.driverawarenessdetection.login.data;
 import com.example.driverawarenessdetection.client.Client;
 import com.example.driverawarenessdetection.client.HttpAsyncTask;
 import com.example.driverawarenessdetection.login.data.model.LoggedInUser;
+import com.example.driverawarenessdetection.login.ui.LoginType;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -21,7 +22,12 @@ public class LoginDataSource {
         if (userExists) {
             return client.login(username, password);
         } else {
-            return client.register(username, password);
+            String loginType = LoginType.getLoginType();
+            if (!loginType.equals("user")) {
+                return new Result.Error(new IOException("User does not exist"));
+            } else {
+                return client.register(username, password);
+            }
         }
     }
 }
