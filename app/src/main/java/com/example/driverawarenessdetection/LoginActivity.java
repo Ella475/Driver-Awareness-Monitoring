@@ -1,7 +1,9 @@
 package com.example.driverawarenessdetection;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,10 +14,12 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.driverawarenessdetection.login.data.LoginDataSource;
 import com.example.driverawarenessdetection.login.data.LoginRepository;
+import com.example.driverawarenessdetection.login.ui.LoginType;
 import com.example.driverawarenessdetection.login.ui.LoginViewModel;
 
 import java.util.Objects;
@@ -23,6 +27,7 @@ import java.util.Objects;
 public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
+    private final String loginType = LoginType.getLoginType();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -32,6 +37,8 @@ public class LoginActivity extends AppCompatActivity {
         findViewById(R.id.container).getRootView().setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         Objects.requireNonNull(getSupportActionBar()).hide();
+
+        handleLoginType();
 
         loginViewModel = new LoginViewModel(LoginRepository.getInstance(new LoginDataSource()));
 
@@ -65,12 +72,24 @@ public class LoginActivity extends AppCompatActivity {
                 return;
             }
             if (loginResult.getSuccess() != null) {
-                updateUiWithUser(loginResult.getSuccess());
+                if (loginType == "user") {
+                    updateUiWithUser(loginResult.getSuccess());
+                } else {
+                    updateUiWithUser("Supervisor");
+                }
             }
             setResult(Activity.RESULT_OK);
 
-            //Complete and destroy login activity once successful
-            finish();
+            String loginType = LoginType.getLoginType();
+            if (!Objects.equals(loginType, "user")) {
+                Intent switchStatisticsActivityIntent = new Intent(LoginActivity.this,
+                        StatisticsActivity.class);
+                startActivity(switchStatisticsActivityIntent);
+            } else {
+                Intent switchMainScreenIntent = new Intent(LoginActivity.this,
+                        MainScreen.class);
+                startActivity(switchMainScreenIntent);
+            }
         });
 
         TextWatcher afterTextChangedListener = new TextWatcher() {
@@ -99,6 +118,20 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private void handleLoginType() {
+        ImageView hello = findViewById(R.id.hello);
+        Button login = findViewById(R.id.login);
+
+        if (loginType == "user") {
+            hello.setBackground(getResources().getDrawable(R.drawable.user_logo));
+            login.setText(R.string.action_sign_in);
+        } else {
+            hello.setBackground(getResources().getDrawable(R.drawable.superviser_logo));
+            login.setText(R.string.action_sign_in_short);
+        }
+    }
+
     private void updateUiWithUser(String name) {
         String welcome = getString(R.string.welcome) + name + "!";
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
@@ -109,7 +142,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onBackPressed() {
-        LoginRepository.getInstance(new LoginDataSource()).logout();
         finishAffinity();
     }
 }

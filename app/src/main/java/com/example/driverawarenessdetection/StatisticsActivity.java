@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.example.driverawarenessdetection.client.DriveData;
 import com.example.driverawarenessdetection.client.DriveDataReceiver;
+import com.example.driverawarenessdetection.login.ui.LoginType;
 import com.example.driverawarenessdetection.statistics.BarChartCreator;
 import com.example.driverawarenessdetection.statistics.ChartCreator;
 import com.example.driverawarenessdetection.statistics.MultiLineChartCreator;
@@ -106,5 +107,14 @@ public class StatisticsActivity extends AppCompatActivity {
 
         ImageView rightArrow = findViewById(R.id.right_button);
         rightArrow.setOnClickListener(v -> presentSingleDrive());
+    }
+
+    public void onBackPressed() {
+        String loginType = LoginType.getLoginType();
+        if (!loginType.equals("user")) {
+            finishAffinity();
+        } else {
+            super.onBackPressed();
+        }
     }
 }

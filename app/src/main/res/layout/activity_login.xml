@@ -14,16 +14,18 @@
 
     <ImageView
         android:id="@+id/hello"
-        android:layout_width="282dp"
-        android:layout_height="198dp"
+        android:layout_width="280dp"
+        android:layout_height="250dp"
         android:layout_gravity="center"
-        android:background="@drawable/logo"
+        android:background="@drawable/user_logo"
         android:fontFamily="sans-serif-black"
         android:letterSpacing="0.06"
+        app:layout_constraintBottom_toBottomOf="@+id/guideline_h_logo"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toLeftOf="@+id/guideline_v_middle"
         app:layout_constraintRight_toRightOf="@+id/guideline_v_middle"
         app:layout_constraintTop_toTopOf="@+id/guideline_h_logo"
-        app:layout_constraintBottom_toBottomOf="@+id/guideline_h_logo"/>
+        app:layout_constraintVertical_bias="0.436" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_h_logo"
