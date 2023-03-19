@@ -19,6 +19,7 @@ import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.charts.BarChart;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class StatisticsActivity extends BaseActivity {
@@ -70,6 +71,12 @@ public class StatisticsActivity extends BaseActivity {
         TextView title = findViewById(R.id.title);
         String drive = getString(R.string.drive) + " " + (driveIndex + 1);
         title.setText(drive);
+
+        TextView time = findViewById(R.id.time);
+        String driveTime = driveData.getDriveTime();
+        String[] driveTimeList = driveTime.split(" ");
+        driveTime = driveTimeList[1] + " " + driveTimeList[0];
+        time.setText(driveTime);
 
         leftArrow.setOnClickListener(v -> {
             if (driveIndex < driveDataList.size() - 1) {

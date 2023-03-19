@@ -145,7 +145,7 @@ public class Client {
         return null;
     }
 
-    public List<String> getDrives(String userId) throws JSONException {
+    public List<HashMap<String, String>> getDrives(String userId) throws JSONException {
         String endpoint = "drives";
         HashMap<String, String> payload = new HashMap<String, String>() {{
             put("user_id", userId);
@@ -157,7 +157,7 @@ public class Client {
 
         if (Objects.equals(response.get("success"), "true")) {
             System.out.println("Drives retrieved successfully!");
-            return parseDriveIds(response.get("response"));
+            return parseDrives(response.get("response"));
 
         } else {
             System.out.println("Drives failed to retrieve");
@@ -165,18 +165,22 @@ public class Client {
         }
     }
 
-    private List<String> parseDriveIds(String jsonString) throws JSONException {
+    private List<HashMap<String, String>> parseDrives(String jsonString) throws JSONException {
         if (jsonString == null) {
             return null;
         }
         JSONArray jsonArray = new JSONArray(jsonString);
-        List<String> driveIds = new ArrayList<>();
+        List<HashMap<String, String>> drives = new ArrayList<>();
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject jsonObject = jsonArray.getJSONObject(i);
             int driveId = jsonObject.getInt("id");
-            driveIds.add(Integer.toString(driveId));
+            String driveTime = jsonObject.getString("time");
+            HashMap<String, String> drive = new HashMap<>();
+            drive.put("driveId", Integer.toString(driveId));
+            drive.put("driveTime", driveTime);
+            drives.add(drive);
         }
-        return driveIds;
+        return drives;
     }
 
     public void sendDriveData(String drive_id, int awarenessPercentage, boolean asleep,

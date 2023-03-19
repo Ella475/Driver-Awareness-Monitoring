@@ -16,10 +16,13 @@ public class DriveData {
     private float meanAwarenessPercentage;
     private int len;
     private String driveId;
+    private String driveTime;
 
 
-    public DriveData(String jsonString) throws JSONException {
+    public DriveData(String jsonString, String driveId, String driveTime) throws JSONException {
         parseDriveData(jsonString);
+        this.driveId = driveId;
+        this.driveTime = driveTime;
     }
 
     private void parseDriveData(String jsonString) throws JSONException {
@@ -34,7 +37,6 @@ public class DriveData {
             boolean asleep = jsonObject.getInt("asleep") != 0;
             boolean inattentive = jsonObject.getInt("inattentive") != 0;
 
-            driveId = jsonObject.getString("drive_id");
             awarenessPercentages.add((double)awarenessPercentage);
             asleeps.add(asleep);
             inattentives.add(inattentive);
@@ -72,6 +74,10 @@ public class DriveData {
 
     public String getDriveId() {
         return driveId;
+    }
+
+    public String getDriveTime() {
+        return driveTime;
     }
 }
 

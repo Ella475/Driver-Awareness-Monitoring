@@ -5,6 +5,7 @@ import com.example.driverawarenessdetection.login.data.LoginRepository;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class DriveDataReceiver {
@@ -21,9 +22,11 @@ public class DriveDataReceiver {
     private void initDriveDataList() {
         try {
             driveDataList = new ArrayList<>();
-            List<String> driveIds = client.getDrives(userId);
-            for (String driveId : driveIds) {
-                driveDataList.add(new DriveData(client.getDriveData(driveId)));
+            List<HashMap<String, String>> drives = client.getDrives(userId);
+            for (HashMap<String, String> drive : drives) {
+                String driveId = drive.get("driveId");
+                String driveTime = drive.get("driveTime");
+                driveDataList.add(new DriveData(client.getDriveData(driveId), driveId, driveTime));
             }
         } catch (JSONException e) {
             e.printStackTrace();

@@ -9,52 +9,78 @@
     android:background="#003cff"
     tools:context=".SettingsActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_h_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.30" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_v_0.5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_editor_absoluteY="16dp">
+        app:layout_constraintGuide_percent="0.5" />
 
-        <LinearLayout
+    <LinearLayout
+        android:layout_width="360dp"
+        android:layout_height="360dp"
+        android:layout_margin="30dp"
+        android:background="@drawable/white_bg"
+        android:orientation="vertical"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline_v_0.5"
+        app:layout_constraintRight_toRightOf="@+id/guideline_v_0.5"
+        app:layout_constraintBottom_toBottomOf="@+id/guideline_h_top"
+        app:layout_constraintTop_toTopOf="@+id/guideline_h_top" >
+
+        <TextView
+            android:id="@+id/t1"
+            android:layout_width="282dp"
+            android:layout_height="122dp"
+            android:text="@string/choose_which_audio_alerts_you_would_like_to_receive"
+            android:textAlignment="center"
+            android:textColor="#003cff"
+            android:textFontWeight="@integer/material_motion_duration_long_2"
+            android:textSize="25dp"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_h_picture"
             android:layout_width="wrap_content"
-            android:layout_height="360dp"
-            android:layout_margin="30dp"
-            android:background="@drawable/white_bg"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            tools:layout_editor_absoluteY="16dp">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.30" />
 
-            <TextView
-                android:id="@+id/t1"
-                android:layout_width="282dp"
-                android:layout_height="122dp"
-                android:layout_centerHorizontal="true"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp"
-                android:text="@string/choose_which_audio_alerts_you_would_like_to_receive"
-                android:textAlignment="center"
-                android:textColor="#003cff"
-                android:textFontWeight="@integer/material_motion_duration_long_2"
-                android:textSize="25dp"
-                tools:layout_editor_absoluteX="76dp"
-                tools:layout_editor_absoluteY="57dp" />
-
-            <ImageView
-                android:layout_width="300dp"
-                android:layout_height="200dp"
-                android:layout_gravity="center"
-                android:src="@drawable/alert" />
-        </LinearLayout>
-
-        <FrameLayout
-            android:id="@+id/idFrameLayout"
-            android:layout_width="match_parent"
-            android:layout_height="280dp"
-            android:layout_gravity="bottom">
-
-        </FrameLayout>
+        <ImageView
+            android:layout_width="300dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:src="@drawable/alert"/>
     </LinearLayout>
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_h_frame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.78" />
+
+    <FrameLayout
+        android:id="@+id/idFrameLayout"
+        android:layout_height="280dp"
+        android:layout_width="360dp"
+        android:layout_gravity="bottom"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline_v_0.5"
+        app:layout_constraintRight_toRightOf="@+id/guideline_v_0.5"
+        app:layout_constraintBottom_toBottomOf="@+id/guideline_h_frame"
+        app:layout_constraintTop_toTopOf="@+id/guideline_h_frame">
+
+    </FrameLayout>
+
 
     <ImageView
         android:id="@+id/back"
@@ -65,8 +91,7 @@
         app:layout_constraintRight_toRightOf="@+id/guideline_v_back"
         app:layout_constraintBottom_toBottomOf="@+id/guideline_h_back"
         app:layout_constraintTop_toTopOf="@+id/guideline_h_back"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"/>
+        />
 
 
     <androidx.constraintlayout.widget.Guideline

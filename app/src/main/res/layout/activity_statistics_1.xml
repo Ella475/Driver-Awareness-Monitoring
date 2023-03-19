@@ -33,6 +33,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.03" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_h_subtext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.07" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_h_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.05" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -56,8 +70,8 @@
         android:src="@drawable/right_enabeled"
         app:layout_constraintLeft_toLeftOf="@+id/guideline_v_right"
         app:layout_constraintRight_toRightOf="@+id/guideline_v_right"
-        app:layout_constraintTop_toTopOf="@+id/guideline_h_text"
-        app:layout_constraintBottom_toBottomOf="@+id/guideline_h_text" />
+        app:layout_constraintTop_toTopOf="@+id/guideline_h_btn"
+        app:layout_constraintBottom_toBottomOf="@+id/guideline_h_btn" />
 
     <ImageView
         android:layout_width="50dp"
@@ -66,8 +80,8 @@
         android:src="@drawable/left_enabeled"
         app:layout_constraintLeft_toLeftOf="@+id/guideline_v_left"
         app:layout_constraintRight_toRightOf="@+id/guideline_v_left"
-        app:layout_constraintTop_toTopOf="@+id/guideline_h_text"
-        app:layout_constraintBottom_toBottomOf="@+id/guideline_h_text" />
+        app:layout_constraintTop_toTopOf="@+id/guideline_h_btn"
+        app:layout_constraintBottom_toBottomOf="@+id/guideline_h_btn" />
 
 
 
@@ -83,6 +97,18 @@
         app:layout_constraintRight_toRightOf="@+id/guideline_v_0.5"
         app:layout_constraintTop_toTopOf="@+id/guideline_h_text"
         app:layout_constraintBottom_toBottomOf="@+id/guideline_h_text" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/time"
+        android:textColor="#FFFFFF"
+        android:text="21.2.2012: 08:22"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline_v_0.5"
+        app:layout_constraintRight_toRightOf="@+id/guideline_v_0.5"
+        app:layout_constraintTop_toTopOf="@+id/guideline_h_subtext"
+        app:layout_constraintBottom_toBottomOf="@+id/guideline_h_subtext" />
 
     <LinearLayout
         android:id="@+id/bg"
