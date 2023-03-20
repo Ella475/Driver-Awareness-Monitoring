@@ -99,6 +99,9 @@ As a user:
     <img src="images/photo_cal_2.jpg" alt="alt text" style="width:20%;">
    
     <img src="images/photo_cal_3.jpg" alt="alt text" style="width:20%;">
+    
+    Before calibration, your awareness will be calculated relative to looking straight to your phone's camera.
+    After calibration, your awareness will be calculated relative to the position you set.
    
 6. Change the settings to your liking
 
