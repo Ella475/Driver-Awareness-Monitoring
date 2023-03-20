@@ -62,6 +62,7 @@ https://github.com/Ella475/Db-and-Server-For-Awareness-Detection-App.git
 
 3. Change the IP address in the app to the IP address of your computer.
 4. You can find the IP address of your computer, for more information, see the site below:
+
    https://www.med.unc.edu/it/guide/operating-systems/how-do-i-find-the-host-name-ip-address-or-physical-address-of-my-machine/
 
    Update this in InDriver-Awareness-Monitoring/app/src/main/java/com/example/driverawarenessdetection/utils/, find the ServerIpAddress.java file.
@@ -99,6 +100,7 @@ As a user:
     <img src="images/photo_cal_2.jpg" alt="alt text" style="width:20%;">
    
     <img src="images/photo_cal_3.jpg" alt="alt text" style="width:20%;">
+    
     
     Before calibration, your awareness will be calculated relative to looking straight to your phone's camera.
     After calibration, your awareness will be calculated relative to the position you set.
