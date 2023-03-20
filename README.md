@@ -63,25 +63,24 @@ The app can be used in two ways: as a user or as a supervisor.
 
 As a user:
 1. Chose to enter as a user
-   ![alt text](/images/photo_welcome.jpg)
-
-2. Register a new account or login to an existing account
-    ![alt text](/images/photo_reg.jpg)
-3. Arrive to main screen
+   <img src="images/photo_welcome.jpg" alt="alt text" style="width:20%;">
+3. Register a new account or login to an existing account
+    ![alt text](/images/photo_reg.jpg | 250x250)
+4. Arrive to main screen
     ![alt text](/images/photo_main.jpg)
-4. Calibrate the app
+5. Calibrate the app
     ![At first the app will detect road awareness as looking directly on the phone.](/images/photo_cal_1.jpg)
     ![Put your phone in the angle it will be while driving and calibrate](/images/photo_cal_2.jpg)
     ![At the end the app will detect road awareness as looking at the new angle you calibrated it.](/images/photo_cal_3.jpg)
-5. Change the settings to your liking
+6. Change the settings to your liking
     ![alt text](/images/photo_settings.jpg)
-6. Start a new drive
+7. Start a new drive
     ![alt text](/images/photo_start.jpg)
-7. Observe the statistics of your drive
+8. Observe the statistics of your drive
     ![alt text](/images/photo_stat.jpg)
  
-8. choose the sensitivity of the monitoring
-9. Observe the statistics of your drive
+9. choose the sensitivity of the monitoring
+10. Observe the statistics of your drive
 
 As a supervisor:
 1. Chose to enter as a supervisor
