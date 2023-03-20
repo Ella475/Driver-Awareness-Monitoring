@@ -55,11 +55,26 @@ This is important because different users may have different preferences for the
 git clone https://github.com/Ella475/Driver-Awareness-Monitoring.git
 ```
 2. Run the server, for further instructions see the README file in 
-3. Change the IP address in the app to the IP address of your computer. You can find the IP address of your computer like this:
-   In utils package, ServerIpAddress.java, change the IP address to the IP address of your computer
-4. Run the app on your phone or using an emulator
-5. Connect your phone to your computer
-6. Run the app on your phone
+
+```bash
+https://github.com/Ella475/Db-and-Server-For-Awareness-Detection-App.git
+```
+
+3. Change the IP address in the app to the IP address of your computer.
+4. You can find the IP address of your computer, for more information, see the site below:
+   https://www.med.unc.edu/it/guide/operating-systems/how-do-i-find-the-host-name-ip-address-or-physical-address-of-my-machine/
+
+   Update this in InDriver-Awareness-Monitoring/app/src/main/java/com/example/driverawarenessdetection/utils/, find the ServerIpAddress.java file.
+5. If you are using an emulator, you will not need to change the IP address. 
+
+If you are using an emulator, you will need to make sure that the front camera input is taken from webcam 0.
+
+<img="images/webcam.jpg" alt="alt text" style="width:10%;">
+
+6. If you are using your phone, you will need to change the IP address.
+You will  need to connect your phone to your computer. 
+
+7. Run the app on your phone, and you are ready to go!
 
 ## Usage
 The app can be used in two ways: as a user or as a supervisor.
