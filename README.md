@@ -67,14 +67,14 @@ https://github.com/Ella475/Db-and-Server-For-Awareness-Detection-App.git
    Update this in InDriver-Awareness-Monitoring/app/src/main/java/com/example/driverawarenessdetection/utils/, find the ServerIpAddress.java file.
 5. If you are using an emulator, you will not need to change the IP address. 
 
-   If you are using an emulator, you will need to make sure that the front camera input is taken from webcam 0.
+   You will need to make sure that the front camera input is taken from webcam 0.
 
-   <img="images/webcam.jpg" alt="alt text" style="width:10%;">
+   <img src="images/webcam.jpg" alt="alt text" style="width:10%;">
 
-   1. If you are using your phone, you will need to change the IP address.
+6. If you are using your phone, you will need to change the IP address.
    You will  need to connect your phone to your computer. 
 
-6. Run the app on your phone, and you are ready to go!
+7. Run the app on your phone, and you are ready to go!
 
 ## Usage
 The app can be used in two ways: as a user or as a supervisor.
