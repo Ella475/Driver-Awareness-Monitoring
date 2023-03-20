@@ -50,13 +50,16 @@ This is important because different users may have different preferences for the
 
 ## Installation
 1. Clone the repository
-2. Install the dependencies
-3. Run the server
-4. Change the IP address in the app to the IP address of your computer.
-In utils package, ServerIpAddress.java, change the IP address to the IP address of your computer
-5. Run the app
-6. Connect your phone to your computer
-7. Run the app on your phone
+
+```bash
+git clone https://github.com/Ella475/Driver-Awareness-Monitoring.git
+```
+2. Run the server, for further instructions see the README file in 
+3. Change the IP address in the app to the IP address of your computer. You can find the IP address of your computer like this:
+   In utils package, ServerIpAddress.java, change the IP address to the IP address of your computer
+4. Run the app on your phone or using an emulator
+5. Connect your phone to your computer
+6. Run the app on your phone
 
 ## Usage
 The app can be used in two ways: as a user or as a supervisor.
@@ -94,9 +97,7 @@ As a user:
 
     <img src="images/photo_stat.jpg" alt="alt text" style="width:20%;">
  
-9. Observe the statistics of your drive
-    
-        <img src="images/photo_stat.jpg" alt="alt text" style="width:20%;">
+
 
 As a supervisor:
 1. Chose to enter as a supervisor
