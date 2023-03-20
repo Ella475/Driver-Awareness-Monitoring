@@ -63,24 +63,40 @@ The app can be used in two ways: as a user or as a supervisor.
 
 As a user:
 1. Chose to enter as a user
+
    <img src="images/photo_welcome.jpg" alt="alt text" style="width:20%;">
-3. Register a new account or login to an existing account
-    ![alt text](/images/photo_reg.jpg | 250x250)
+   
+2. Register a new account or login to an existing account
+
+   <img src="images/photo_reg.jpg" alt="alt text" style="width:20%;">
+   
 4. Arrive to main screen
-    ![alt text](/images/photo_main.jpg)
+
+    <img src="images/photo_main.jpg" alt="alt text" style="width:20%;">
+   
 5. Calibrate the app
-    ![At first the app will detect road awareness as looking directly on the phone.](/images/photo_cal_1.jpg)
-    ![Put your phone in the angle it will be while driving and calibrate](/images/photo_cal_2.jpg)
-    ![At the end the app will detect road awareness as looking at the new angle you calibrated it.](/images/photo_cal_3.jpg)
+
+    <img src="images/photo_cal_1.jpg" alt="alt text" style="width:20%;">
+   
+    <img src="images/photo_cal_2.jpg" alt="alt text" style="width:20%;">
+   
+    <img src="images/photo_cal_3.jpg" alt="alt text" style="width:20%;">
+   
 6. Change the settings to your liking
-    ![alt text](/images/photo_settings.jpg)
-7. Start a new drive
-    ![alt text](/images/photo_start.jpg)
+
+    <img src="images/photo_settings.jpg" alt="alt text" style="width:20%;">
+   
+7. Start a new drive and choose the sensitivity of the monitoring
+
+    <img src="images/photo_start.jpg" alt="alt text" style="width:20%;">
+   
 8. Observe the statistics of your drive
-    ![alt text](/images/photo_stat.jpg)
+
+    <img src="images/photo_stat.jpg" alt="alt text" style="width:20%;">
  
-9. choose the sensitivity of the monitoring
-10. Observe the statistics of your drive
+9. Observe the statistics of your drive
+    
+        <img src="images/photo_stat.jpg" alt="alt text" style="width:20%;">
 
 As a supervisor:
 1. Chose to enter as a supervisor
