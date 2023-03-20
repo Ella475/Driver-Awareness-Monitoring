@@ -69,7 +69,7 @@ https://github.com/Ella475/Db-and-Server-For-Awareness-Detection-App.git
 
    You will need to make sure that the front camera input is taken from webcam 0.
 
-   <img src="images/webcam.jpg" alt="alt text" style="width:10%;">
+   <img src="images/webcam.jpg" alt="alt text" style="width:20%;">
 
 6. If you are using your phone, you will need to change the IP address.
    You will  need to connect your phone to your computer. 
