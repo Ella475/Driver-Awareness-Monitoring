@@ -66,7 +66,7 @@ git clone https://github.com/Ella475/Driver-Awareness-Monitoring.git
 
    <img src="images/webcam.jpg" alt="alt text" style="width:20%;">
 
-5.You are ready to go!
+5. You are ready to go!
 
 ## Usage
 The app can be used in two ways: as a user or as a supervisor.
