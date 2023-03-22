@@ -3,7 +3,8 @@
 ## Project Description
 This project aims to create a system that can help improve driver awareness while driving.
 The app uses the camera on the user's phone to monitor the driver's behavior and detect if the driver is falling asleep or if they are distracted.
-The app will provide feedback to the user if any unsafe or distracted driving behavior is detected.
+The app will provide feedback to the user if any unsafe or distracted driving behavior is detected. The app supports two types of users: drivers and supervisors.
+There could be different types of supervisors: parents, family of eldelry people, insurance companies, people ordering taxies, and companies which have drivers.  
 
 ## Features
 The app includes the following features:
@@ -14,13 +15,8 @@ The user can set the location of the phone and adjust the camera angle to captur
 
 ### Camera Monitoring
 The app uses the smartphone's camera to monitor the driver's behavior in real-time. 
-It uses advanced algorithms to detect signs of drowsiness, such as drooping eyelids or head nodding,
+It uses advanced algorithms to detect signs of drowsiness, such as drooping eyelids or heads,
 and signs of distraction, such as looking away from the road or fiddling with the radio.
-
-### Sensitivity
-The user can choose from two different states - fatigue state and normal state - 
-to set the sensitivity of the monitoring. The fatigue state is more sensitive and is designed to detect signs of fatigue or drowsiness,
-while the normal state is less sensitive and is designed to detect signs of distraction.
 
 ### Statistics
 The app presents detailed statistics about the user's driving style. 
@@ -54,28 +50,23 @@ This is important because different users may have different preferences for the
 ```bash
 git clone https://github.com/Ella475/Driver-Awareness-Monitoring.git
 ```
-2. Run the server, for further instructions see the README file in 
+2. Run the server, for further instructions see the README file in [here](https://github.com/Ella475/Db-and-Server-For-Awareness-Detection-App)
 
-```bash
-https://github.com/Ella475/Db-and-Server-For-Awareness-Detection-App.git
-```
+3. If you are using your phone:
 
-3. Change the IP address in the app to the IP address of your computer.
-4. You can find the IP address of your computer, for more information, see the site below:
+    You need to change the IP adress to he one of your computer. You can find the IP address of your computer, for more information, see the site below:
 
    https://www.med.unc.edu/it/guide/operating-systems/how-do-i-find-the-host-name-ip-address-or-physical-address-of-my-machine/
 
-   Update this in InDriver-Awareness-Monitoring/app/src/main/java/com/example/driverawarenessdetection/utils/, find the ServerIpAddress.java file.
-5. If you are using an emulator, you will not need to change the IP address. 
+   Update this in InDriver-Awareness-Monitoring/app/src/main/java/com/example/driverawarenessdetection/utils/ServerIpAddress.java file.
+   
+4. If you are using an emulator, you will not need to change the IP address. 
 
    You will need to make sure that the front camera input is taken from webcam 0.
 
    <img src="images/webcam.jpg" alt="alt text" style="width:20%;">
 
-6. If you are using your phone, you will need to change the IP address.
-   You will  need to connect your phone to your computer. 
-
-7. Run the app on your phone, and you are ready to go!
+5.You are ready to go!
 
 ## Usage
 The app can be used in two ways: as a user or as a supervisor.
