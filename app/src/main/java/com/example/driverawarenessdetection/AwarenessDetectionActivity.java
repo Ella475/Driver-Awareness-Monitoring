@@ -30,7 +30,6 @@ public class AwarenessDetectionActivity extends BaseActivity {
     private CameraSourceWrapper csw;
     private final Handler handler = new Handler();
     private final int updateEvery = 2000; // 1000 milliseconds == 1 second
-    private final long animationDuration = 1000;
     private int percentageCutOff = 20;
     private boolean fatigued = false;
     private AwarenessManager manager = null;
@@ -77,6 +76,7 @@ public class AwarenessDetectionActivity extends BaseActivity {
         } else {
             this.circularProgressBar.setBackgroundProgressBarColor(getColor(0xA4, 0xAF, 0xF4));
         }
+        final long animationDuration = 1000;
         this.circularProgressBar.setProgressWithAnimation((float) awarenessPercentage, animationDuration);
         this.awarenessPercentageText.setText(awarenessPercentage + "%");
     }

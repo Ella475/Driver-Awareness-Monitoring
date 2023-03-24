@@ -5,5 +5,5 @@ package com.example.driverawarenessdetection.utils;
 // Please update this IP address to your server IP address.
 // If you are using an emulator, you don't need to change this IP address.
 public class ServerIpAddress {
-    public static final String IP_ADDRESS = "192.168.1.11";
+    public static final String IP_ADDRESS = "192.168.68.119";
 }

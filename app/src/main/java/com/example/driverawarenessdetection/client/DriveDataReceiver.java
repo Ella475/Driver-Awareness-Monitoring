@@ -19,6 +19,12 @@ public class DriveDataReceiver {
         initDriveDataList();
     }
 
+    public DriveDataReceiver(String userId) {
+        client = Client.getInstance();
+        this.userId = userId;
+        initDriveDataList();
+    }
+
     private void initDriveDataList() {
         try {
             driveDataList = new ArrayList<>();
@@ -36,9 +42,4 @@ public class DriveDataReceiver {
     public ArrayList<DriveData> getDriveDataList() {
         return driveDataList;
     }
-
-    public DriveData getDriveData(int index) {
-        return driveDataList.get(index);
-    }
-
 }
