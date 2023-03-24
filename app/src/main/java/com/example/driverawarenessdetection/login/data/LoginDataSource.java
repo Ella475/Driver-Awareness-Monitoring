@@ -15,29 +15,25 @@ import java.io.IOException;
  * Class that handles authentication w/ login credentials and retrieves user information.
  */
 public class LoginDataSource {
-
     public boolean checkUserExists(String username) {
+        boolean isUser = (LoginType.getLoginType()).equals("user");
         Client client = Client.getInstance();
-        return client.checkUserExists(username);
+        return client.checkUserExists(username, isUser);
     }
 
     public Result<LoggedInUser> handleUser(String username, String password, boolean userExists) {
         Client client = Client.getInstance();
-        String loginType = LoginType.getLoginType();
+        boolean isUser = (LoginType.getLoginType()).equals("user");
 
         if (userExists) {
-            Result result = client.login(username, password);
-            if (loginType.equals("user") | result instanceof Result.Success) {
+            Result result = client.login(username, password, isUser);
+            if (result instanceof Result.Success) {
                 return result;
             } else {
                 return new Result.Error(new IOException("Incorrect password"));
             }
         } else {
-            if (!loginType.equals("user")) {
-                return new Result.Error(new IOException("User does not exist"));
-            } else {
-                return client.register(username, password);
-            }
+            return client.register(username, password, isUser);
         }
     }
 }

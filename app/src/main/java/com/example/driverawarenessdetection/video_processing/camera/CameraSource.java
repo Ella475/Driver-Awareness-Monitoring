@@ -85,7 +85,6 @@ public class CameraSource {
 
   private Size previewSize;
 
-  private static float REQUESTED_FPS = 30.0f;
   private static final boolean REQUESTED_AUTO_FOCUS = true;
 
   // This instance needs to be held onto to avoid GC of its underlying resources. Even though it
@@ -273,6 +272,7 @@ public class CameraSource {
     previewSize = sizePair.preview;
     Log.v(TAG, "Camera preview size: " + previewSize);
 
+    final float REQUESTED_FPS = 30.0f;
     int[] previewFpsRange = selectPreviewFpsRange(camera, REQUESTED_FPS);
     if (previewFpsRange == null) {
       throw new IOException("Could not find suitable preview frames per second range.");

@@ -72,11 +72,7 @@ public class LoginActivity extends BaseActivity {
                 return;
             }
             if (loginResult.getSuccess() != null) {
-                if (loginType == "user") {
-                    updateUiWithUser(loginResult.getSuccess());
-                } else {
-                    updateUiWithUser("Supervisor");
-                }
+                updateUiWithUser(loginResult.getSuccess());
             }
             setResult(Activity.RESULT_OK);
 
@@ -114,9 +110,9 @@ public class LoginActivity extends BaseActivity {
 
         loginButton.setOnClickListener(v -> {
             boolean userExist = loginViewModel.userExists(usernameEditText.getText().toString());
-            if (userExist || !Objects.equals(loginType, "user")) {
+            if (userExist) {
                 loginViewModel.handleUser(usernameEditText.getText().toString(),
-                        passwordEditText.getText().toString(), userExist);
+                        passwordEditText.getText().toString(), true);
             } else {
                 ConfirmationDialog dialog = new ConfirmationDialog();
                 dialog.setMessage("Are you sure you want to register?");

@@ -1,12 +1,22 @@
 package com.example.driverawarenessdetection;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.driverawarenessdetection.client.DriveData;
 import com.example.driverawarenessdetection.client.DriveDataReceiver;
+import com.example.driverawarenessdetection.client.DriveDataSender;
+import com.example.driverawarenessdetection.client.SupervisorSenderReceiver;
 import com.example.driverawarenessdetection.login.ui.LoginType;
 import com.example.driverawarenessdetection.statistics.BarChartCreator;
 import com.example.driverawarenessdetection.statistics.ChartCreator;
@@ -19,12 +29,16 @@ import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.charts.BarChart;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 public class StatisticsActivity extends BaseActivity {
     private ArrayList<DriveData> driveDataList;
+    private DriveDataReceiver driveDataReceiver;
     private int driveIndex = 0;
+    private final String loginType = LoginType.getLoginType();
+    private Runnable supervisorBackPressed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,10 +46,17 @@ public class StatisticsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         Objects.requireNonNull(getSupportActionBar()).hide();
 
-        DriveDataReceiver driveDataReceiver = new DriveDataReceiver();
+        if (loginType.equals("user")) {
+            present_user();
+        } else {
+            presentSupervisor();
+        }
+    }
+
+    private void present_user() {
+        driveDataReceiver = new DriveDataReceiver();
         driveDataList = driveDataReceiver.getDriveDataList();
         driveIndex = driveDataList.size() - 1;
-
         presentAllDrives();
     }
 
@@ -117,15 +138,114 @@ public class StatisticsActivity extends BaseActivity {
         rightArrow.setOnClickListener(v -> presentSingleDrive());
     }
 
+    private void updateDropDownMenu(SupervisorSenderReceiver ssr) {
+        Spinner userSpinner = findViewById(R.id.user_spinner);
+        ssr.fetchSupervisedUsers();
+        List<String> usernameList = ssr.getSupervisedUsersUsernames();
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, usernameList);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        userSpinner.setAdapter(adapter);
+    }
+
+    private void presentSupervisor() {
+        SupervisorSenderReceiver ssr = new SupervisorSenderReceiver();
+
+        setContentView(R.layout.activity_statistics_supervisor);
+
+        Spinner userSpinner = findViewById(R.id.user_spinner);
+        EditText newUserEditText = findViewById(R.id.new_user_edit_text);
+        Button confirmButton = findViewById(R.id.confirm_button);
+        confirmButton.setEnabled(false);
+        confirmButton.setAlpha(0.5f);
+        Button addNewUserButton = findViewById(R.id.add_new_user_button);
+        addNewUserButton.setEnabled(false);
+        addNewUserButton.setAlpha(0.5f);
+
+        // Populate the Spinner with a list of users
+        updateDropDownMenu(ssr);
+
+        // Handle user selection from the Spinner
+        userSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                confirmButton.setEnabled(true);
+                confirmButton.setAlpha(1f);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                confirmButton.setEnabled(false);
+                confirmButton.setAlpha(0.5f);
+            }
+        });
+
+        confirmButton.setOnClickListener(v -> {
+            String selectedUsername = userSpinner.getSelectedItem().toString();
+            List<String> usernames = ssr.getSupervisedUsersUsernames();
+            List<String> ids = ssr.getSupervisedUsersIds();
+            int index = usernames.indexOf(selectedUsername);
+            String selectedUser = ids.get(index);
+
+            driveDataReceiver = new DriveDataReceiver(selectedUser);
+            driveDataList = driveDataReceiver.getDriveDataList();
+            driveIndex = driveDataList.size() - 1;
+            supervisorBackPressed = this::presentSupervisor;
+            presentAllDrives();
+        });
+
+        // Handle text change in the EditText
+        newUserEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                addNewUserButton.setEnabled(true);
+                addNewUserButton.setAlpha(1f);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
+        // Handle button click to add new user data
+        addNewUserButton.setOnClickListener(v -> {
+            String newUser = newUserEditText.getText().toString();
+            boolean userExists = ssr.supervisedUserExists(newUser);
+            if (!userExists) {
+                Toast.makeText(StatisticsActivity.this, "User does not exist!", Toast.LENGTH_SHORT).show();
+            } else {
+                ssr.addSupervisedUser(newUser);
+                updateDropDownMenu(ssr);
+                Toast.makeText(StatisticsActivity.this, "User added!", Toast.LENGTH_SHORT).show();
+                newUserEditText.setText("");
+                addNewUserButton.setEnabled(false);
+                addNewUserButton.setAlpha(0.5f);
+                updateDropDownMenu(ssr);
+            }
+        });
+
+        supervisorBackPressed = this::exit_dialog;
+
+    }
+
+    public void exit_dialog() {
+        ConfirmationDialog dialog = new ConfirmationDialog();
+        dialog.setMessage("Are you sure you want to exit?");
+        dialog.setListener(this::finishAffinity);
+        dialog.show(getSupportFragmentManager(), "ConfirmationDialog");
+    }
+
     public void onBackPressed() {
         String loginType = LoginType.getLoginType();
         if (!loginType.equals("user")) {
-            ConfirmationDialog dialog = new ConfirmationDialog();
-            dialog.setMessage("Are you sure you want to exit?");
-            dialog.setListener(this::finishAffinity);
-            dialog.show(getSupportFragmentManager(), "ConfirmationDialog");
+            supervisorBackPressed.run();
         } else {
             super.onBackPressed();
         }
     }
+
+
 }

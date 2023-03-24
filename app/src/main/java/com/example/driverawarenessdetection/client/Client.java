@@ -2,6 +2,7 @@ package com.example.driverawarenessdetection.client;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -52,11 +53,15 @@ public class Client {
         return response;
     }
 
-    public boolean checkUserExists(String username) {
+    public boolean checkUserExists(String username, boolean isUser) {
         String endpoint = "users";
         HashMap<String, String> payload = new HashMap<String, String>() {{
             put("username", username);
         }};
+
+        if (!isUser) {
+            payload.put("supervisor", "true");
+        }
 
         String method = "GET";
 
@@ -74,12 +79,16 @@ public class Client {
 
     }
 
-    public Result register(String username, String password) {
+    public Result register(String username, String password, boolean isUser) {
         String endpoint = "users";
         HashMap<String, String> payload = new HashMap<String, String>() {{
             put("username", username);
             put("password", password);
         }};
+
+        if (!isUser) {
+            payload.put("supervisor", "true");
+        }
 
         String method = "POST";
 
@@ -99,12 +108,16 @@ public class Client {
 
     }
 
-    public Result login(String username, String password) {
+    public Result login(String username, String password, boolean isUser) {
         String endpoint = "users";
         HashMap<String, String> payload = new HashMap<String, String>() {{
             put("username", username);
             put("password", password);
         }};
+
+        if (!isUser) {
+            payload.put("supervisor", "true");
+        }
 
         String method = "GET";
 
@@ -219,4 +232,59 @@ public class Client {
         }
     }
 
+    public List<List<String>> getSupervisedUsers(String supervisorId) {
+        String endpoint = "supervisors";
+        HashMap<String, String> payload = new HashMap<String, String>() {{
+            put("supervisor_id", supervisorId);
+        }};
+
+        String method = "GET";
+
+        HashMap<String, String> response = getResponse(sendAsyncTask(endpoint, payload, method));
+
+        if (Objects.equals(response.get("success"), "true")) {
+            System.out.println("Supervised users retrieved successfully!");
+            if (response.get("response") == null) {
+                return new ArrayList<>();
+            }
+            return parseSupervisedUsers(response.get("response"));
+
+        } else {
+            System.out.println("Supervised users failed to retrieve");
+            return null;
+        }
+
+    }
+
+    private List<List<String>> parseSupervisedUsers(String response) {
+        if (response == null) {
+            return null;
+        }
+        response = response.replace("[", "");
+        response = response.replace("]", "");
+        response = response.replace("'", "");
+        String[] supervisedUsers = response.split(", ");
+
+        ArrayList<String> userIds = new ArrayList<>();
+        ArrayList<String> usernames = new ArrayList<>();
+        for (String supervisedUser : supervisedUsers) {
+            String[] user = supervisedUser.split(":");
+            userIds.add(user[0]);
+            usernames.add(user[1]);
+        }
+
+        return new ArrayList<>(Arrays.asList(userIds, usernames));
+    }
+
+    public void setSupervisedUser(String supervisorId, String username) {
+        String endpoint = "supervisors";
+        HashMap<String, String> payload = new HashMap<String, String>() {{
+            put("supervisor_id", supervisorId);
+            put("username", username);
+        }};
+
+        String method = "POST";
+
+        sendAsyncTask(endpoint, payload, method);
+    }
 }
