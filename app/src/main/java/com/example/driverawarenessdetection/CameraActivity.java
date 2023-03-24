@@ -38,11 +38,11 @@ public class CameraActivity extends BaseActivity {
         calibrationBtn.setBackgroundTintMode(null);
         reader = new MsgReader(CameraActivity.this);
         calibrationBtn.setOnClickListener(v -> {
-            reader.speak("Starting calibration!");
-            reader.speak("Please look at the road for a few seconds!");
-            reader.speak("five. four. three. two. one.");
+            reader.speak(getString(R.string.start_calibration));
+            reader.speak(getString(R.string.look_at_road));
+            reader.speak(getString(R.string.count));
             csw.awarenessProcessor.onSuccessDetector.getManager().onCalibration();
-            reader.speak("Calibration finished!");
+            reader.speak(getString(R.string.finish));
         });
     }
 

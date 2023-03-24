@@ -4,7 +4,7 @@ import com.example.driverawarenessdetection.video_processing.awareness_detection
 
 public class SleepCommand implements CommandInterface {
 
-    MsgReader reader;
+    final MsgReader reader;
 
     SleepCommand (MsgReader reader){
         this.reader = reader;

@@ -1,8 +1,6 @@
 package com.example.driverawarenessdetection.video_processing.awareness_detection;
 
 import android.content.Context;
-import android.graphics.PointF;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -14,11 +12,8 @@ import com.google.mlkit.vision.face.Face;
 import com.google.mlkit.vision.face.FaceDetection;
 import com.google.mlkit.vision.face.FaceDetector;
 import com.google.mlkit.vision.face.FaceDetectorOptions;
-import com.google.mlkit.vision.face.FaceLandmark;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 
 public class AwarenessDetectorProcessor extends VisionProcessorBase<List<Face>> {
 

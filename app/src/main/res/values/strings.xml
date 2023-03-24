@@ -35,6 +35,16 @@
     <string name="choose_a_user_to_view_data">Choose a user to view data:</string>
     <string name="enter_a_new_user_name">Enter a new user name</string>
     <string name="confirm">Confirm</string>
+    <string name="are_you_sure_you_want_to_exit">Are you sure you want to exit?</string>
+    <string name="confirm_dialog">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="start_calibration">Starting calibration!</string>
+    <string name="look_at_road">Please look at the road for a few seconds!</string>
+    <string name="count">five. four. three. two. one.</string>
+    <string name="finish">Calibration finished!</string>
+    <string name="exit_confiramtion">Are you sure you want to register?</string>
+    <string name="title_dialog">ConfirmationDialog</string>
+    <string name="exit_app">Are you sure you want to exit?</string>
 
 
     <string-array name="pref_remind_me_to_take_a_break">

@@ -4,10 +4,10 @@ import com.example.driverawarenessdetection.video_processing.awareness_detection
 import com.google.mlkit.vision.face.Face;
 
 public class AttentionDetector extends AwarenessDetector {
-    public static CalibrationData calibrationData = new CalibrationData();
-    float X_ANGLE_MAX_DEVIATION;
-    float Y_ANGLE_MAX_DEVIATION;
-    float Z_ANGLE_MAX_DEVIATION;
+    public static final CalibrationData calibrationData = new CalibrationData();
+    final float X_ANGLE_MAX_DEVIATION;
+    final float Y_ANGLE_MAX_DEVIATION;
+    final float Z_ANGLE_MAX_DEVIATION;
 
     AttentionDetector(int max_history, float x_max_dev, float y_max_dev, float z_max_dev) {
         super(max_history);

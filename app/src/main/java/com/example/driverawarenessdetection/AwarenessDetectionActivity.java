@@ -20,8 +20,6 @@ import com.example.driverawarenessdetection.video_processing.camera.CameraSource
 import com.example.driverawarenessdetection.video_processing.camera.GraphicOverlay;
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 
-import java.util.HashMap;
-
 
 public class AwarenessDetectionActivity extends BaseActivity {
     private int awarenessPercentage = 100;
@@ -44,7 +42,6 @@ public class AwarenessDetectionActivity extends BaseActivity {
         setContentView(R.layout.activity_awareness_detection);
         findViewById(R.id.awareness).getRootView().setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        getSupportActionBar().hide();
 
         CameraSourcePreview preview = findViewById(R.id.camera_source_preview);
         GraphicOverlay graphicOverlay = findViewById(R.id.graphic_overlay);
@@ -81,11 +78,6 @@ public class AwarenessDetectionActivity extends BaseActivity {
         this.awarenessPercentageText.setText(awarenessPercentage + "%");
     }
 
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
 
     private void initView() {
         this.circularProgressBar = findViewById(R.id.awarenessCircularProgressbar);

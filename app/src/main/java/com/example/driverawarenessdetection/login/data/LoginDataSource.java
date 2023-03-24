@@ -1,13 +1,8 @@
 package com.example.driverawarenessdetection.login.data;
 
-import android.os.Bundle;
-
-import androidx.fragment.app.FragmentManager;
-
 import com.example.driverawarenessdetection.client.Client;
 import com.example.driverawarenessdetection.login.data.model.LoggedInUser;
 import com.example.driverawarenessdetection.login.ui.LoginType;
-import com.example.driverawarenessdetection.utils.ConfirmationDialog;
 
 import java.io.IOException;
 

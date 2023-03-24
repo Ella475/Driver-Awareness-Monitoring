@@ -115,10 +115,10 @@ public class LoginActivity extends BaseActivity {
                         passwordEditText.getText().toString(), true);
             } else {
                 ConfirmationDialog dialog = new ConfirmationDialog();
-                dialog.setMessage("Are you sure you want to register?");
+                dialog.setMessage(getString(R.string.exit_confiramtion));
                 dialog.setListener(() -> loginViewModel.handleUser(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString(), false));
-                dialog.show(getSupportFragmentManager(), "ConfirmationDialog");
+                dialog.show(getSupportFragmentManager(), getString(R.string.title_dialog));
             }
         });
     }
@@ -128,7 +128,7 @@ public class LoginActivity extends BaseActivity {
         ImageView hello = findViewById(R.id.hello);
         Button login = findViewById(R.id.login);
 
-        if (loginType == "user") {
+        if (Objects.equals(loginType, "user")) {
             hello.setBackground(getResources().getDrawable(R.drawable.user_logo));
             login.setText(R.string.action_sign_in);
         } else {
@@ -148,8 +148,8 @@ public class LoginActivity extends BaseActivity {
 
     public void onBackPressed() {
         ConfirmationDialog dialog = new ConfirmationDialog();
-        dialog.setMessage("Are you sure you want to exit?");
+        dialog.setMessage(getString(R.string.exit_app));
         dialog.setListener(this::finishAffinity);
-        dialog.show(getSupportFragmentManager(), "ConfirmationDialog");
+        dialog.show(getSupportFragmentManager(), getString(R.string.title_dialog));
     }
 }

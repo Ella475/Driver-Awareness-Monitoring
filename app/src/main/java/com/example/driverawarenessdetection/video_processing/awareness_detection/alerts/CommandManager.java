@@ -15,7 +15,7 @@ public class CommandManager {
     private final SleepCommand sleepCommand;
     private final AttentionCommand attentionCommand;
     private final AwarenessCommand awarenessCommand;
-    public static AlertsData alertsData = new AlertsData();
+    public static final AlertsData alertsData = new AlertsData();
     private final int percentageCutOff;
     private Instant lastAlertTime;
     private Thread takeBreakThread;

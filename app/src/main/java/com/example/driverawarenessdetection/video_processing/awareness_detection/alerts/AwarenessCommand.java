@@ -4,7 +4,7 @@ import com.example.driverawarenessdetection.video_processing.awareness_detection
 
 public class AwarenessCommand implements CommandInterface{
 
-    MsgReader reader;
+    final MsgReader reader;
 
     AwarenessCommand (MsgReader reader){
         this.reader = reader;

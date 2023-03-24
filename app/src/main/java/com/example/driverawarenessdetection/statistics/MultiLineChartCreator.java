@@ -10,7 +10,6 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.util.ArrayList;
-import java.util.concurrent.atomic.DoubleAccumulator;
 
 import com.example.driverawarenessdetection.client.DriveData;
 import com.github.mikephil.charting.charts.LineChart;
@@ -31,14 +30,6 @@ public class MultiLineChartCreator extends ChartCreator{
             entries = new ArrayList<>();
             ArrayList<Double> awarenessList = driveData.getAwarenessPercentageList();
             for (int i = 0; i < awarenessList.size(); i++) {
-                String label = "";
-                if (i == 0) {
-                    label = "Start";
-                } else if (i == awarenessList.size() - 1) {
-                    label = "End";
-                } else if (i % 10 == 0) {
-                    label = String.valueOf(i);
-                }
                 Entry entry = new Entry(i, awarenessList.get(i).floatValue());
                 entries.add(entry);
             }

@@ -20,8 +20,8 @@ public class AwarenessCameraGraphic extends GraphicOverlay.Graphic {
     private final Paint smallPaint;
     private final Paint bigPaint;
 
-    private Boolean isAware;
-    private volatile Face face;
+    private final Boolean isAware;
+    private final Face face;
 
     AwarenessCameraGraphic(GraphicOverlay overlay, Face face, Boolean isAware) {
         super(overlay);
@@ -47,7 +47,7 @@ public class AwarenessCameraGraphic extends GraphicOverlay.Graphic {
         Face face = this.face;
         if (face == null) {
             drawText(canvas, "Face Not Found.", offset++);
-            drawText(canvas, "Readjust Your Device!", offset++);
+            drawText(canvas, "Readjust Your Device!", offset);
             return;
         }
         drawText(canvas, "Face Found. Ready To Go!", offset++);

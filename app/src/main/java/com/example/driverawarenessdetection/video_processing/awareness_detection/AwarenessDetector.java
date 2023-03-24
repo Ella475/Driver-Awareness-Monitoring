@@ -10,7 +10,7 @@ import java.util.Arrays;
 
 public abstract class AwarenessDetector implements AwarenessDetectorInterface{
     private final ArrayDeque<HistoryObject> history = new ArrayDeque<>();
-    protected int MAX_HISTORY;
+    protected final int MAX_HISTORY;
 
     public AwarenessDetector(int max_history) {
         MAX_HISTORY = max_history;

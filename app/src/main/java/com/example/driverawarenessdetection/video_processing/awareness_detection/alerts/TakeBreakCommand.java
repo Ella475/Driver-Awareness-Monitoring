@@ -3,7 +3,7 @@ package com.example.driverawarenessdetection.video_processing.awareness_detectio
 import com.example.driverawarenessdetection.video_processing.awareness_detection.utils.MsgReader;
 
 public class TakeBreakCommand implements CommandInterface {
-    MsgReader reader;
+    final MsgReader reader;
 
     TakeBreakCommand (MsgReader reader){
         this.reader = reader;

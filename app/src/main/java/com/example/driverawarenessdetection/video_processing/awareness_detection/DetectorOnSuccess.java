@@ -5,7 +5,6 @@ import androidx.annotation.NonNull;
 import com.example.driverawarenessdetection.video_processing.camera.GraphicOverlay;
 import com.google.mlkit.vision.face.Face;
 
-import java.util.HashMap;
 import java.util.List;
 
 public class DetectorOnSuccess {

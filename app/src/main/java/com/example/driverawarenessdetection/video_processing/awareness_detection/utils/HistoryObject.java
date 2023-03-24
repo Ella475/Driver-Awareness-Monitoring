@@ -1,8 +1,8 @@
 package com.example.driverawarenessdetection.video_processing.awareness_detection.utils;
 
 public class HistoryObject {
-    private boolean isNotAware;
-    private float awarenessPercentage;
+    private final boolean isNotAware;
+    private final float awarenessPercentage;
 
     public HistoryObject(boolean notAware, float awarenessPercentage) {
         this.isNotAware = notAware;

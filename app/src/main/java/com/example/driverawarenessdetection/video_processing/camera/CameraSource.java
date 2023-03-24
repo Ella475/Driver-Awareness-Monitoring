@@ -513,7 +513,7 @@ public class CameraSource {
     CameraInfo cameraInfo = new CameraInfo();
     Camera.getCameraInfo(cameraId, cameraInfo);
 
-    int displayAngle = 0;
+    int displayAngle;
     if (cameraInfo.facing == CameraInfo.CAMERA_FACING_FRONT) {
       this.rotationDegrees = (cameraInfo.orientation + degrees) % 360;
       displayAngle = (360 - this.rotationDegrees) % 360; // compensate for it being mirrored

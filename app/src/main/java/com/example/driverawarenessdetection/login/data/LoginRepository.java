@@ -1,14 +1,6 @@
 package com.example.driverawarenessdetection.login.data;
 
-import android.app.Fragment;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-
-import com.example.driverawarenessdetection.MainActivity;
-import com.example.driverawarenessdetection.R;
-import com.example.driverawarenessdetection.SettingsActivity;
 import com.example.driverawarenessdetection.login.data.model.LoggedInUser;
-import com.example.driverawarenessdetection.settings.SettingsFragment;
 
 /**
  * Class that requests authentication and user information from the remote data source and

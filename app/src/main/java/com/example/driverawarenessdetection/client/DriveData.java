@@ -1,7 +1,6 @@
 package com.example.driverawarenessdetection.client;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -15,8 +14,8 @@ public class DriveData {
     private final ArrayList<String> index = new ArrayList<>();
     private float meanAwarenessPercentage;
     private int len;
-    private String driveId;
-    private String driveTime;
+    private final String driveId;
+    private final String driveTime;
 
 
     public DriveData(String jsonString, String driveId, String driveTime) throws JSONException {

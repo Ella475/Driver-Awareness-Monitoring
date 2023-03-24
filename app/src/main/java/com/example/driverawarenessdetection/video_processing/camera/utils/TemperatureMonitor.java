@@ -19,7 +19,7 @@ public final class TemperatureMonitor implements SensorEventListener {
 
   private static final String TAG = "TemperatureMonitor";
 
-  public Map<String, Float> sensorReadingsCelsius = new HashMap<>();
+  public final Map<String, Float> sensorReadingsCelsius = new HashMap<>();
 
   private final SensorManager sensorManager;
 

@@ -25,9 +25,9 @@ import java.util.Map;
 
 public class HttpAsyncTask extends AsyncTask<Void, Void, HashMap<String, String>> {
     private String url;
-    private HashMap<String, String> payload;
-    private String method;
-    private OnResponseListener onResponseListener;
+    private final HashMap<String, String> payload;
+    private final String method;
+    private final OnResponseListener onResponseListener;
 
     public HttpAsyncTask(String endpoint, HashMap<String, String> payload, String method, OnResponseListener onResponseListener) {
         if (Build.FINGERPRINT.contains("generic") || Build.FINGERPRINT.contains("emulator")) {

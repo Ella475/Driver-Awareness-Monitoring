@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 import com.example.driverawarenessdetection.client.DriveData;
 import com.example.driverawarenessdetection.client.DriveDataReceiver;
-import com.example.driverawarenessdetection.client.DriveDataSender;
 import com.example.driverawarenessdetection.client.SupervisorSenderReceiver;
 import com.example.driverawarenessdetection.login.ui.LoginType;
 import com.example.driverawarenessdetection.statistics.BarChartCreator;
@@ -29,7 +28,6 @@ import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.charts.BarChart;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 

@@ -71,9 +71,9 @@ public class MainScreenActivity extends BaseActivity implements LifecycleObserve
     @Override
     public void onBackPressed() {
         ConfirmationDialog dialog = new ConfirmationDialog();
-        dialog.setMessage("Are you sure you want to exit?");
+        dialog.setMessage(getString(R.string.exit_app));
         dialog.setListener(this::finishAffinity);
-        dialog.show(getSupportFragmentManager(), "ConfirmationDialog");
+        dialog.show(getSupportFragmentManager(), getString(R.string.title_dialog));
     }
 
 }
