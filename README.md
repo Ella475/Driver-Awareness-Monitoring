@@ -4,7 +4,7 @@
 This project aims to create a system that can help improve driver awareness while driving.
 The app uses the camera on the user's phone to monitor the driver's behavior and detect if the driver is falling asleep or if they are distracted.
 The app will provide feedback to the user if any unsafe or distracted driving behavior is detected. The app supports two types of users: drivers and supervisors.
-There could be different types of supervisors: parents, family of eldelry people, insurance companies, people ordering taxies, and companies which have drivers.  
+There could be different types of supervisors: parents, family of elderly people, insurance companies, people ordering taxi, and companies which have drivers.  
 
 ## Features
 The app includes the following features:
@@ -31,6 +31,7 @@ In the fatigue state, the app is more sensitive and will provide feedback even f
 
 ### Supervision
 Supervisors can also use the app to observe information about the driving awareness of their drivers.
+A supervisor can add a driver to their list of supervised drivers and view the statistics of their drives.
 This feature is especially useful for companies that employ drivers and want to ensure that their employee drivers are driving safely.
 
 ### Feedback
@@ -43,6 +44,8 @@ The app allows the user to customize the settings to their liking.
 The user can choose the sensitivity of the monitoring, and the type of feedback they want to receive.
 This is important because different users may have different preferences for the type of feedback they want to receive.
 
+## System Requirements
+   This app requires Android version 12 or higher to run properly.
 
 ## Installation
 1. Clone the repository
@@ -54,19 +57,21 @@ git clone https://github.com/Ella475/Driver-Awareness-Monitoring.git
 
 3. If you are using your phone:
 
-    You need to change the IP adress to he one of your computer. You can find the IP address of your computer, for more information, see the site below:
+   You need to change the IP address to he one of your computer.</br> If you don't know how to find the IP address of your computer, see the site below:
 
    https://www.med.unc.edu/it/guide/operating-systems/how-do-i-find-the-host-name-ip-address-or-physical-address-of-my-machine/
 
-   Update this in InDriver-Awareness-Monitoring/app/src/main/java/com/example/driverawarenessdetection/utils/ServerIpAddress.java file.
+   Update this in In Driver-Awareness-Monitoring/app/src/main/java/com/example/driverawarenessdetection/utils/ServerIpAddress.java file.
    
-4. If you are using an emulator, you will not need to change the IP address. 
+   1. If you are using an emulator:
+   
+   You don't need to change the IP address. 
 
    You will need to make sure that the front camera input is taken from webcam 0.
 
    <img src="images/webcam.jpg" alt="alt text" style="width:20%;">
 
-5. You are ready to go!
+4. You are ready to go!
 
 ## Usage
 The app can be used in two ways: as a user or as a supervisor.
@@ -111,8 +116,11 @@ As a user:
 
 
 As a supervisor:
-1. Chose to enter as a supervisor
-2. login with the details of the driver you want to supervise
-3. Observe the statistics of the driver's drive
+1. Choose to enter as a supervisor.
+2. Login to an existing account or register a new account.
+3. Add a driver to your list of supervised drivers.
+4. chose which driver you want to observe.
+5. Observe the statistics of the driver's drives.
+6. Repeat steps 3 to 5 for each driver you want to observe.
 
 
