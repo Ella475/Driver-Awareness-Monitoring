@@ -22,7 +22,7 @@ public class AwarenessManager implements AwarenessDetectorInterface{
     }
 
     AwarenessManager() {
-        sleep_detector = new SleepDetector(10, 0.5f);
+        sleep_detector = new SleepDetector(5, 0.3f);
         attention_detector = new AttentionDetector(20, 20, 20, 50);
 
     }

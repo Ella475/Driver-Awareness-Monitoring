@@ -4,17 +4,10 @@ import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.typeText;
-import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.matcher.RootMatchers.withDecorView;
-import static androidx.test.espresso.matcher.ViewMatchers.isClickable;
-import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.isEnabled;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.startsWith;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import android.content.Intent;
@@ -35,7 +28,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 
-
+/**
+ * Tests for the following user stories:
+ * As a user (driver) I want to be able to register to the app, so that I can use the app.
+ * As a user (driver) I want to be able to sign into the app
+ * so that my personalized data can be saved between different usage of the app.
+ */
 @RunWith(AndroidJUnit4.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class LoginTest {
@@ -54,47 +52,35 @@ public class LoginTest {
     }
 
     @Test
-    public void test1RegisterUser() throws InterruptedException {
-        // Simulate user entering credentials
-        onView(withId(R.id.username)).perform(typeText(USERNAME), closeSoftKeyboard());
-        onView(withId(R.id.password)).perform(typeText(PASSWORD), closeSoftKeyboard());
+    public void test1RegisterUser() {
+        Utils.enterCredentialsAndConfirm(USERNAME, PASSWORD);
 
-        // Click login button
-        onView(withId(R.id.login)).perform(click());
-
-        // confirm registration dialog
-        onView(withText("Confirm")).perform(click());
-
-        SystemClock.sleep(1000);
+        SystemClock.sleep(2000);
 
         // Check if user is registered
-        assertTrue(isUserRegistered());
-    }
-
-    private boolean isUserRegistered() {
-        LoginRepository loginRepository = LoginRepository.getInstance(null);
-        LoggedInUser user = loginRepository.getLoggedInUser();
-        return user.getDisplayName().equals(USERNAME);
+        assertTrue(Utils.isUserLoggedIn(USERNAME));
+        Utils.logoutUser();
     }
 
     @Test
     public void test2LoginUser() {
-        // Simulate user entering credentials
-        onView(withId(R.id.username)).perform(typeText(USERNAME), closeSoftKeyboard());
-        onView(withId(R.id.password)).perform(typeText(PASSWORD), closeSoftKeyboard());
+        Utils.enterCredentials(USERNAME, PASSWORD);
 
-        // Click login button
-        onView(withId(R.id.login)).perform(click());
-
-        SystemClock.sleep(1000);
+        SystemClock.sleep(2000);
 
         // Check if user is logged in
-        assertTrue(isUserLoggedIn());
+        assertTrue(Utils.isUserLoggedIn(USERNAME));
+        Utils.logoutUser();
     }
 
-    private boolean isUserLoggedIn() {
-        LoginRepository loginRepository = LoginRepository.getInstance(null);
-        LoggedInUser user = loginRepository.getLoggedInUser();
-        return user.getDisplayName().equals(USERNAME);
+    @Test
+    public void test3RegisterUsedUsernameOrWrongPassword() {
+        Utils.enterCredentialsAndConfirm(USERNAME, PASSWORD);
+
+        SystemClock.sleep(2000);
+
+        // Check if user is registered
+        assertFalse(Utils.isUserLoggedIn(USERNAME));
+        Utils.logoutUser();
     }
 }
