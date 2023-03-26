@@ -4,7 +4,9 @@
 This project aims to create a system that can help improve driver awareness while driving.
 The app uses the camera on the user's phone to monitor the driver's behavior and detect if the driver is falling asleep or if they are distracted.
 The app will provide feedback to the user if any unsafe or distracted driving behavior is detected. The app supports two types of users: drivers and supervisors.
-There could be different types of supervisors: parents, family of elderly people, insurance companies, people ordering taxi, and companies which have drivers.  
+There could be different types of supervisors: parents, family of eldelry people, insurance companies, people ordering taxies, and companies which have drivers. 
+
+[![Watch the video](https://img.youtube.com/vi/gPt2YpkQpa0/0.jpg)](https://youtu.be/gPt2YpkQpa0)
 
 ## Features
 The app includes the following features:
@@ -60,10 +62,12 @@ git clone https://github.com/Ella475/Driver-Awareness-Monitoring.git
    You need to change the IP address to he one of your computer.</br> If you don't know how to find the IP address of your computer, see the site below:
 
    https://www.med.unc.edu/it/guide/operating-systems/how-do-i-find-the-host-name-ip-address-or-physical-address-of-my-machine/
+   
+   Make sure that your phone and server use the same internet network.
 
    Update this in In Driver-Awareness-Monitoring/app/src/main/java/com/example/driverawarenessdetection/utils/ServerIpAddress.java file.
    
-   1. If you are using an emulator:
+5. If you are using an emulator:
    
    You don't need to change the IP address. 
 
@@ -71,7 +75,7 @@ git clone https://github.com/Ella475/Driver-Awareness-Monitoring.git
 
    <img src="images/webcam.jpg" alt="alt text" style="width:20%;">
 
-4. You are ready to go!
+6. You are ready to go!
 
 ## Usage
 The app can be used in two ways: as a user or as a supervisor.
