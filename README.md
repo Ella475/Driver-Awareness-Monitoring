@@ -6,7 +6,7 @@ The app uses the camera on the user's phone to monitor the driver's behavior and
 The app will provide feedback to the user if any unsafe or distracted driving behavior is detected. The app supports two types of users: drivers and supervisors.
 There could be different types of supervisors: parents, family of eldelry people, insurance companies, people ordering taxies, and companies which have drivers. 
 
-[![Watch the video](https://img.youtube.com/vi/gPt2YpkQpa0/maxresdefault.jpg)](https://youtu.be/gPt2YpkQpa0)
+<video src=https://youtu.be/gPt2YpkQpa0 width=180/>
 
 ## Features
 The app includes the following features:
