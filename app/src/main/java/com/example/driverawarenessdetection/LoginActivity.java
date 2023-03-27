@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 import com.example.driverawarenessdetection.login.data.LoginDataSource;
 import com.example.driverawarenessdetection.login.data.LoginRepository;
-import com.example.driverawarenessdetection.login.ui.LoginType;
+import com.example.driverawarenessdetection.login.data.LoginType;
 import com.example.driverawarenessdetection.login.ui.LoginViewModel;
 import com.example.driverawarenessdetection.utils.BaseActivity;
 import com.example.driverawarenessdetection.utils.ConfirmationDialog;
@@ -77,14 +77,14 @@ public class LoginActivity extends BaseActivity {
             setResult(Activity.RESULT_OK);
 
             String loginType = LoginType.getLoginType();
-            if (!Objects.equals(loginType, "user")) {
-                Intent switchStatisticsActivityIntent = new Intent(LoginActivity.this,
-                        StatisticsActivity.class);
-                startActivity(switchStatisticsActivityIntent);
-            } else {
+            if (Objects.equals(loginType, "user")) {
                 Intent switchMainScreenIntent = new Intent(LoginActivity.this,
                         MainScreenActivity.class);
                 startActivity(switchMainScreenIntent);
+            } else {
+                Intent switchStatisticsActivityIntent = new Intent(LoginActivity.this,
+                        StatisticsActivity.class);
+                startActivity(switchStatisticsActivityIntent);
             }
         });
 
@@ -126,14 +126,11 @@ public class LoginActivity extends BaseActivity {
     @SuppressLint("UseCompatLoadingForDrawables")
     private void handleLoginType() {
         ImageView hello = findViewById(R.id.hello);
-        Button login = findViewById(R.id.login);
 
         if (Objects.equals(loginType, "user")) {
             hello.setBackground(getResources().getDrawable(R.drawable.user_logo));
-            login.setText(R.string.action_sign_in);
         } else {
             hello.setBackground(getResources().getDrawable(R.drawable.superviser_logo));
-            login.setText(R.string.action_sign_in_short);
         }
     }
 

@@ -1,4 +1,4 @@
-package com.example.driverawarenessdetection.login.ui;
+package com.example.driverawarenessdetection.login.data;
 
 public class LoginType {
     private static String LOGIN_TYPE = "user";

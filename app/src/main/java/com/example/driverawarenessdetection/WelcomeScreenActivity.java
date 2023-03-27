@@ -10,7 +10,7 @@ import android.widget.Button;
 
 import com.example.driverawarenessdetection.login.data.LoginDataSource;
 import com.example.driverawarenessdetection.login.data.LoginRepository;
-import com.example.driverawarenessdetection.login.ui.LoginType;
+import com.example.driverawarenessdetection.login.data.LoginType;
 import com.example.driverawarenessdetection.utils.BaseActivity;
 import com.example.driverawarenessdetection.utils.ConfirmationDialog;
 

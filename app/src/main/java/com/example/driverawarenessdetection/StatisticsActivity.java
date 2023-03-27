@@ -16,7 +16,7 @@ import android.widget.Toast;
 import com.example.driverawarenessdetection.client.DriveData;
 import com.example.driverawarenessdetection.client.DriveDataReceiver;
 import com.example.driverawarenessdetection.client.SupervisorSenderReceiver;
-import com.example.driverawarenessdetection.login.ui.LoginType;
+import com.example.driverawarenessdetection.login.data.LoginType;
 import com.example.driverawarenessdetection.statistics.BarChartCreator;
 import com.example.driverawarenessdetection.statistics.ChartCreator;
 import com.example.driverawarenessdetection.statistics.MultiLineChartCreator;
