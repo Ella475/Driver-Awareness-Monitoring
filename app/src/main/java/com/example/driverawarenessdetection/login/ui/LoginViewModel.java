@@ -8,7 +8,7 @@ import android.util.Patterns;
 
 import com.example.driverawarenessdetection.login.data.LoginRepository;
 import com.example.driverawarenessdetection.login.data.Result;
-import com.example.driverawarenessdetection.login.data.model.LoggedInUser;
+import com.example.driverawarenessdetection.login.data.LoggedInUser;
 import com.example.driverawarenessdetection.R;
 
 public class LoginViewModel extends ViewModel {

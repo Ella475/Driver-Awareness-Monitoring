@@ -9,7 +9,7 @@ import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
 import com.example.driverawarenessdetection.login.data.Result;
-import com.example.driverawarenessdetection.login.data.model.LoggedInUser;
+import com.example.driverawarenessdetection.login.data.LoggedInUser;
 
 import org.json.JSONArray;
 import org.json.JSONException;

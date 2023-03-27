@@ -1,7 +1,6 @@
 package com.example.driverawarenessdetection.login.data;
 
 import com.example.driverawarenessdetection.client.Client;
-import com.example.driverawarenessdetection.login.data.model.LoggedInUser;
 
 import java.io.IOException;
 

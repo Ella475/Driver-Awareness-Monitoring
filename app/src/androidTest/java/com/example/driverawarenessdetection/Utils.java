@@ -9,7 +9,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 import com.example.driverawarenessdetection.login.data.LoginDataSource;
 import com.example.driverawarenessdetection.login.data.LoginRepository;
-import com.example.driverawarenessdetection.login.data.model.LoggedInUser;
+import com.example.driverawarenessdetection.login.data.LoggedInUser;
 
 public class Utils {
 
