@@ -38,9 +38,8 @@ public class CameraSourceWrapper {
             cameraSource.setFacing(CameraSource.CAMERA_FACING_FRONT);
             if (Build.FINGERPRINT.contains("generic") || Build.FINGERPRINT.contains("emulator")) {
                 // running on an emulator
-                // running on a real device
                 cameraSource.setStartingDegrees(180);
-                System.out.println("Running on real device." + " Starting degrees: 180");
+                System.out.println("Running on an emulator." + " Starting degrees: 180");
             } else {
                 // running on a real device
                 cameraSource.setStartingDegrees(270);
